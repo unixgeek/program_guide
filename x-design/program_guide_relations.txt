@@ -1,0 +1,22 @@
+/*
+ * $Id: program_guide_relations.txt,v 1.1 2005-10-14 19:39:45 gunter Exp $
+ *
+ * Derived from program_guide_er.dia.
+ */
+[user]
+{id} | username | password | last_login_date | registration_date
+
+[program]
+{id} | name | {{season_number}} | {{episode_number}}
+
+[episode]
+{season} | {number} | production_code | original_air_date | title
+
+[viewed]
+{{user_id}} | {{season_number}} | {{episode_number}}
+
+[queued]
+{{user_id}} | {{season_number}} | {{episode_number}}
+
+[subscribed]
+{{user_id}} | {{program_id}}
