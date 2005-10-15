@@ -57,7 +57,7 @@ CREATE TABLE subscribed (
 CREATE TABLE user (
   id int(11) unsigned NOT NULL auto_increment,
   username varchar(16) NOT NULL default '',
-  password varchar(16) binary NOT NULL default '',
+  password varchar(32) binary NOT NULL default '',
   last_login_date datetime NOT NULL default '0000-00-00 00:00:00',
   registration_date datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (id)
