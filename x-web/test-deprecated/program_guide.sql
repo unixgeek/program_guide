@@ -192,11 +192,21 @@ INSERT INTO program VALUES (12,'The Office (US)');
 -- Dumping data for table `queued`
 --
 
+INSERT INTO queued VALUES (1,5,'1',1);
+INSERT INTO queued VALUES (1,5,'1',2);
+INSERT INTO queued VALUES (1,5,'1',3);
+INSERT INTO queued VALUES (1,5,'1',4);
+INSERT INTO queued VALUES (1,5,'1',5);
+INSERT INTO queued VALUES (1,10,'2',1);
+INSERT INTO queued VALUES (1,10,'2',2);
+INSERT INTO queued VALUES (1,10,'2',3);
 
 --
 -- Dumping data for table `subscribed`
 --
 
+INSERT INTO subscribed VALUES (1,5);
+INSERT INTO subscribed VALUES (1,10);
 
 --
 -- Dumping data for table `user`
@@ -208,4 +218,11 @@ INSERT INTO user VALUES (1,'gunter','6e854442cd2a940c9e95941dce4ad598','2005-10-
 -- Dumping data for table `viewed`
 --
 
+INSERT INTO viewed VALUES (1,5,'1',1);
+INSERT INTO viewed VALUES (1,5,'1',2);
+INSERT INTO viewed VALUES (1,5,'1',3);
+INSERT INTO viewed VALUES (1,5,'1',4);
+INSERT INTO viewed VALUES (1,10,'2',1);
+INSERT INTO viewed VALUES (1,10,'2',2);
+INSERT INTO viewed VALUES (1,10,'2',3);
 
