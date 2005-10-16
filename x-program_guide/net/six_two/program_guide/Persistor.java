@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.1 2005-10-16 05:02:59 gunter Exp $
+ * $Id: Persistor.java,v 1.2 2005-10-16 21:13:43 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -165,8 +165,8 @@ public class Persistor {
             throws SQLException {
         ArrayList userEpisodes = new ArrayList();
         
-        String sql = "SELECT p.name, e.season, e.number, e.production_code, "
-            + "e.original_air_date, e.title, IFNULL(q.user_id, 0) AS queued, "
+        String sql = "SELECT p.*, e.*, "
+            + "IFNULL(q.user_id, 0) AS queued, "
             + "IFNULL(v.user_id, 0) as viewed "
             + "FROM user u "
             + "LEFT JOIN subscribed s "
@@ -194,14 +194,14 @@ public class Persistor {
         ResultSet result = statement.getResultSet();
         
         while (result.next()) {
-            Program program = new Program();
-            program.setName(result.getString("name"));
-            Episode episode = new Episode();
-            episode.setSeason(result.getString("season").charAt(0));
-            episode.setNumber(result.getInt("number"));
-            episode.setProductionCode(result.getString("production_code"));
-            episode.setOriginalAirDate(result.getDate("original_air_date"));
-            episode.setTitle(result.getString("title"));
+            Program program = new Program(result.getInt("p.id"),
+                    result.getString("p.name"));
+            Episode episode = new Episode(result.getInt("e.program_id"),
+                    result.getString("e.season").charAt(0),
+                    result.getInt("e.number"),
+                    result.getString("e.production_code"),
+                    result.getDate("e.original_air_date"),
+                    result.getString("e.title"));
             userEpisodes.add(new UserEpisode(program, episode, 
                     result.getShort("queued"), result.getShort("viewed")));
         }
@@ -214,5 +214,178 @@ public class Persistor {
         }
         
         return userEpisodesArray;
+    }
+    
+    public static Program[] getAllPrograms(Connection connection) 
+            throws SQLException {
+        ArrayList programs = new ArrayList();
+        
+        String sql = "SELECT * FROM program";
+        
+        Statement statement = connection.createStatement();
+        statement.execute(sql);
+        ResultSet result = statement.getResultSet();
+        
+        while (result.next()) {
+            Program program = new Program();
+            program.setId(result.getInt("id"));
+            program.setName(result.getString("name"));
+            
+            programs.add(program);
+        }
+        result.close();
+        statement.close();
+        
+        Program[] programsArray = new Program[programs.size()];
+        for (int i = 0; i != programs.size(); i++) {
+            programsArray[i] = (Program) programs.get(i);
+        }
+        
+        return programsArray;
+    }
+    
+    public static Subscribed[] getSubscribed(Connection connection, User user) 
+            throws SQLException {
+        
+        ArrayList subscriptions = new ArrayList();
+        
+        String sql = "SELECT * FROM subscribed "
+            + "WHERE user_id = ?";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.execute();;
+        ResultSet result = statement.getResultSet();
+        
+        while (result.next()) {
+            Subscribed subscribed = new Subscribed();
+            subscribed.setUserId(result.getInt("user_id"));
+            subscribed.setProgramId(result.getInt("program_id"));
+            
+            subscriptions.add(subscribed);
+        }
+        result.close();
+        statement.close();
+        
+        Subscribed[] subscriptionsArray = new Subscribed[subscriptions.size()];
+        for (int i = 0; i != subscriptions.size(); i++) {
+            subscriptionsArray[i] = (Subscribed) subscriptions.get(i);
+        }
+        
+        return subscriptionsArray;
+    }
+    
+    public static int addSubscription(Connection connection, User user, 
+            Program program) throws SQLException {
+        String sql = "INSERT INTO subscribed VALUES (?, ?)";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.setInt(2, program.getId());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
+    }
+    
+    public static int deleteSubscription(Connection connection, User user, 
+            Program program) throws SQLException {
+        String sql = "DELETE FROM subscribed "
+            + "WHERE user_id = ? "
+            + "AND program_id = ? ";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.setInt(2, program.getId());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
+    }
+    
+    public static int addUserQueuedEpisode(Connection connection, User user, 
+            Episode episode) throws SQLException {
+        String sql = "INSERT INTO queued VALUES (?, ?, ?, ?)";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.setInt(2, episode.getProgramId());
+        statement.setString(3, Character.toString(episode.getSeason()));
+        statement.setInt(4, episode.getNumber());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
+    }
+    
+    public static int deleteUserQueuedEpisode(Connection connection, User user, 
+            Episode episode) throws SQLException {
+        String sql = "DELETE FROM viewed "
+            + "WHERE user_id = ? "
+            + "AND program_id = ? "
+            + "AND season = ? "
+            + "AND episode_number = ?";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.setInt(2, episode.getProgramId());
+        statement.setString(3, Character.toString(episode.getSeason()));
+        statement.setInt(4, episode.getNumber());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
+    }
+    
+    public static int addUserViewedEpisode(Connection connection, User user, 
+            Episode episode) throws SQLException {
+        String sql = "INSERT INTO queued VALUES (?, ?, ?, ?)";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.setInt(2, episode.getProgramId());
+        statement.setString(3, Character.toString(episode.getSeason()));
+        statement.setInt(4, episode.getNumber());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
+    }
+    
+    public static int deleteUserViewedEpisode(Connection connection, User user, 
+            Episode episode) throws SQLException {
+        String sql = "DELETE FROM viewed "
+            + "WHERE user_id = ? "
+            + "AND program_id = ? "
+            + "AND season = ? "
+            + "AND episode_number = ?";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.setInt(2, episode.getProgramId());
+        statement.setString(3, Character.toString(episode.getSeason()));
+        statement.setInt(4, episode.getNumber());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
     }
 }
