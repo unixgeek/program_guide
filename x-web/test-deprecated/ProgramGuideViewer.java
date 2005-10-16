@@ -4,11 +4,14 @@ import java.sql.SQLException;
 
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.UserManager;
+import net.six_two.program_guide.tables.Episode;
+import net.six_two.program_guide.tables.Program;
+import net.six_two.program_guide.tables.Subscribed;
 import net.six_two.program_guide.tables.User;
 import net.six_two.program_guide.tables.UserEpisode;
 
 /*
- * $Id: ProgramGuideViewer.java,v 1.1 2005-10-16 05:39:57 gunter Exp $
+ * $Id: ProgramGuideViewer.java,v 1.2 2005-10-16 21:16:36 gunter Exp $
  */
 
 public class ProgramGuideViewer {
@@ -42,6 +45,41 @@ public class ProgramGuideViewer {
                 System.out.print(episodes[i].getQueued() + " | ");
                 System.out.println(episodes[i].getViewed());
             }
+            
+            /*Program[] programs = Persistor.getAllPrograms(connection);
+            for (int i = 0; i != programs.length; i++) {
+                System.out.println(programs[i].getId() + " | " 
+                        + programs[i].getName());
+            }*/
+            
+            /* SUBSCRIPTION TEST */
+            /*Subscribed[] subscriptions;
+            System.out.println("Subscriptions");
+            subscriptions = Persistor.getSubscribed(connection, user);
+            for (int i = 0; i != subscriptions.length; i++) {
+                System.out.println(subscriptions[i].getUserId() + " | " 
+                        + subscriptions[i].getProgramId());
+            }
+            Persistor.addSubscription(connection, user, programs[4]);
+            System.out.println("Subscriptions (Add)");
+            subscriptions = Persistor.getSubscribed(connection, user);
+            for (int i = 0; i != subscriptions.length; i++) {
+                System.out.println(subscriptions[i].getUserId() + " | " 
+                        + subscriptions[i].getProgramId());
+            }
+            Persistor.deleteSubscription(connection, user, programs[4]);
+            System.out.println("Subscriptions (Delete)");
+            subscriptions = Persistor.getSubscribed(connection, user);
+            for (int i = 0; i != subscriptions.length; i++) {
+                System.out.println(subscriptions[i].getUserId() + " | " 
+                        + subscriptions[i].getProgramId());
+            }*/
+            
+            /* VIEWED / QUEUED TEST */
+            //Episode episode = episodes[7].getEpisode();
+            //Persistor.addUserQueuedEpisode(connection, user, episode);
+            //Episode episode = episodes[7].getEpisode();
+            //Persistor.deleteUserQueuedEpisode(connection, user, episode);
             
             connection.close();
         } catch (ClassNotFoundException e) {
