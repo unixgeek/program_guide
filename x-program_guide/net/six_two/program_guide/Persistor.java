@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.2 2005-10-16 21:13:43 gunter Exp $
+ * $Id: Persistor.java,v 1.3 2005-10-16 21:41:29 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -82,6 +82,9 @@ public class Persistor {
         
         statement.close();
         
+        deleteSubscriptions(connection, user);
+        deleteQueuedEpisodes(connection, user);
+        deleteViewedEpisodes(connection, user);
         return count;
     }
     
@@ -295,7 +298,7 @@ public class Persistor {
             Program program) throws SQLException {
         String sql = "DELETE FROM subscribed "
             + "WHERE user_id = ? "
-            + "AND program_id = ? ";
+            + "AND program_id = ?";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
@@ -309,7 +312,23 @@ public class Persistor {
         return count;
     }
     
-    public static int addUserQueuedEpisode(Connection connection, User user, 
+    public static int deleteSubscriptions(Connection connection, User user) 
+            throws SQLException {
+        String sql = "DELETE FROM subscribed "
+            + "WHERE user_id = ?";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
+    }
+    
+    public static int addQueuedEpisode(Connection connection, User user, 
             Episode episode) throws SQLException {
         String sql = "INSERT INTO queued VALUES (?, ?, ?, ?)";
         
@@ -327,7 +346,7 @@ public class Persistor {
         return count;
     }
     
-    public static int deleteUserQueuedEpisode(Connection connection, User user, 
+    public static int deleteQueuedEpisode(Connection connection, User user, 
             Episode episode) throws SQLException {
         String sql = "DELETE FROM viewed "
             + "WHERE user_id = ? "
@@ -349,7 +368,23 @@ public class Persistor {
         return count;
     }
     
-    public static int addUserViewedEpisode(Connection connection, User user, 
+    public static int deleteQueuedEpisodes(Connection connection, User user) 
+            throws SQLException {
+        String sql = "DELETE FROM viewed "
+            + "WHERE user_id = ? ";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
+    }
+    
+    public static int addViewedEpisode(Connection connection, User user, 
             Episode episode) throws SQLException {
         String sql = "INSERT INTO queued VALUES (?, ?, ?, ?)";
         
@@ -367,7 +402,7 @@ public class Persistor {
         return count;
     }
     
-    public static int deleteUserViewedEpisode(Connection connection, User user, 
+    public static int deleteViewedEpisode(Connection connection, User user, 
             Episode episode) throws SQLException {
         String sql = "DELETE FROM viewed "
             + "WHERE user_id = ? "
@@ -380,6 +415,22 @@ public class Persistor {
         statement.setInt(2, episode.getProgramId());
         statement.setString(3, Character.toString(episode.getSeason()));
         statement.setInt(4, episode.getNumber());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
+    }
+    
+    public static int deleteViewedEpisodes(Connection connection, User user)
+            throws SQLException {
+        String sql = "DELETE FROM viewed "
+            + "WHERE user_id = ? ";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
         
         statement.execute();
         int count = statement.getUpdateCount();
