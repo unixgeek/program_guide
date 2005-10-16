@@ -1,5 +1,5 @@
 /*
- * $Id: UserEpisodeRelation.java,v 1.1 2005-10-16 05:02:59 gunter Exp $
+ * $Id: UserEpisodeRelation.java,v 1.2 2005-10-16 21:14:22 gunter Exp $
  */
 package net.six_two.program_guide.tables;
 
@@ -11,6 +11,13 @@ public class UserEpisodeRelation {
     
     public UserEpisodeRelation() {
         
+    }
+    
+    public UserEpisodeRelation(User user, Episode episode) {
+        this.episodeNumber = episode.getNumber();
+        this.programId = episode.getProgramId();
+        this.season = episode.getSeason();
+        this.userId = user.getId();
     }
     
     public UserEpisodeRelation(int userId, int programId, char season,
