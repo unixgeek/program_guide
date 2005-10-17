@@ -1,17 +1,19 @@
+#!/bin/sh
 #
-# $Id: scrape.sh,v 1.5 2005-10-17 17:56:47 gunter Exp $
+# $Id: scrape.sh,v 1.6 2005-10-17 18:29:40 gunter Exp $
 #
-# requires: html2text sgrep
+# requires: html2text
 #
 . program_guide.config
 
-if [ "$#" -ne "2" ]; then
-    echo "usage: `basename $0` id url"
+if [ "$#" -ne "3" ]; then
+    echo "usage: `basename $0` id program url"
     exit 1
 fi
 
 ID="${1}"
-URL="${2}"
+PROGRAM="${2}"
+URL="${3}"
 HTML=`mktemp /tmp/scrape.html.XXXXXX`
 DATA=`mktemp /tmp/scrape.data.XXXXXX`
 
@@ -27,8 +29,6 @@ if [ "$?" -ne "0" ]; then
     exit 1
 fi
 
-PROGRAM=`sgrep '("<title>" .. "</title>")' ${HTML} | sed 's/<title>//' | sed 's/<\/title>//' | sed 's/ (a Titles and Air Dates Guide)//'`
-
 echo "${PROGRAM} => ${HTML}"
 echo "${PROGRAM} => ${DATA}"
 
@@ -41,7 +41,7 @@ echo "${PROGRAM} => ${DATA}"
 # 3) SEASON-EPISODE|DAY|MONTH|YEAR|TITLE
 #                 1|   2|
 # 4) SEASON-EPISODE|TITLE
-for line in `html2text -nobs ${HTML} | grep -e '[[:alnum:]]-[([:digit:]|[:space:][:digit:])]' | sed -E 's/^[[:space:]]+[[:digit:]]+\.//' | tr -s ' ' | sed 's/^ //' | sed 's/- /-/' | tr ' ' '|'`
+for line in `html2text -nobs ${HTML} | grep -e '[[:alnum:]]-[([:digit:]|[:space:][:digit:])]' | sed -E 's/^[[:space:]]*[[:digit:]]+\.//' | tr -s ' ' | sed 's/^ //' | sed 's/- /-/' | tr ' ' '|'`
 do
     SEASON=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 1`
     EPISODE=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 2`
