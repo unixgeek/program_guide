@@ -1,5 +1,5 @@
 #
-# $Id: scrape.sh,v 1.1 2005-10-15 04:35:10 gunter Exp $
+# $Id: scrape.sh,v 1.2 2005-10-17 01:42:50 gunter Exp $
 #
 
 if [ "$#" -ne "1" ]; then
@@ -39,24 +39,34 @@ do
     MONTH=`echo "${line}" | cut -d "|" -f 5`
     YEAR=`echo "${line}" | cut -d "|" -f 6`
     TITLE=`echo "${line}" | cut -d "|" -f 7 | tr '_' ' ' | sed "s/'/''/g"`
- 
-    # If TITLE is empty, then production code or date is probably missing from the data.
-    if [ -z "${TITLE}" ]; then
-        PRODUCTION_CODE=null
-        DAY=01
-        MONTH=Jan
-        YEAR=00
-        TITLE="FIXME: INCOMPLETE DATA"
-        #DAY=`echo "${line}" | cut -d "|" -f 3`
-        #MONTH=`echo "${line}" | cut -d "|" -f 4`
-        #YEAR=`echo "${line}" | cut -d "|" -f 5`
-        #TITLE=`echo "${line}" | cut -d "|" -f 6 | tr '_' ' '`
-    fi
-
     AIR_DATE=`date -j -f %y%b%d ${YEAR}${MONTH}${DAY} +%y%m%d`
     if [ "$?" -ne "0" ]; then
         echo "date failed."
-        continue
+    fi
+ 
+    # If TITLE and YEAR are empty, then PRODUCTION_CODE and AIR_DATE
+    # are missing from the data.
+    if [ -z "${DAY}" ] && [ -z "${TITLE}" ]; then
+        PRODUCTION_CODE=null
+        AIR_DATE=null
+        TITLE=`echo "${line}" | cut -d "|" -f 3`
+    # If TITLE is empty, then PRODUCTION_CODE or AIR_DATE is missing from 
+    # the data.
+    elif [ -z "${TITLE}" ]; then
+        # Try processing a date. If date is successful, the PRODUCITON_CODE
+        # is the missing field; otherwise, AIR_DATE is missing.
+        DAY=`echo "${line}" | cut -d "|" -f 3`
+        MONTH=`echo "${line}" | cut -d "|" -f 4`
+        YEAR=`echo "${line}" | cut -d "|" -f 5`
+        AIR_DATE=`date -j -f %y%b%d ${YEAR}${MONTH}${DAY} +%y%m%d`
+        if [ "$?" -ne "0" ]; then
+            echo "date failed."
+            AIR_DATE=null
+            TITLE=`echo "${line}" | cut -d "|" -f 4 | tr '_' ' ' | sed "s/'/''/g"`
+        else
+            PRODUCTION_CODE=null
+            TITLE=`echo "${line}" | cut -d "|" -f 6 | tr '_' ' ' | sed "s/'/''/g"`
+        fi
     fi
 
     echo "=>${PROGRAM}"
@@ -69,5 +79,5 @@ do
 done
 
 # mysql program_guide < ${SQL}
-
+less -S ${SQL}
 exit 0
