@@ -25,6 +25,9 @@ CREATE TABLE episode (
 CREATE TABLE program (
   id int(11) unsigned NOT NULL auto_increment,
   name tinytext NOT NULL,
+  url tinytext,
+  last_update datetime default NULL,
+  do_update tinyint(4) default NULL,
   PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
