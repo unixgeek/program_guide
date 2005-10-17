@@ -1,5 +1,5 @@
 #
-# $Id: scrape.sh,v 1.4 2005-10-17 17:51:19 gunter Exp $
+# $Id: scrape.sh,v 1.5 2005-10-17 17:56:47 gunter Exp $
 #
 # requires: html2text sgrep
 #
@@ -12,11 +12,10 @@ fi
 
 ID="${1}"
 URL="${2}"
-#HTML=`mktemp /tmp/scrape.html.XXXXXX`
-HTML=/tmp/scrape.html.VLJ0lp
+HTML=`mktemp /tmp/scrape.html.XXXXXX`
 DATA=`mktemp /tmp/scrape.data.XXXXXX`
 
-#fetch -q -o ${HTML} "${URL}"
+fetch -q -o ${HTML} "${URL}"
 if [ "$?" -ne "0" ]; then
     echo "fetch failed."
     exit 1
