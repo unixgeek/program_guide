@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: update_programs.sh,v 1.2 2005-10-17 17:49:53 gunter Exp $
+# $Id: update_programs.sh,v 1.3 2005-10-17 18:30:02 gunter Exp $
 #
 . program_guide.config
 
@@ -18,8 +18,8 @@ do
     ID="`echo ${result} | cut -d "|" -f 1`"
     NAME="`echo ${result} | cut -d "|" -f 2 | tr '_' ' '`"
     URL="`echo ${result} | cut -d "|" -f 3`"
-    echo "${NAME} => ./scrape ${ID} ${URL}"
-    ./scrape.sh "${ID}" "${URL}"
+    echo "${NAME} => ./scrape ${ID} ${NAME} ${URL}"
+    ./scrape.sh "${ID}" "${NAME}" "${URL}"
 done
 
 exit 0
