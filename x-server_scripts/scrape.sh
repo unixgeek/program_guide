@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.6 2005-10-17 18:29:40 gunter Exp $
+# $Id: scrape.sh,v 1.7 2005-10-18 02:09:17 gunter Exp $
 #
 # requires: html2text
 #
@@ -41,7 +41,9 @@ echo "${PROGRAM} => ${DATA}"
 # 3) SEASON-EPISODE|DAY|MONTH|YEAR|TITLE
 #                 1|   2|
 # 4) SEASON-EPISODE|TITLE
-for line in `html2text -nobs ${HTML} | grep -e '[[:alnum:]]-[([:digit:]|[:space:][:digit:])]' | sed -E 's/^[[:space:]]*[[:digit:]]+\.//' | tr -s ' ' | sed 's/^ //' | sed 's/- /-/' | tr ' ' '|'`
+
+# Possible shorter expression for matching: '(\<[[:alnum:]]+\.[[:space:]]+|[[:space:]]+)\<[[:alnum:]]-'
+for line in `html2text -nobs ${HTML} | egrep -e '(\<[[:alnum:]]+\.[[:space:]]+|[[:space:]]+)\<[[:alnum:]]-[([:digit:]|[:space:][:digit:])]' | sed -E 's/^[[:space:]]*[[:digit:]]+\.//' | tr -s ' ' | sed 's/^ //' | sed 's/- /-/' | tr ' ' '|'`
 do
     SEASON=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 1`
     EPISODE=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 2`
