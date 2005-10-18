@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.7 2005-10-18 02:09:17 gunter Exp $
+# $Id: scrape.sh,v 1.8 2005-10-18 12:46:21 gunter Exp $
 #
-# requires: html2text
+# requires: lynx
 #
 . program_guide.config
 
@@ -14,22 +14,9 @@ fi
 ID="${1}"
 PROGRAM="${2}"
 URL="${3}"
-HTML=`mktemp /tmp/scrape.html.XXXXXX`
 DATA=`mktemp /tmp/scrape.data.XXXXXX`
 
-fetch -q -o ${HTML} "${URL}"
-if [ "$?" -ne "0" ]; then
-    echo "fetch failed."
-    exit 1
-fi
-
-dos2unix ${HTML}
-if [ "$?" -ne "0" ]; then
-    echo "dos2unix failed."
-    exit 1
-fi
-
-echo "${PROGRAM} => ${HTML}"
+echo "${PROGRAM} => ${URL}"
 echo "${PROGRAM} => ${DATA}"
 
 # Possible line formats:
@@ -43,7 +30,7 @@ echo "${PROGRAM} => ${DATA}"
 # 4) SEASON-EPISODE|TITLE
 
 # Possible shorter expression for matching: '(\<[[:alnum:]]+\.[[:space:]]+|[[:space:]]+)\<[[:alnum:]]-'
-for line in `html2text -nobs ${HTML} | egrep -e '(\<[[:alnum:]]+\.[[:space:]]+|[[:space:]]+)\<[[:alnum:]]-[([:digit:]|[:space:][:digit:])]' | sed -E 's/^[[:space:]]*[[:digit:]]+\.//' | tr -s ' ' | sed 's/^ //' | sed 's/- /-/' | tr ' ' '|'`
+for line in `lynx -nolist -dump "${URL}" | egrep -e '(\<[[:alnum:]]+\.[[:space:]]+|[[:space:]]+)\<[[:alnum:]]-[([:digit:]|[:space:][:digit:])]' | sed -E 's/^[[:space:]]*[[:digit:]]+\.//' | tr -s ' ' | sed 's/^ //' | sed 's/- /-/' | tr ' ' '|'`
 do
     SEASON=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 1`
     EPISODE=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 2`
@@ -51,7 +38,7 @@ do
     DAY=`echo "${line}" | cut -d "|" -f 3`
     MONTH=`echo "${line}" | cut -d "|" -f 4`
     YEAR=`echo "${line}" | cut -d "|" -f 5`
-    TITLE=`echo "${line}" | cut -d "|" -f 6 | tr '_' ' '`
+    TITLE=`echo "${line}" | cut -d "|" -f 6- | tr '|' ' '`
     AIR_DATE=`date -j -f %y%b%d ${YEAR}${MONTH}${DAY} +%y%m%d 2> /dev/null`
     CASE=1
 
@@ -60,7 +47,7 @@ do
     if [ -z "${DAY}" ] && [ -z "${TITLE}" ]; then
         PRODUCTION_CODE=null
         AIR_DATE=null
-        TITLE=`echo "${line}" | cut -d "|" -f 2`
+        TITLE=`echo "${line}" | cut -d "|" -f 2- | tr '|' ' '`
         CASE=4
     # If TITLE is empty, then PRODUCTION_CODE or AIR_DATE is missing from 
     # the data.
@@ -73,11 +60,11 @@ do
         AIR_DATE=`date -j -f %y%b%d ${YEAR}${MONTH}${DAY} +%y%m%d 2> /dev/null`
         if [ "$?" -ne "0" ]; then
             AIR_DATE=null
-            TITLE=`echo "${line}" | cut -d "|" -f 3 | tr '_' ' '`
+            TITLE=`echo "${line}" | cut -d "|" -f 3- | tr '|' ' '`
             CASE=2
         else
             PRODUCTION_CODE=null
-            TITLE=`echo "${line}" | cut -d "|" -f 5 | tr '_' ' '`
+            TITLE=`echo "${line}" | cut -d "|" -f 5- | tr '|' ' '`
             CASE=3
         fi
     fi
