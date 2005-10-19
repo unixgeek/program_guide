@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.9 2005-10-19 02:57:25 gunter Exp $
+# $Id: scrape.sh,v 1.10 2005-10-19 15:05:07 gunter Exp $
 #
 # requires: lynx
 #
@@ -14,85 +14,75 @@ fi
 ID="${1}"
 PROGRAM="${2}"
 URL="${3}"
+RAW=`mktemp /tmp/scrape.raw.XXXXXX`
 DATA=`mktemp /tmp/scrape.data.XXXXXX`
+FIELDS="5 8 13 11 255"
 
-echo "${PROGRAM} => ${URL}"
+echo "${PROGRAM} => ${RAW}"
 echo "${PROGRAM} => ${DATA}"
 
-# Possible line formats:
-#                 1|              2|  3|    4|   5|    6
-# 1) SEASON-EPISODE|PRODUCTION_CODE|DAY|MONTH|YEAR|TITLE
-#                 1|              2|   3|
-# 2) SEASON-EPISODE|PRODUCTION_CODE|TITLE
-#                 1|  2|    3|   4|   5|
-# 3) SEASON-EPISODE|DAY|MONTH|YEAR|TITLE
-#                 1|   2|
-# 4) SEASON-EPISODE|TITLE
-REGEX1='^[[:alnum:]]+-[[:digit:]]+\|[[:alnum:]]+\|[[:digit:]]+\|[[:alpha:]]+\|[[:digit:]]+\|.+'
-REGEX3='^[[:alnum:]]+-[[:digit:]]+\|[[:digit:]]+\|[[:alpha:]]+\|[[:digit:]]+\|.+' # -v above
-# Possible shorter expression for matching: '(\<[[:alnum:]]+\.[[:space:]]+|[[:space:]]+)\<[[:alnum:]]-'
-for line in `lynx -nolist -dump "${URL}" | egrep -e '(\<[[:alnum:]]+\.[[:space:]]+|[[:space:]]+)\<[[:alnum:]]-[([:digit:]|[:space:][:digit:])]' | sed -E 's/^[[:space:]]*[[:digit:]]+\.//' | tr -s ' ' | sed 's/^ //' | sed 's/- /-/' | tr ' ' '|'`
+# Dump the page to stdout.
+lynx -nolist -dont_wrap_pre -dump "${URL}" | \
+    # Find lines containing episode data.  
+    egrep -e '^([[:space:]]*\<[[:alnum:]]+\.[[:space:]]+|[[:space:]]+)\<[[:alnum:]]-[([:digit:]|[:space:][:digit:])]' | \
+    # Treat data as fixed length and ignore the first field. (Hack?)
+    awk -v FIELDWIDTHS="${FIELDS}" '{print $2 "|" $3 "|" $4 "|" $5}' | \
+    # Convert spaces to _ to make the for loop work correctly.
+    tr ' ' '_' > ${RAW}
+
+for line in `cat ${RAW}`
 do
-    SEASON=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 1`
-    EPISODE=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 2`
-    PRODUCTION_CODE=`echo "${line}" | cut -d "|" -f 2`
-    DAY=`echo "${line}" | cut -d "|" -f 3`
-    MONTH=`echo "${line}" | cut -d "|" -f 4`
-    YEAR=`echo "${line}" | cut -d "|" -f 5`
-    TITLE=`echo "${line}" | cut -d "|" -f 6- | tr '|' ' '`
-    AIR_DATE=`date -j -f %y%b%d ${YEAR}${MONTH}${DAY} +%y%m%d 2> /dev/null`
-    CASE=1
+    SEASON=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 1 | tr -d '_'`
+    EPISODE=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 2 | tr -d '_'`
+    PRODUCTION_CODE=`echo "${line}" | cut -d "|" -f 2 | tr -d '_'`
+    DATE=`echo "${line}" | cut -d "|" -f 3 | tr -d '_'`
+    ORIGINAL_AIR_DATE=`date -j -f %d%b%y ${DATE} +%y%m%d 2> /dev/null`
+    TITLE=`echo "${line}" | cut -d "|" -f 4 | tr '_' ' ' | sed 's/^[[:space:]]*//'`
 
-    # If TITLE and DAY are empty, then PRODUCTION_CODE and AIR_DATE
-    # are missing from the data.
-    if [ -z "${DAY}" ] && [ -z "${TITLE}" ]; then
-        PRODUCTION_CODE=null
-        AIR_DATE=null
-        TITLE=`echo "${line}" | cut -d "|" -f 2- | tr '|' ' '`
-        CASE=4
-    # If TITLE is empty, then PRODUCTION_CODE or AIR_DATE is missing from 
-    # the data.
-    elif [ -z "${TITLE}" ]; then
-        # Try processing a date. If date is successful, the PRODUCITON_CODE
-        # is the missing field; otherwise, AIR_DATE is missing.
-        DAY=`echo "${line}" | cut -d "|" -f 2`
-        MONTH=`echo "${line}" | cut -d "|" -f 3`
-        YEAR=`echo "${line}" | cut -d "|" -f 4`
-        AIR_DATE=`date -j -f %y%b%d ${YEAR}${MONTH}${DAY} +%y%m%d 2> /dev/null`
-        if [ "$?" -ne "0" ]; then
-            AIR_DATE=null
-            TITLE=`echo "${line}" | cut -d "|" -f 3- | tr '|' ' '`
-            CASE=2
-        else
-            PRODUCTION_CODE=null
-            TITLE=`echo "${line}" | cut -d "|" -f 5- | tr '|' ' '`
-            CASE=3
-        fi
-    fi
+    # If any variable is empty, set it to null (\N).
+    if [ -z "${SEASON}" ]; then
+        SEASON=\\N
+    fi 
+    if [ -z "${EPISODE}" ]; then
+        EPISODE=\\N
+    fi 
+    if [ -z "${PRODUCTION_CODE}" ]; then
+        PRODUCTION_CODE=\\N
+    fi 
+    if [ -z "${ORIGINAL_AIR_DATE}" ]; then
+        ORIGINAL_AIR_DATE=\\N
+    fi 
+    if [ -z "${TITLE}" ]; then
+       TITLE=\\N
+    fi 
 
-    echo "${PROGRAM} => (${CASE}) [${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${AIR_DATE}|${TITLE}]"
-    echo "${ID}|${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${AIR_DATE}|${TITLE}"  >> ${DATA}
+    echo "${PROGRAM} => [${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${ORIGINAL_AIR_DATE}|${TITLE}]"
+    echo "${ID}|${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${ORIGINAL_AIR_DATE}|${TITLE}" >> ${DATA}
 done
 
-    LOAD=\
+LOAD=\
 "LOAD DATA LOCAL INFILE '${DATA}' REPLACE
 INTO TABLE episode FIELDS TERMINATED BY '|'
 (program_id, season, number, production_code, original_air_date, title)"
-    mysql ${DATABASE} -e "${LOAD}"
-    if [ "$?" -ne "0" ]; then
-        exit 1
-    fi 
-    echo "${PROGRAM} => Loaded ${DATA}."
+mysql ${DATABASE} -e "${LOAD}"
+if [ "$?" -ne "0" ]; then
+    exit 1
+fi 
+echo "${PROGRAM} => Loaded ${DATA}."
 
-    UPDATE_DATE=`date '+%y-%m-%d %H:%M:%S'`
-    SQL=\
+UPDATE_DATE=`date '+%y-%m-%d %H:%M:%S'`
+
+SQL=\
 "UPDATE program
 SET last_update = '${UPDATE_DATE}'
 WHERE id = ${ID}"
-    mysql ${DATABASE} -e "${SQL}"
-    if [ "$?" -ne "0" ]; then
-        exit 1
-    fi 
-    echo "${PROGRAM} => Updated timestamp to ${UPDATE_DATE}"
+mysql ${DATABASE} -e "${SQL}"
+if [ "$?" -ne "0" ]; then
+    exit 1
+fi 
+
+echo "${PROGRAM} => Updated timestamp to ${UPDATE_DATE}"
+
+rm -f ${RAW} ${DATA}
 
 exit 0
