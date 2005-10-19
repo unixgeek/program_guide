@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.8 2005-10-18 12:46:21 gunter Exp $
+# $Id: scrape.sh,v 1.9 2005-10-19 02:57:25 gunter Exp $
 #
 # requires: lynx
 #
@@ -28,7 +28,8 @@ echo "${PROGRAM} => ${DATA}"
 # 3) SEASON-EPISODE|DAY|MONTH|YEAR|TITLE
 #                 1|   2|
 # 4) SEASON-EPISODE|TITLE
-
+REGEX1='^[[:alnum:]]+-[[:digit:]]+\|[[:alnum:]]+\|[[:digit:]]+\|[[:alpha:]]+\|[[:digit:]]+\|.+'
+REGEX3='^[[:alnum:]]+-[[:digit:]]+\|[[:digit:]]+\|[[:alpha:]]+\|[[:digit:]]+\|.+' # -v above
 # Possible shorter expression for matching: '(\<[[:alnum:]]+\.[[:space:]]+|[[:space:]]+)\<[[:alnum:]]-'
 for line in `lynx -nolist -dump "${URL}" | egrep -e '(\<[[:alnum:]]+\.[[:space:]]+|[[:space:]]+)\<[[:alnum:]]-[([:digit:]|[:space:][:digit:])]' | sed -E 's/^[[:space:]]*[[:digit:]]+\.//' | tr -s ' ' | sed 's/^ //' | sed 's/- /-/' | tr ' ' '|'`
 do
