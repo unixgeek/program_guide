@@ -1,9 +1,9 @@
 /*
- * $Id: UserManager.java,v 1.1 2005-10-16 05:02:59 gunter Exp $
+ * $Id: UserManager.java,v 1.2 2005-10-20 22:49:47 gunter Exp $
  */
 package net.six_two.program_guide;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import net.six_two.misc.MD5MessageDigest;
 import net.six_two.program_guide.tables.User;
@@ -11,11 +11,11 @@ import net.six_two.program_guide.tables.User;
 public class UserManager {
     public static User createUser(String username, String password) {
         User user = new User();
-        Date date = new Date(System.currentTimeMillis());
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         
         user.setUsername(username);
-        user.setRegistrationDate(date);
-        user.setLastLoginDate(date);
+        user.setRegistrationDate(timestamp);
+        user.setLastLoginDate(timestamp);
         setPasswordForUser(user, password);
         
         return user;

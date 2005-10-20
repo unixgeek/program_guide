@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.5 2005-10-20 02:52:27 gunter Exp $
+ * $Id: Persistor.java,v 1.6 2005-10-20 22:49:32 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -29,8 +29,8 @@ public class Persistor {
             user.setId(result.getInt(1));
             user.setUsername(result.getString(2));
             user.setPassword(result.getString(3));
-            user.setLastLoginDate(result.getDate(4));
-            user.setRegistrationDate(result.getDate(5));
+            user.setLastLoginDate(result.getTimestamp(4));
+            user.setRegistrationDate(result.getTimestamp(5));
             
             users.add(user);
         }
@@ -131,8 +131,8 @@ public class Persistor {
                 user.setId(result.getInt(1));
                 user.setUsername(result.getString(2));
                 user.setPassword(result.getString(3));
-                user.setLastLoginDate(result.getDate(4));
-                user.setRegistrationDate(result.getDate(5));
+                user.setLastLoginDate(result.getTimestamp(4));
+                user.setRegistrationDate(result.getTimestamp(5));
             }
             
             result.close();
@@ -154,8 +154,8 @@ public class Persistor {
             user.setId(result.getInt(1));
             user.setUsername(result.getString(2));
             user.setPassword(result.getString(3));
-            user.setLastLoginDate(result.getDate(4));
-            user.setRegistrationDate(result.getDate(5));
+            user.setLastLoginDate(result.getTimestamp(4));
+            user.setRegistrationDate(result.getTimestamp(5));
         }
         
         result.close();
@@ -200,7 +200,7 @@ public class Persistor {
             Program program = new Program(result.getInt("p.id"),
                     result.getString("p.name"),
                     result.getString("p.url"),
-                    result.getDate("p.last_update"),
+                    result.getTimestamp("p.last_update"),
                     result.getShort("p.do_update"));
             Episode episode = new Episode(result.getInt("e.program_id"),
                     result.getString("e.season").charAt(0),
@@ -236,9 +236,8 @@ public class Persistor {
             Program program = new Program();
             program.setId(result.getInt("id"));
             program.setName(result.getString("name"));
-            program.setLastUpdate(result.getDate("last_update"));
+            program.setLastUpdate(result.getTimestamp("last_update"));
             program.setDoUpdate(result.getShort("do_update"));
-            
             programs.add(program);
         }
         result.close();
@@ -254,7 +253,6 @@ public class Persistor {
     
     public static Subscribed[] getSubscribed(Connection connection, User user) 
             throws SQLException {
-        
         ArrayList subscriptions = new ArrayList();
         
         String sql = "SELECT * FROM subscribed "

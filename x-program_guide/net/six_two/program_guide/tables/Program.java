@@ -1,14 +1,14 @@
 /*
- * $Id: Program.java,v 1.2 2005-10-20 02:47:15 gunter Exp $
+ * $Id: Program.java,v 1.3 2005-10-20 22:50:11 gunter Exp $
  */
 package net.six_two.program_guide.tables;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Program {
     private short doUpdate;
     private int id;
-    private Date lastUpdate;
+    private Timestamp lastUpdate;
     private String name;
     private String url;
     
@@ -16,7 +16,7 @@ public class Program {
         
     }
     
-    public Program(int id, String name, String url, Date lastUpdate,
+    public Program(int id, String name, String url, Timestamp lastUpdate,
             short doUpdate) {
         this.id = id;
         this.name = name;
@@ -41,11 +41,11 @@ public class Program {
         this.id = id;
     }
 
-    public Date getLastUpdate() {
+    public Timestamp getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Date lastUpdate) {
+    public void setLastUpdate(Timestamp lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
     

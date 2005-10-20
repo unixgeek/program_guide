@@ -1,15 +1,15 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.util.Date;
 
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.User;
 
 /*
- * $Id: Users.java,v 1.1 2005-10-16 05:39:57 gunter Exp $
+ * $Id: Users.java,v 1.2 2005-10-20 22:53:32 gunter Exp $
  */
 
 public class Users {
@@ -42,7 +42,7 @@ public class Users {
             System.out.println("==> " + DateFormat.getDateTimeInstance()
                     .format(somebody.getRegistrationDate()));
             
-            somebody.setLastLoginDate(new Date(System.currentTimeMillis()));
+            somebody.setLastLoginDate(new Timestamp(System.currentTimeMillis()));
             Persistor.updateUser(connection, somebody);
             
             User foo = UserManager.createUser("kari", "elizabeth");
