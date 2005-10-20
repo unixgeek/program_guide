@@ -3,6 +3,6 @@
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="mysql-connector-java-3.1.11-bin.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/net.six_two.program_guide"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/program_guide"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
