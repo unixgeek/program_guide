@@ -11,7 +11,7 @@ import net.six_two.program_guide.tables.User;
 import net.six_two.program_guide.tables.UserEpisode;
 
 /*
- * $Id: ProgramGuideViewer.java,v 1.2 2005-10-16 21:16:36 gunter Exp $
+ * $Id: ProgramGuideViewer.java,v 1.3 2005-10-20 03:05:50 gunter Exp $
  */
 
 public class ProgramGuideViewer {
@@ -34,7 +34,7 @@ public class ProgramGuideViewer {
                 System.exit(1);
             }
             
-            UserEpisode[] episodes = Persistor.getUserEpisodes(connection, user);
+            /*UserEpisode[] episodes = Persistor.getUserEpisodes(connection, user);
             for (int i = 0; i != episodes.length; i++) {
                 System.out.print(episodes[i].getProgram().getName() + " | ");
                 System.out.print(episodes[i].getEpisode().getSeason() + " | ");
@@ -44,13 +44,15 @@ public class ProgramGuideViewer {
                 System.out.print(episodes[i].getEpisode().getTitle() + " | ");
                 System.out.print(episodes[i].getQueued() + " | ");
                 System.out.println(episodes[i].getViewed());
-            }
+            }*/
             
-            /*Program[] programs = Persistor.getAllPrograms(connection);
+            Program[] programs = Persistor.getAllPrograms(connection);
             for (int i = 0; i != programs.length; i++) {
                 System.out.println(programs[i].getId() + " | " 
-                        + programs[i].getName());
-            }*/
+                        + programs[i].getName() + " | "
+                        + programs[i].getLastUpdate() + " | "
+                        + programs[i].getDoUpdate());
+            }
             
             /* SUBSCRIPTION TEST */
             /*Subscribed[] subscriptions;
