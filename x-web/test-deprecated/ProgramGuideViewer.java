@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.DateFormat;
 
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.UserManager;
@@ -11,7 +12,7 @@ import net.six_two.program_guide.tables.User;
 import net.six_two.program_guide.tables.UserEpisode;
 
 /*
- * $Id: ProgramGuideViewer.java,v 1.3 2005-10-20 03:05:50 gunter Exp $
+ * $Id: ProgramGuideViewer.java,v 1.4 2005-10-20 18:30:08 gunter Exp $
  */
 
 public class ProgramGuideViewer {
@@ -50,7 +51,8 @@ public class ProgramGuideViewer {
             for (int i = 0; i != programs.length; i++) {
                 System.out.println(programs[i].getId() + " | " 
                         + programs[i].getName() + " | "
-                        + programs[i].getLastUpdate() + " | "
+                        + DateFormat.getDateTimeInstance().
+                            format(programs[i].getLastUpdate()) + " | "
                         + programs[i].getDoUpdate());
             }
             
