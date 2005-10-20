@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.4 2005-10-20 02:47:15 gunter Exp $
+ * $Id: Persistor.java,v 1.5 2005-10-20 02:52:27 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -236,6 +236,8 @@ public class Persistor {
             Program program = new Program();
             program.setId(result.getInt("id"));
             program.setName(result.getString("name"));
+            program.setLastUpdate(result.getDate("last_update"));
+            program.setDoUpdate(result.getShort("do_update"));
             
             programs.add(program);
         }
