@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.3 2005-10-16 21:41:29 gunter Exp $
+ * $Id: Persistor.java,v 1.4 2005-10-20 02:47:15 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -198,7 +198,10 @@ public class Persistor {
         
         while (result.next()) {
             Program program = new Program(result.getInt("p.id"),
-                    result.getString("p.name"));
+                    result.getString("p.name"),
+                    result.getString("p.url"),
+                    result.getDate("p.last_update"),
+                    result.getShort("p.do_update"));
             Episode episode = new Episode(result.getInt("e.program_id"),
                     result.getString("e.season").charAt(0),
                     result.getInt("e.number"),
