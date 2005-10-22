@@ -63,6 +63,7 @@ CREATE TABLE user (
   password varchar(32) binary NOT NULL default '',
   last_login_date datetime NOT NULL default '0000-00-00 00:00:00',
   registration_date datetime NOT NULL default '0000-00-00 00:00:00',
+  level tinyint(3) unsigned NOT NULL default '1',
   PRIMARY KEY  (id),
   UNIQUE KEY username (username)
 ) TYPE=MyISAM;
