@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.6 2005-10-20 22:49:32 gunter Exp $
+ * $Id: Persistor.java,v 1.7 2005-10-22 04:16:36 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -125,8 +125,9 @@ public class Persistor {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, username);
             statement.execute();
-            User user = new User();
             ResultSet result = statement.getResultSet();
+            
+            User user = new User();
             if (result.next()) {
                 user.setId(result.getInt(1));
                 user.setUsername(result.getString(2));
@@ -150,6 +151,7 @@ public class Persistor {
         statement.execute();
         User user = new User();
         ResultSet result = statement.getResultSet();
+        
         if (result.next()) {
             user.setId(result.getInt(1));
             user.setUsername(result.getString(2));
@@ -249,6 +251,27 @@ public class Persistor {
         }
         
         return programsArray;
+    }
+    
+    public static Program getProgram(Connection connection, int id) 
+            throws SQLException {
+        String sql = "SELECT * FROM program WHERE id = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, id);
+        statement.execute();
+        ResultSet result = statement.getResultSet();
+        
+        Program program = new Program();
+        if (result.next()) {
+            program.setId(result.getInt("id"));
+            program.setName(result.getString("name"));
+            program.setLastUpdate(result.getTimestamp("last_update"));
+            program.setDoUpdate(result.getShort("do_update"));
+        }
+        result.close();
+        statement.close();
+        
+        return program;
     }
     
     public static Subscribed[] getSubscribed(Connection connection, User user) 
@@ -389,7 +412,7 @@ public class Persistor {
     
     public static int addViewedEpisode(Connection connection, User user, 
             Episode episode) throws SQLException {
-        String sql = "INSERT INTO queued VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO viewed VALUES (?, ?, ?, ?)";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
