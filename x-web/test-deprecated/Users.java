@@ -9,7 +9,7 @@ import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.User;
 
 /*
- * $Id: Users.java,v 1.2 2005-10-20 22:53:32 gunter Exp $
+ * $Id: Users.java,v 1.3 2005-10-22 22:46:35 gunter Exp $
  */
 
 public class Users {
@@ -22,7 +22,7 @@ public class Users {
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://outlands.six-two.net/program_guide",
                     dbUsername, dbPassword);
-            User[] users = Persistor.getAllUsers(connection);
+            User[] users = Persistor.selectAllUsers(connection);
             for (int i = 0; i != users.length; i++) {
                 System.out.println("=> " + users[i].getUsername());
                 System.out.println("==> " + users[i].getId()); 
@@ -33,7 +33,7 @@ public class Users {
                         .format(users[i].getRegistrationDate()));
             }
             
-            User somebody = Persistor.getUser(connection, "gunter");
+            User somebody = Persistor.selectUser(connection, "gunter");
             System.out.println("=> " + somebody.getUsername());
             System.out.println("==> " + somebody.getId()); 
             System.out.println("==> " + somebody.getPassword());
@@ -46,7 +46,7 @@ public class Users {
             Persistor.updateUser(connection, somebody);
             
             User foo = UserManager.createUser("kari", "elizabeth");
-            Persistor.addUser(connection, foo);
+            Persistor.insertUser(connection, foo);
             
             /*User foo = Persistor.getUser(connection, "kari");
             Persistor.deleteUser(connection, foo);*/

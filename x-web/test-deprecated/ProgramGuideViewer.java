@@ -13,7 +13,7 @@ import net.six_two.program_guide.tables.User;
 import net.six_two.program_guide.tables.UserEpisode;
 
 /*
- * $Id: ProgramGuideViewer.java,v 1.5 2005-10-20 22:52:54 gunter Exp $
+ * $Id: ProgramGuideViewer.java,v 1.6 2005-10-22 22:46:35 gunter Exp $
  */
 
 public class ProgramGuideViewer {
@@ -30,7 +30,7 @@ public class ProgramGuideViewer {
                     "jdbc:mysql://outlands.six-two.net/program_guide",
                     dbUsername, dbPassword);
             
-            User user = Persistor.getUser(connection, pgUsername);
+            User user = Persistor.selectUser(connection, pgUsername);
             
             if (!UserManager.authenticateUser(user, pgPassword)) {
                 System.out.println("Invalid password.");
@@ -49,7 +49,7 @@ public class ProgramGuideViewer {
                 System.out.println(episodes[i].getViewed());
             }*/
             
-            Program[] programs = Persistor.getAllPrograms(connection);
+            Program[] programs = Persistor.selectAllPrograms(connection);
             for (int i = 0; i != programs.length; i++) {
 //                System.out.println(programs[i].getId() + "\t" 
 //                        + programs[i].getName() + "\t"
