@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.9 2005-10-22 17:58:04 gunter Exp $
+ * $Id: Persistor.java,v 1.10 2005-10-22 22:27:49 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -16,6 +16,64 @@ import net.six_two.program_guide.tables.*;
 public class Persistor {
     /* episode table *********************************************************/
     public static UserEpisode[] selectAllEpisodesForUser(Connection connection,
+            User user, Program program) throws SQLException {
+        ArrayList userEpisodes = new ArrayList();
+        
+        if (user == null)
+            throw new SQLException("Attempted operation with a null user.");
+        if (program == null)
+            throw new SQLException("Attempted operation with a null program.");
+        
+        String sql = "SELECT e.*, "
+            + "IFNULL(q.user_id, 0) AS queued, "
+            + "IFNULL(v.user_id, 0) as viewed "
+            + "FROM user u "
+            + "LEFT JOIN subscribed s "
+            + "ON u.id = s.user_id "
+            + "LEFT JOIN episode e "
+            + "ON s.program_id = e.program_id "
+            + "LEFT JOIN queued q "
+            + "ON (u.id = q.user_id "
+            + "    AND q.program_id = e.program_id "
+            + "    AND q.season = e.season "
+            + "    AND q.episode_number = e.number) "
+            + "LEFT JOIN viewed v "
+            + "ON (u.id = v.user_id "
+            + "    AND v.program_id = e.program_id "
+            + "    AND v.season = e.season "
+            + "    AND v.episode_number = e.number) "
+            + "WHERE u.id = ?"
+            + "AND e.program_id = ?";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.setInt(2, program.getId());
+        statement.execute();
+        
+        ResultSet result = statement.getResultSet();
+        
+        while (result.next()) {
+            Episode episode = new Episode(result.getInt("e.program_id"),
+                    result.getString("e.season").charAt(0),
+                    result.getInt("e.number"),
+                    result.getString("e.production_code"),
+                    result.getDate("e.original_air_date"),
+                    result.getString("e.title"));
+            userEpisodes.add(new UserEpisode(program, episode, 
+                    result.getShort("queued"), result.getShort("viewed")));
+        }
+        result.close();
+        statement.close();
+        
+        UserEpisode[] userEpisodesArray = new UserEpisode[userEpisodes.size()];
+        for (int i = 0; i != userEpisodes.size(); i++) {
+            userEpisodesArray[i] = (UserEpisode) userEpisodes.get(i);
+        }
+        
+        return userEpisodesArray;
+    }
+    
+    public static UserEpisode[] selectAllEpisodesForUser(Connection connection,
             User user) throws SQLException {
         ArrayList userEpisodes = new ArrayList();
         
@@ -24,7 +82,7 @@ public class Persistor {
         
         String sql = "SELECT p.*, e.*, "
             + "IFNULL(q.user_id, 0) AS queued, "
-            + "IFNULL(v.user_id, 0) as viewed "
+            + "IFNULL(v.user_id, 0) AS viewed "
             + "FROM user u "
             + "LEFT JOIN subscribed s "
             + "ON u.id = s.user_id "
@@ -109,6 +167,42 @@ public class Persistor {
         statement.execute(sql);
         ResultSet result = statement.getResultSet();
         
+        while (result.next()) {
+            Program program = new Program();
+            program.setId(result.getInt("id"));
+            program.setName(result.getString("name"));
+            program.setLastUpdate(result.getTimestamp("last_update"));
+            program.setDoUpdate(result.getShort("do_update"));
+            programs.add(program);
+        }
+        result.close();
+        statement.close();
+        
+        Program[] programsArray = new Program[programs.size()];
+        for (int i = 0; i != programs.size(); i++) {
+            programsArray[i] = (Program) programs.get(i);
+        }
+        
+        return programsArray;
+    }
+    
+    public static Program[] selectAllProgramsForUser(Connection connection,
+                User user) throws SQLException {
+        if (user == null)
+            throw new SQLException("Attempted operation with a null user.");
+        
+        String sql = "SELECT * "
+            + "FROM subscribed s "
+            + "LEFT JOIN program p "
+            + "ON s.program_id = p.id "
+            + "WHERE user_id = ?";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.execute();
+        ResultSet result = statement.getResultSet();
+        
+        ArrayList programs = new ArrayList();
         while (result.next()) {
             Program program = new Program();
             program.setId(result.getInt("id"));
