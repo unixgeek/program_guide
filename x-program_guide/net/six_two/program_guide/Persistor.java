@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.7 2005-10-22 04:16:36 gunter Exp $
+ * $Id: Persistor.java,v 1.8 2005-10-22 15:09:56 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -14,7 +14,62 @@ import java.util.ArrayList;
 import net.six_two.program_guide.tables.*;
 
 public class Persistor {
-    public static User[] getAllUsers(Connection connection) 
+    /*
+     * user table
+     */
+    public static User selectUser(Connection connection, String username)
+    throws SQLException {
+        String sql = "SELECT * FROM user WHERE username = ?";
+
+        if (username == null) 
+            throw new SQLException("Attempted operation with a null"
+                    + " username.");
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, username);
+        statement.execute();
+        ResultSet result = statement.getResultSet();
+        
+        User user = new User();
+        if (result.next()) {
+            user.setId(result.getInt(1));
+            user.setUsername(result.getString(2));
+            user.setPassword(result.getString(3));
+            user.setLastLoginDate(result.getTimestamp(4));
+            user.setRegistrationDate(result.getTimestamp(5));
+        }
+        
+        result.close();
+        statement.close();
+        
+        return user;
+    }
+
+    public static User selectUser(Connection connection, int id)
+            throws SQLException {
+        String sql = "SELECT * FROM user WHERE id = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, id);
+        statement.execute();
+        User user = new User();
+        ResultSet result = statement.getResultSet();
+
+        if (result.next()) {
+            user.setId(result.getInt(1));
+            user.setUsername(result.getString(2));
+            user.setPassword(result.getString(3));
+            user.setLastLoginDate(result.getTimestamp(4));
+            user.setRegistrationDate(result.getTimestamp(5));
+        }
+
+        result.close();
+        statement.close();
+
+        return user;
+    }
+    
+    public static User[] selectAllUsers(Connection connection) 
             throws SQLException {
         ArrayList users = new ArrayList();
         
@@ -54,6 +109,9 @@ public class Persistor {
             + "registration_date = ? "
             + "WHERE id = ?";
         
+        if (user == null)
+            throw new SQLException("Attempted operation on a null user.");
+        
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, user.getUsername());
         statement.setString(2, user.getPassword());
@@ -74,6 +132,9 @@ public class Persistor {
         String sql = "DELETE FROM user "
             + "WHERE id = ?";
         
+        if (user == null)
+            throw new SQLException("Attempted operation on a null user.");
+        
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
         
@@ -88,9 +149,12 @@ public class Persistor {
         return count;
     }
     
-    public static int addUser(Connection connection, User user) 
+    public static int insertUser(Connection connection, User user) 
             throws SQLException {
         String sql = "INSERT INTO user VALUES (null, ?, ?, ?, ?)";
+        
+        if (user == null) 
+            throw new SQLException("Attempted operation on a null user.");
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, user.getUsername());
@@ -113,57 +177,10 @@ public class Persistor {
         result.next();
         user.setId(result.getInt(1));
         
-        statement.close();
-        
-        return count;
-    }
-    
-    public static User getUser(Connection connection, String username)
-        throws SQLException {
-            String sql = "SELECT * FROM user WHERE username = ?";
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, username);
-            statement.execute();
-            ResultSet result = statement.getResultSet();
-            
-            User user = new User();
-            if (result.next()) {
-                user.setId(result.getInt(1));
-                user.setUsername(result.getString(2));
-                user.setPassword(result.getString(3));
-                user.setLastLoginDate(result.getTimestamp(4));
-                user.setRegistrationDate(result.getTimestamp(5));
-            }
-            
-            result.close();
-            statement.close();
-            
-            return user;
-    }
-    
-    public static User getUser(Connection connection, int id)
-            throws SQLException {
-        String sql = "SELECT * FROM user WHERE id = ?";
-
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, id);
-        statement.execute();
-        User user = new User();
-        ResultSet result = statement.getResultSet();
-        
-        if (result.next()) {
-            user.setId(result.getInt(1));
-            user.setUsername(result.getString(2));
-            user.setPassword(result.getString(3));
-            user.setLastLoginDate(result.getTimestamp(4));
-            user.setRegistrationDate(result.getTimestamp(5));
-        }
-        
         result.close();
         statement.close();
         
-        return user;
+        return count;
     }
     
     public static UserEpisode[] getUserEpisodes(Connection connection, User user)
