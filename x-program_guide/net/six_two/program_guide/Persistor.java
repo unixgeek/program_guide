@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.11 2005-10-22 22:54:55 gunter Exp $
+ * $Id: Persistor.java,v 1.12 2005-10-23 05:56:58 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -148,6 +148,7 @@ public class Persistor {
         if (result.next()) {
             program.setId(result.getInt("id"));
             program.setName(result.getString("name"));
+            program.setUrl(result.getString("url"));
             program.setLastUpdate(result.getTimestamp("last_update"));
             program.setDoUpdate(result.getShort("do_update"));
         }
@@ -171,6 +172,7 @@ public class Persistor {
             Program program = new Program();
             program.setId(result.getInt("id"));
             program.setName(result.getString("name"));
+            program.setUrl(result.getString("url"));
             program.setLastUpdate(result.getTimestamp("last_update"));
             program.setDoUpdate(result.getShort("do_update"));
             programs.add(program);
@@ -407,11 +409,12 @@ public class Persistor {
         
         User user = new User();
         if (result.next()) {
-            user.setId(result.getInt(1));
-            user.setUsername(result.getString(2));
-            user.setPassword(result.getString(3));
-            user.setLastLoginDate(result.getTimestamp(4));
-            user.setRegistrationDate(result.getTimestamp(5));
+            user.setId(result.getInt("id"));
+            user.setUsername(result.getString("username"));
+            user.setPassword(result.getString("password"));
+            user.setLastLoginDate(result.getTimestamp("last_login_date"));
+            user.setRegistrationDate(result.getTimestamp("registration_date"));
+            user.setLevel(result.getShort("level"));
         }
         
         result.close();
@@ -431,11 +434,12 @@ public class Persistor {
         ResultSet result = statement.getResultSet();
 
         if (result.next()) {
-            user.setId(result.getInt(1));
-            user.setUsername(result.getString(2));
-            user.setPassword(result.getString(3));
-            user.setLastLoginDate(result.getTimestamp(4));
-            user.setRegistrationDate(result.getTimestamp(5));
+            user.setId(result.getInt("id"));
+            user.setUsername(result.getString("username"));
+            user.setPassword(result.getString("password"));
+            user.setLastLoginDate(result.getTimestamp("last_login_date"));
+            user.setRegistrationDate(result.getTimestamp("registration_date"));
+            user.setLevel(result.getShort("level"));
         }
 
         result.close();
@@ -456,11 +460,12 @@ public class Persistor {
         
         while (result.next()) {
             User user = new User();
-            user.setId(result.getInt(1));
-            user.setUsername(result.getString(2));
-            user.setPassword(result.getString(3));
-            user.setLastLoginDate(result.getTimestamp(4));
-            user.setRegistrationDate(result.getTimestamp(5));
+            user.setId(result.getInt("id"));
+            user.setUsername(result.getString("username"));
+            user.setPassword(result.getString("password"));
+            user.setLastLoginDate(result.getTimestamp("last_login_date"));
+            user.setRegistrationDate(result.getTimestamp("registration_date"));
+            user.setLevel(result.getShort("level"));;
             
             users.add(user);
         }
@@ -481,7 +486,8 @@ public class Persistor {
             + "SET username = ?, "
             + "password = ?, "
             + "last_login_date = ?, "
-            + "registration_date = ? "
+            + "registration_date = ?, "
+            + "level = ? "
             + "WHERE id = ?";
         
         if (user == null)
@@ -493,6 +499,7 @@ public class Persistor {
         statement.setDate(3, new Date(user.getLastLoginDate().getTime()));
         statement.setDate(4, new Date(user.getRegistrationDate().getTime()));
         statement.setInt(5, user.getId());
+        statement.setShort(6, user.getLevel());
         
         statement.execute();
         int count = statement.getUpdateCount();
@@ -526,7 +533,7 @@ public class Persistor {
     
     public static int insertUser(Connection connection, User user) 
             throws SQLException {
-        String sql = "INSERT INTO user VALUES (null, ?, ?, ?, ?)";
+        String sql = "INSERT INTO user VALUES (null, ?, ?, ?, ?, ?)";
         
         if (user == null) 
             throw new SQLException("Attempted operation on a null user.");
@@ -536,6 +543,7 @@ public class Persistor {
         statement.setString(2, user.getPassword());
         statement.setDate(3, new Date(user.getLastLoginDate().getTime()));
         statement.setDate(4, new Date(user.getRegistrationDate().getTime()));
+        statement.setShort(5, user.getLevel());
         
         statement.execute();
         int count = statement.getUpdateCount();
