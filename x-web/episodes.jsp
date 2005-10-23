@@ -8,7 +8,10 @@
 <title>Program Guide</title>
 </head>
 <body>
+<a href="programs.jsp">Back to programs</a>
 <jsp:include page="GetUserEpisodes" />
+<form action="episodes.jsp" method="post">
+<input type="hidden" name="program_id" value="${program.id}" />
 <table border="1">
  <tr>
   <th colspan="8">${program.name}</th>
@@ -29,10 +32,26 @@
   <td>${userEpisode.episode.productionCode}</td>
   <td>${userEpisode.episode.originalAirDate}</td>
   <td>${userEpisode.episode.title}</td>
-  <td>${userEpisode.queued}</td>
-  <td>${userEpisode.viewed}</td>
+  <c:choose>
+   <c:when test='${userEpisode.queued == 1}'>
+  <td><input type="checkbox" name="queued_${userEpisode.episode.season}_${userEpisode.episode.number}" checked="checked" /></td>
+   </c:when>
+   <c:otherwise>
+  <td><input type="checkbox" name="queued_${userEpisode.episode.season}_${userEpisode.episode.number}" /></td>
+   </c:otherwise>
+  </c:choose>
+  <c:choose>
+   <c:when test='${userEpisode.viewed == 1}'>
+  <td><input type="checkbox" name="viewed_${userEpisode.episode.season}_${userEpisode.episode.number}" checked="checked" /></td>
+   </c:when>
+   <c:otherwise>
+  <td><input type="checkbox" name="viewed_${userEpisode.episode.season}_${userEpisode.episode.number}" /></td>
+   </c:otherwise>
+  </c:choose>
  </tr>
  </c:forEach>
 </table>
+<input type="submit" value="Update" />
+</form>
 </body>
 </html>

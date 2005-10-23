@@ -1,11 +1,12 @@
 /*
- * $Id: EditProgramsServlet.java,v 1.1 2005-10-23 06:02:08 gunter Exp $
+ * $Id: EditProgramsServlet.java,v 1.2 2005-10-23 23:31:55 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Enumeration;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -37,9 +38,20 @@ public class EditProgramsServlet extends HttpServlet {
             
             request.setAttribute("programsList", programs);
         } catch (NamingException e) {
-            e.printStackTrace();
+            log("error", e);
         } catch (SQLException e) {
-            e.printStackTrace();
+            log("error", e);
         }
+    }
+    
+    protected void doPost(HttpServletRequest request,
+            HttpServletResponse response) throws IOException,
+            ServletException {
+        Enumeration attributes = request.getAttributeNames();
+        while (attributes.hasMoreElements()) {
+            log(attributes.nextElement().toString());
+        }
+        
+        doGet(request, response);
     }
 }

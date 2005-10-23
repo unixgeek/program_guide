@@ -10,6 +10,7 @@
 <body>
 <jsp:include page="EditPrograms" />
 <form action="edit_programs.jsp" method="post">
+<input type="hidden" name="program_id" value="${program.id}" />
 <table border="1">
  <tr>
   <th colspan="4">Programs</th>
@@ -25,7 +26,14 @@
   <td><input type="text" name="name${program.id}" value="${program.name}" /></td>
   <td><input type="text" name="url${program.id}" value="${program.url}" /></td>
   <td>${program.lastUpdate}</td>
-  <td><input type="checkbox" name="update${program.id}" value="${program.doUpdate}" /></td>
+  <c:choose>
+   <c:when test='${program.doUpdate == 1}'>
+  <td><input type="checkbox" name="update${program.id}" checked value="0" /></td>
+   </c:when>
+   <c:otherwise>
+  <td><input type="checkbox" name="update${program.id}" value="1" /></td>
+   </c:otherwise>
+  </c:choose>
  </tr>
  </c:forEach>
 </table>
