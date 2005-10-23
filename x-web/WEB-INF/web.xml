@@ -4,6 +4,7 @@
 http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
     version="2.4">
   <description>Program Guide</description>
+  <welcome-file>index.jsp</welcome-file>
   <resource-ref>
       <description>DB Connection</description>
       <res-ref-name>jdbc/program_guide</res-ref-name>
@@ -11,11 +12,27 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
       <res-auth>Container</res-auth>
   </resource-ref>
   <servlet>
-      <servlet-name>GetPrograms</servlet-name>
-      <servlet-class>net.six_two.program_guide.servlets.GetProgramsServlet</servlet-class>
+      <servlet-name>EditPrograms</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.EditProgramsServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-      <servlet-name>GetPrograms</servlet-name>
-      <url-pattern>/GetPrograms</url-pattern>
+      <servlet-name>EditPrograms</servlet-name>
+      <url-pattern>/EditPrograms</url-pattern>
+  </servlet-mapping>
+  <servlet>
+      <servlet-name>GetUserPrograms</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.GetUserProgramsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>GetUserPrograms</servlet-name>
+      <url-pattern>/GetUserPrograms</url-pattern>
+  </servlet-mapping>
+  <servlet>
+      <servlet-name>GetUserEpisodes</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.GetUserEpisodesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>GetUserEpisodes</servlet-name>
+      <url-pattern>/GetUserEpisodes</url-pattern>
   </servlet-mapping>
 </web-app>
