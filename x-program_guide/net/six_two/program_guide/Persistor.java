@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.12 2005-10-23 05:56:58 gunter Exp $
+ * $Id: Persistor.java,v 1.13 2005-10-24 04:54:35 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -268,6 +268,29 @@ public class Persistor {
         statement.setInt(2, episode.getProgramId());
         statement.setString(3, Character.toString(episode.getSeason()));
         statement.setInt(4, episode.getNumber());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
+    }
+    
+    public static int deleteQueuedForUser(Connection connection, User user, 
+            Program program) throws SQLException {
+        String sql = "DELETE FROM queued "
+            + "WHERE user_id = ? "
+            + "AND program_id = ?";
+        
+        if (user == null)
+            throw new SQLException("Attempted operation with a null user.");
+        if (program == null)
+            throw new SQLException("Attempted operation with a null program.");
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.setInt(2, program.getId());
         
         statement.execute();
         int count = statement.getUpdateCount();
