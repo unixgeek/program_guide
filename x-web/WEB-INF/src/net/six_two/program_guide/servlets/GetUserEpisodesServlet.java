@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserEpisodesServlet.java,v 1.2 2005-10-23 23:31:55 gunter Exp $
+ * $Id: GetUserEpisodesServlet.java,v 1.3 2005-10-24 04:53:15 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -69,25 +69,20 @@ public class GetUserEpisodesServlet extends HttpServlet {
                 Integer.parseInt(request.getParameter("program_id"));
             Program program = Persistor.selectProgram(connection, program_id);
             
-            UserEpisode[] userEpisodes = Persistor.
-                selectAllEpisodesForUser(connection, user, program);
+            /*UserEpisode[] userEpisodes = Persistor.
+                selectAllEpisodesForUser(connection, user, program);*/
+            Persistor.deleteQueuedForUser(connection, user, program);
             
-            Enumeration parameters = request.getParameterNames();
-            while (parameters.hasMoreElements()) {
-                String parameterName = (String) parameters.nextElement();
-                log(parameterName);
-                
-                String tokens[] = parameterName.split("_");
-                if (tokens[0].equals("queued")) {
+            String[] queued = request.getParameterValues("queued");
+            if (queued != null) {
+                for (int i = 0; i != queued.length; i++) {
+                    String tokens[] = queued[i].split("_");
                     Episode episode = new Episode();
                     episode.setProgramId(program_id);
-                    episode.setSeason(tokens[1].charAt(0));
-                    episode.setNumber(Integer.parseInt(tokens[2]));
+                    episode.setSeason(tokens[0].charAt(0));
+                    episode.setNumber(Integer.parseInt(tokens[1]));
                     
                     Persistor.insertQueuedForUser(connection, user, episode);
-                }
-                else if (tokens[0].equals("viewed")) {
-                    
                 }
             }
         } catch (NamingException e) {

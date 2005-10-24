@@ -34,18 +34,18 @@
   <td>${userEpisode.episode.title}</td>
   <c:choose>
    <c:when test='${userEpisode.queued == 1}'>
-  <td><input type="checkbox" name="queued_${userEpisode.episode.season}_${userEpisode.episode.number}" checked="checked" /></td>
+  <td><input type="checkbox" name="queued" value="${userEpisode.episode.season}_${userEpisode.episode.number}" checked="checked" /></td>
    </c:when>
    <c:otherwise>
-  <td><input type="checkbox" name="queued_${userEpisode.episode.season}_${userEpisode.episode.number}" /></td>
+  <td><input type="checkbox" name="queued" value="${userEpisode.episode.season}_${userEpisode.episode.number}" /></td>
    </c:otherwise>
   </c:choose>
   <c:choose>
    <c:when test='${userEpisode.viewed == 1}'>
-  <td><input type="checkbox" name="viewed_${userEpisode.episode.season}_${userEpisode.episode.number}" checked="checked" /></td>
+  <td><input type="checkbox" name="viewed" value="${userEpisode.episode.season}_${userEpisode.episode.number}" checked="checked" /></td>
    </c:when>
    <c:otherwise>
-  <td><input type="checkbox" name="viewed_${userEpisode.episode.season}_${userEpisode.episode.number}" /></td>
+  <td><input type="checkbox" name="viewed" value="${userEpisode.episode.season}_${userEpisode.episode.number}" /></td>
    </c:otherwise>
   </c:choose>
  </tr>
