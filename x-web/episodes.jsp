@@ -50,8 +50,11 @@
   </c:choose>
  </tr>
  </c:forEach>
+ <tr>
+  <td align="right" colspan="7">
+   <input type="submit" value="Update" />
+  </td>
 </table>
-<input type="submit" value="Update" />
 </form>
 </body>
 </html>
