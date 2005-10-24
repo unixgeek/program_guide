@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserEpisodesServlet.java,v 1.3 2005-10-24 04:53:15 gunter Exp $
+ * $Id: GetUserEpisodesServlet.java,v 1.4 2005-10-24 22:45:06 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -83,6 +83,21 @@ public class GetUserEpisodesServlet extends HttpServlet {
                     episode.setNumber(Integer.parseInt(tokens[1]));
                     
                     Persistor.insertQueuedForUser(connection, user, episode);
+                }
+            }
+            
+            Persistor.deleteViewedForUser(connection, user, program);
+            
+            String[] viewed = request.getParameterValues("viewed");
+            if (viewed != null) {
+                for (int i = 0; i != viewed.length; i++) {
+                    String tokens[] = viewed[i].split("_");
+                    Episode episode = new Episode();
+                    episode.setProgramId(program_id);
+                    episode.setSeason(tokens[0].charAt(0));
+                    episode.setNumber(Integer.parseInt(tokens[1]));
+                    
+                    Persistor.insertViewedForUser(connection, user, episode);
                 }
             }
         } catch (NamingException e) {
