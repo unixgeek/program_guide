@@ -8,9 +8,8 @@
 <title>Program Guide</title>
 </head>
 <body>
-<a href="programs.jsp">Back to programs</a>
-<jsp:include page="GetUserEpisodes" />
-<form action="episodes.jsp" method="post">
+<%@ include file="menu.jsp" %>
+<form action="SetUserEpisodes.do" method="post">
 <input type="hidden" name="program_id" value="${program.id}" />
 <table border="1">
  <tr>
