@@ -17,7 +17,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
   </servlet>
   <servlet-mapping>
       <servlet-name>EditPrograms</servlet-name>
-      <url-pattern>/EditPrograms</url-pattern>
+      <url-pattern>/EditPrograms.do</url-pattern>
   </servlet-mapping>
   <servlet>
       <servlet-name>GetUserPrograms</servlet-name>
@@ -25,7 +25,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
   </servlet>
   <servlet-mapping>
       <servlet-name>GetUserPrograms</servlet-name>
-      <url-pattern>/GetUserPrograms</url-pattern>
+      <url-pattern>/GetUserPrograms.do</url-pattern>
   </servlet-mapping>
   <servlet>
       <servlet-name>GetUserEpisodes</servlet-name>
@@ -33,6 +33,14 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
   </servlet>
   <servlet-mapping>
       <servlet-name>GetUserEpisodes</servlet-name>
-      <url-pattern>/GetUserEpisodes</url-pattern>
+      <url-pattern>/GetUserEpisodes.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+      <servlet-name>SetUserEpisodes</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.SetUserEpisodesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>SetUserEpisodes</servlet-name>
+      <url-pattern>/SetUserEpisodes.do</url-pattern>
   </servlet-mapping>
 </web-app>
