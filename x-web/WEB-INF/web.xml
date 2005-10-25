@@ -4,7 +4,7 @@
 http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
     version="2.4">
   <description>Program Guide</description>
-  <welcome-file>index.jsp</welcome-file>
+  <welcome-file>login.jsp</welcome-file>
   <resource-ref>
       <description>DB Connection</description>
       <res-ref-name>jdbc/program_guide</res-ref-name>
@@ -39,6 +39,22 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
       <servlet-name>SetUserEpisodes</servlet-name>
       <servlet-class>net.six_two.program_guide.servlets.SetUserEpisodesServlet</servlet-class>
   </servlet>
+  <servlet>
+      <servlet-name>Login</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>Login</servlet-name>
+      <url-pattern>/Login.do</url-pattern>
+  </servlet-mapping>  
+  <servlet>
+      <servlet-name>Logout</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>Logout</servlet-name>
+      <url-pattern>/Logout.do</url-pattern>
+  </servlet-mapping>  
   <servlet-mapping>
       <servlet-name>SetUserEpisodes</servlet-name>
       <url-pattern>/SetUserEpisodes.do</url-pattern>
