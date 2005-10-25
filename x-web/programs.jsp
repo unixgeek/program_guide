@@ -5,10 +5,13 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
+<link rel="stylesheet" href="default.css" type="text/css" />
 <title>Program Guide</title>
 </head>
 <body>
-<jsp:include page="GetUserPrograms" />
+<%@ include file="menu.jsp" %>
+<jsp:include page="GetUserPrograms.do" />
+<div class="content">
 <table border="1">
  <tr>
   <th colspan="4">Programs</th>
@@ -21,12 +24,13 @@
  </tr>
  <c:forEach var="program" items="${programsList}">
  <tr>
-  <td><a href="episodes.jsp?program_id=${program.id}">${program.name}</a></td>
+  <td><a href="GetUserEpisodes.do?program_id=${program.id}">${program.name}</a></td>
   <td>${program.url}</td>
   <td>${program.lastUpdate}</td>
   <td>${program.doUpdate}</td>
  </tr>
  </c:forEach>
 </table>
+</div>
 </body>
 </html>
