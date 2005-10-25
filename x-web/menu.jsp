@@ -1,10 +1,11 @@
-<div id="menu">
-<ul>
- <li><a href="GetUserPrograms.do">Programs</a></li>
+<div class="menu">
+<table>
+ <tr><td class="username">${user.username}</td></tr>
+ <tr><td><a class="menuitem" href="GetUserPrograms.do">Programs</a></td></tr>
  <c:if test="${user.level == '0'}">
- <li><a href="programsstuff">Edit Programs</a></li>
+ <tr><td><a class="menuitem" href="EditPrograms.do">Edit Programs</a></td></tr>
  </c:if>
- <li><a href="">Account Settings</a></li>
- <li><a href="Logout.do">Logout</a></li>
-</ul>
+ <tr><td><a class="menuitem" href="AccountSettings.do">Account Settings</a></td></tr>
+ <tr><td><a class="menuitem" href="Logout.do">Logout</a></td></tr>
+</table>
 </div>

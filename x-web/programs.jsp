@@ -10,9 +10,7 @@
 </head>
 <body>
 <%@ include file="menu.jsp" %>
-<jsp:include page="GetUserPrograms.do" />
-<div class="content">
-<table border="1">
+<table class="tabledata" cellspacing="0" border="1">
  <tr>
   <th colspan="4">Programs</th>
  </tr>
@@ -24,13 +22,12 @@
  </tr>
  <c:forEach var="program" items="${programsList}">
  <tr>
-  <td><a href="GetUserEpisodes.do?program_id=${program.id}">${program.name}</a></td>
-  <td>${program.url}</td>
-  <td>${program.lastUpdate}</td>
-  <td>${program.doUpdate}</td>
+  <td class="rowdata"><a href="GetUserEpisodes.do?program_id=${program.id}">${program.name}</a></td>
+  <td class="rowdata">${program.url}</td>
+  <td class="rowdatacenter">${program.lastUpdate}</td>
+  <td class="rowdatacenter">${program.doUpdate}</td>
  </tr>
  </c:forEach>
 </table>
-</div>
 </body>
 </html>
