@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.14 2005-10-24 22:44:30 gunter Exp $
+ * $Id: Persistor.java,v 1.15 2005-10-26 03:17:47 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -133,6 +133,60 @@ public class Persistor {
         
         return userEpisodesArray;
     }
+    
+    public static UserEpisode[] selectAllEpisodesForUser(Connection connection,
+            User user, int dayRange) throws SQLException {
+        ArrayList userEpisodes = new ArrayList();
+        
+        if (user == null)
+            throw new SQLException("Attempted operation with a null user.");
+        
+        String sql = "SELECT p.*, e.* "
+            + "FROM user u "
+            + "LEFT JOIN subscribed s "
+            + "ON u.id = s.user_id "
+            + "LEFT JOIN program p "
+            + "ON s.program_id = p.id "
+            + "LEFT JOIN episode e "
+            + "ON s.program_id = e.program_id "
+            + "WHERE u.id = ? "
+            + "AND original_air_date >= (CURRENT_DATE() - INTERVAL ? DAY) "
+            + "AND original_air_date <= (CURRENT_DATE() + INTERVAL ? DAY) "
+            + "ORDER BY e.original_air_date DESC";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.setInt(2, dayRange);
+        statement.setInt(3, dayRange);
+        statement.execute();
+        
+        ResultSet result = statement.getResultSet();
+        
+        while (result.next()) {
+            Program program = new Program(result.getInt("p.id"),
+                    result.getString("p.name"),
+                    result.getString("p.url"),
+                    result.getTimestamp("p.last_update"),
+                    result.getShort("p.do_update"));
+            Episode episode = new Episode(result.getInt("e.program_id"),
+                    result.getString("e.season").charAt(0),
+                    result.getInt("e.number"),
+                    result.getString("e.production_code"),
+                    result.getDate("e.original_air_date"),
+                    result.getString("e.title"));
+            userEpisodes.add(new UserEpisode(program, episode, (short) -1, 
+                    (short) -1));
+        }
+        result.close();
+        statement.close();
+        
+        UserEpisode[] userEpisodesArray = new UserEpisode[userEpisodes.size()];
+        for (int i = 0; i != userEpisodes.size(); i++) {
+            userEpisodesArray[i] = (UserEpisode) userEpisodes.get(i);
+        }
+        
+        return userEpisodesArray;
+    }
     /* episode table *********************************************************/
     
     /* program table *********************************************************/
@@ -197,7 +251,8 @@ public class Persistor {
             + "FROM subscribed s "
             + "LEFT JOIN program p "
             + "ON s.program_id = p.id "
-            + "WHERE user_id = ?";
+            + "WHERE user_id = ? "
+            + "ORDER BY p.name";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
@@ -430,8 +485,9 @@ public class Persistor {
         statement.execute();
         ResultSet result = statement.getResultSet();
         
-        User user = new User();
+        User user = null;
         if (result.next()) {
+            user = new User();
             user.setId(result.getInt("id"));
             user.setUsername(result.getString("username"));
             user.setPassword(result.getString("password"));
@@ -453,10 +509,11 @@ public class Persistor {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, id);
         statement.execute();
-        User user = new User();
         ResultSet result = statement.getResultSet();
-
+        
+        User user = null;
         if (result.next()) {
+            user = new User();
             user.setId(result.getInt("id"));
             user.setUsername(result.getString("username"));
             user.setPassword(result.getString("password"));
