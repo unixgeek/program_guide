@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.15 2005-10-26 03:17:47 gunter Exp $
+ * $Id: Persistor.java,v 1.16 2005-10-26 22:20:36 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -279,6 +279,129 @@ public class Persistor {
         
         return programsArray;
     }
+    
+    public static int updateProgram(Connection connection, Program program)
+            throws SQLException {
+        String sql = "UPDATE program "
+                + "SET name = ?, "
+                + "url = ?, "
+                + "do_update = ? "
+                + "WHERE id = ?";
+        
+        if (program == null)
+            throw new SQLException("Attempted operation with a null program.");
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, program.getName());
+        statement.setString(2, program.getUrl());
+        statement.setShort(3, program.getDoUpdate());
+        statement.setInt(4, program.getId());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        statement.close();
+        
+        return count;
+    }
+    
+    public static int deleteProgram(Connection connection, Program program)
+            throws SQLException {
+        String sql = "DELETE FROM program WHERE id = ?";
+        
+        if (program == null)
+            throw new SQLException("Attempted operation with a null program.");
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, program.getId());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        statement.close();
+        
+        count += deleteQueuedForProgram(connection, program);
+        count += deleteViewedForProgram(connection, program);
+        count += deleteSubscribedForProgram(connection, program);
+        
+        return count;
+    }
+    
+    public static int insertProgram(Connection connection, Program program)
+            throws SQLException {
+        String sql = "INSERT INTO program VALUES (null, ?, ?, null, ?)";
+        
+        if (program == null)
+            throw new SQLException("Attempted operation with a null program.");
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, program.getName());
+        statement.setString(2, program.getUrl());
+        statement.setShort(3, program.getDoUpdate());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        sql = "SELECT LAST_INSERT_ID()";
+        
+        statement.execute();
+        ResultSet result = statement.getResultSet();
+        result.next();
+        program.setId(result.getInt(1));
+        
+        result.close();
+        statement.close();
+        
+        return count;
+    }
+    
+    public static ProgramSubscribed[] selectAllProgramsAndSubscribedForUser(
+            Connection connection, User user) 
+            throws SQLException {
+        ArrayList subscriptions = new ArrayList();
+        
+        String sql = "SELECT p.*, IFNULL(s.program_id, 0) as subscribed "
+            + "FROM program p "
+            + "LEFT JOIN subscribed s "
+            + "ON (p.id = s.program_id "
+            + "    AND s.user_id = ?)";
+        
+        if (user == null)
+            throw new SQLException("Attempted operation with a null user.");
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.execute();;
+        ResultSet result = statement.getResultSet();
+        
+        while (result.next()) {
+            Program program = new Program();
+            program.setId(result.getInt("p.id"));
+            program.setName(result.getString("p.name"));
+            program.setUrl(result.getString("p.url"));
+            program.setLastUpdate(result.getTimestamp("p.last_update"));
+            program.setDoUpdate(result.getShort("p.do_update"));
+            short subscribed = result.getShort("subscribed");
+            if (subscribed != 0) {
+                /*
+                 *  The query will return program id for subscribed, if it's not
+                 * null.  Make that 1 for true.
+                 */
+                subscribed = 1;
+            }            
+
+            subscriptions.add(new ProgramSubscribed(program, subscribed));
+        }
+        result.close();
+        statement.close();
+        
+        ProgramSubscribed[] subscriptionsArray = new ProgramSubscribed[subscriptions.size()];
+        for (int i = 0; i != subscriptions.size(); i++) {
+            subscriptionsArray[i] = (ProgramSubscribed) subscriptions.get(i);
+        }
+        
+        return subscriptionsArray;
+    }
     /* program table *********************************************************/
     
     /* queued table **********************************************************/
@@ -307,7 +430,7 @@ public class Persistor {
     
     public static int deleteQueuedForUser(Connection connection, User user, 
             Episode episode) throws SQLException {
-        String sql = "DELETE FROM viewed "
+        String sql = "DELETE FROM queued "
             + "WHERE user_id = ? "
             + "AND program_id = ? "
             + "AND season = ? "
@@ -357,7 +480,7 @@ public class Persistor {
     
     public static int deleteAllQueuedForUser(Connection connection, User user) 
             throws SQLException {
-        String sql = "DELETE FROM viewed "
+        String sql = "DELETE FROM queued "
             + "WHERE user_id = ? ";
         
         if (user == null)
@@ -373,9 +496,27 @@ public class Persistor {
         
         return count;
     }
+    
+    public static int deleteQueuedForProgram(Connection connection, 
+            Program program) throws SQLException {
+        String sql = "DELETE FROM queued WHERE program_id = ? ";
+        
+        if (program == null)
+            throw new SQLException("Attempted operation with a null program.");
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, program.getId());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
+    }
     /* queued table **********************************************************/
     
-    /* subscribed table ******************************************************/
+    /* subscribed table ******************************************************/    
     public static Subscribed[] selectSubscribedForUser(Connection connection,
             User user) throws SQLException {
         ArrayList subscriptions = new ArrayList();
@@ -461,6 +602,24 @@ public class Persistor {
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
+    }
+    
+    public static int deleteSubscribedForProgram(Connection connection, 
+            Program program) throws SQLException {
+        String sql = "DELETE FROM subscribed WHERE program_id = ? ";
+        
+        if (program == null)
+            throw new SQLException("Attempted operation with a null program.");
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, program.getId());
         
         statement.execute();
         int count = statement.getUpdateCount();
@@ -578,8 +737,8 @@ public class Persistor {
         statement.setString(2, user.getPassword());
         statement.setDate(3, new Date(user.getLastLoginDate().getTime()));
         statement.setDate(4, new Date(user.getRegistrationDate().getTime()));
-        statement.setInt(5, user.getId());
-        statement.setShort(6, user.getLevel());
+        statement.setShort(5, user.getLevel());
+        statement.setInt(6, user.getId());
         
         statement.execute();
         int count = statement.getUpdateCount();
@@ -727,6 +886,24 @@ public class Persistor {
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
+        
+        statement.execute();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
+    }
+    
+    public static int deleteViewedForProgram(Connection connection, 
+            Program program) throws SQLException {
+        String sql = "DELETE FROM viewed WHERE program_id = ? ";
+        
+        if (program == null)
+            throw new SQLException("Attempted operation with a null program.");
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, program.getId());
         
         statement.execute();
         int count = statement.getUpdateCount();
