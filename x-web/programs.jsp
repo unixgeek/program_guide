@@ -28,6 +28,9 @@
   <td class="rowdatacenter">${program.doUpdate}</td>
  </tr>
  </c:forEach>
+ <tr>
+  <td align="right" colspan="4"><a href="SetUserPrograms.do">Edit Subscriptions</a></td>
+ </tr>
 </table>
 </body>
 </html>
