@@ -1,5 +1,5 @@
 /*
- * $Id: EditProgramsServlet.java,v 1.3 2005-10-26 03:21:13 gunter Exp $
+ * $Id: AdminProgramsServlet.java,v 1.1 2005-10-26 22:31:10 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -23,7 +23,7 @@ import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.Program;
 import net.six_two.program_guide.tables.User;
 
-public class EditProgramsServlet extends HttpServlet {
+public class AdminProgramsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, 
             HttpServletResponse response) throws IOException, 
             ServletException {
@@ -44,18 +44,27 @@ public class EditProgramsServlet extends HttpServlet {
             return;
         }
         
+        if (user.getLevel() != 0) {
+            request.setAttribute("message", "You must login with admin rights first.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+        
         try {
             InitialContext context = new InitialContext();
             DataSource source = (DataSource) 
                 context.lookup("java:comp/env/jdbc/program_guide");
             Connection connection = source.getConnection();
             
-            //user.getLevel() == 0;
             Program[] programs = Persistor.selectAllPrograms(connection);
             
             connection.close();
             
             request.setAttribute("programsList", programs);
+            RequestDispatcher dispatcher = 
+                request.getRequestDispatcher("admin_programs.jsp");
+            dispatcher.forward(request, response);
         } catch (NamingException e) {
             log("error", e);
         } catch (SQLException e) {
@@ -63,14 +72,9 @@ public class EditProgramsServlet extends HttpServlet {
         }
     }
     
-    protected void doPost(HttpServletRequest request,
-            HttpServletResponse response) throws IOException,
+    protected void doPost(HttpServletRequest request, 
+            HttpServletResponse response) throws IOException, 
             ServletException {
-        Enumeration attributes = request.getAttributeNames();
-        while (attributes.hasMoreElements()) {
-            log(attributes.nextElement().toString());
-        }
-        
         doGet(request, response);
     }
 }
