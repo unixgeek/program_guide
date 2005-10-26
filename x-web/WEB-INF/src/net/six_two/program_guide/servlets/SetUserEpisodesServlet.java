@@ -1,5 +1,5 @@
 /*
- * $Id: SetUserEpisodesServlet.java,v 1.1 2005-10-25 13:55:27 gunter Exp $
+ * $Id: SetUserEpisodesServlet.java,v 1.2 2005-10-26 03:23:56 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import net.six_two.program_guide.Persistor;
@@ -26,21 +27,34 @@ public class SetUserEpisodesServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws IOException,
             ServletException {
+        
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            request.setAttribute("message", "You must login first.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+        
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            request.setAttribute("message", "You must login first.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+        
         try {
             InitialContext context = new InitialContext();
             DataSource source = (DataSource) 
                 context.lookup("java:comp/env/jdbc/program_guide");
             Connection connection = source.getConnection();
             
-            User user = Persistor.selectUser(connection, "gunter");
-            UserManager.authenticateUser(user, "");
-            
             int program_id = 
                 Integer.parseInt(request.getParameter("program_id"));
+            
             Program program = Persistor.selectProgram(connection, program_id);
             
-            /*UserEpisode[] userEpisodes = Persistor.
-                selectAllEpisodesForUser(connection, user, program);*/
             Persistor.deleteQueuedForUser(connection, user, program);
             
             String[] queued = request.getParameterValues("queued");
@@ -70,6 +84,7 @@ public class SetUserEpisodesServlet extends HttpServlet {
                     Persistor.insertViewedForUser(connection, user, episode);
                 }
             }
+            connection.close();
         } catch (NamingException e) {
             e.printStackTrace();
         } catch (SQLException e) {
