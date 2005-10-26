@@ -28,6 +28,11 @@
     border-style: solid;
 }
 
+.error {
+    text-align: center;
+    font-weight: bold;
+}
+
 .tabledata {
     margin-left: 2em;
     margin-right: auto;
@@ -47,4 +52,12 @@
 
 .tablebutton {
     float: right;
+}
+
+a {
+    text-decoration: none;
+ }
+ 
+a:hover {
+    text-decoration: underline;
 }
