@@ -1,24 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<link rel="stylesheet" href="default.css" type="text/css"
+<link rel="stylesheet" href="default.css" type="text/css" />
 <title>Program Guide</title>
 </head>
 <body>
 <p class="error">${message}</p>
-<form name="login" action="Login.do" method="post">
+<form action="Login.do" method="post">
 <table class="login" width="0%">
  <tr>
   <td>Username:</td>
-  <td><input type="text" name="username" value="${username}"/></td>
+  <td><input type="text" name="username" value="${username}" /></td>
  </tr>
  <tr>
   <td>Password:</td>
   <td><input type="password" name="password" /></td>
  </tr>
  <tr>
-  <td>&nbsp;</td>
-  <td class="tablebutton"><input type="submit" value="Login" /></td>
+  <td align="right" colspan="2"><input type="submit" value="Login" /></td>
+ </tr>
+ <tr>
+  <td align="left" colspan="2"><a href="Register.do">Register</a></td>
  </tr>
 </table>
 </form>
