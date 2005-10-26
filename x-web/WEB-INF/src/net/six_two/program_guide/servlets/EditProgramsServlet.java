@@ -1,5 +1,5 @@
 /*
- * $Id: EditProgramsServlet.java,v 1.2 2005-10-23 23:31:55 gunter Exp $
+ * $Id: EditProgramsServlet.java,v 1.3 2005-10-26 03:21:13 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -10,10 +10,12 @@ import java.util.Enumeration;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import net.six_two.program_guide.Persistor;
@@ -25,16 +27,33 @@ public class EditProgramsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, 
             HttpServletResponse response) throws IOException, 
             ServletException {
+        
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            request.setAttribute("message", "You must login first.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+        
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            request.setAttribute("message", "You must login first.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+        
         try {
             InitialContext context = new InitialContext();
             DataSource source = (DataSource) 
                 context.lookup("java:comp/env/jdbc/program_guide");
             Connection connection = source.getConnection();
             
-            User user = Persistor.selectUser(connection, "gunter");
-            UserManager.authenticateUser(user, "");
             //user.getLevel() == 0;
             Program[] programs = Persistor.selectAllPrograms(connection);
+            
+            connection.close();
             
             request.setAttribute("programsList", programs);
         } catch (NamingException e) {
