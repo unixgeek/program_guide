@@ -1,16 +1,26 @@
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
-http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+    http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
     version="2.4">
   <description>Program Guide</description>
-  <welcome-file>login.jsp</welcome-file>
+  <welcome-file-list>
+      <welcome-file>DisplayFrontPage.do</welcome-file>
+  </welcome-file-list>
   <resource-ref>
       <description>DB Connection</description>
       <res-ref-name>jdbc/program_guide</res-ref-name>
       <res-type>javax.sql.DataSource</res-type>
       <res-auth>Container</res-auth>
   </resource-ref>
+  <servlet>
+      <servlet-name>DisplayFrontPage</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.DisplayFrontPageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>DisplayFrontPage</servlet-name>
+      <url-pattern>/DisplayFrontPage.do</url-pattern>
+  </servlet-mapping>
   <servlet>
       <servlet-name>EditPrograms</servlet-name>
       <servlet-class>net.six_two.program_guide.servlets.EditProgramsServlet</servlet-class>
@@ -34,6 +44,14 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
   <servlet-mapping>
       <servlet-name>GetUserEpisodes</servlet-name>
       <url-pattern>/GetUserEpisodes.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+      <servlet-name>GetUserRecentEpisodes</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.GetUserRecentEpisodesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>GetUserRecentEpisodes</servlet-name>
+      <url-pattern>/GetUserRecentEpisodes.do</url-pattern>
   </servlet-mapping>
   <servlet>
       <servlet-name>SetUserEpisodes</servlet-name>
