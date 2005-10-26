@@ -10,42 +10,26 @@
 </head>
 <body>
 <%@ include file="menu.jsp" %>
-<table border="1">
+<table class="tabledata" cellspacing="0" border="1">
  <tr>
-  <th colspan="8">Recent Shows</th>
+  <th colspan="8">Recent Episodes</th>
  </tr>
  <tr>
+  <th>Program</th>
   <th>Season</th>
   <th>Episode</th>
   <th>Production Code</th>
   <th>Original Air Date</th>
   <th>Title</th>
-  <th>Queued</th>
-  <th>Viewed</th>
  </tr>
  <c:forEach var="userEpisode" items="${userEpisodesList}">
  <tr>
-  <td>${userEpisode.episode.season}</td>
-  <td>${userEpisode.episode.number}</td>
-  <td>${userEpisode.episode.productionCode}</td>
-  <td>${userEpisode.episode.originalAirDate}</td>
-  <td>${userEpisode.episode.title}</td>
-  <c:choose>
-   <c:when test='${userEpisode.queued == 1}'>
-  <td><input type="checkbox" name="queued" value="${userEpisode.episode.season}_${userEpisode.episode.number}" checked="checked" /></td>
-   </c:when>
-   <c:otherwise>
-  <td><input type="checkbox" name="queued" value="${userEpisode.episode.season}_${userEpisode.episode.number}" /></td>
-   </c:otherwise>
-  </c:choose>
-  <c:choose>
-   <c:when test='${userEpisode.viewed == 1}'>
-  <td><input type="checkbox" name="viewed" value="${userEpisode.episode.season}_${userEpisode.episode.number}" checked="checked" /></td>
-   </c:when>
-   <c:otherwise>
-  <td><input type="checkbox" name="viewed" value="${userEpisode.episode.season}_${userEpisode.episode.number}" /></td>
-   </c:otherwise>
-  </c:choose>
+  <td class="rowdata"><a href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
+  <td class="rowdata">${userEpisode.episode.season}</td>
+  <td class="rowdata">${userEpisode.episode.number}</td>
+  <td class="rowdata">${userEpisode.episode.productionCode}</td>
+  <td class="rowdatacenter">${userEpisode.episode.originalAirDate}</td>
+  <td class="rowdatacenter">${userEpisode.episode.title}</td>
  </tr>
  </c:forEach>
 </table>
