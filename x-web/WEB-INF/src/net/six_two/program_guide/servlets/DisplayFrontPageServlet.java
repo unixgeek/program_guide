@@ -1,5 +1,5 @@
 /*
- * $Id: DisplayFrontPageServlet.java,v 1.1 2005-10-26 03:20:40 gunter Exp $
+ * $Id: DisplayFrontPageServlet.java,v 1.2 2005-10-26 03:30:13 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -44,5 +44,11 @@ public class DisplayFrontPageServlet extends HttpServlet {
         request.setAttribute("user", user);
         RequestDispatcher dispatcher = request.getRequestDispatcher("GetUserRecentEpisodes.do");
         dispatcher.forward(request, response);
+    }
+    
+    protected void doPost(HttpServletRequest request, 
+            HttpServletResponse response) throws IOException, 
+            ServletException {
+        doGet(request, response);
     }
 }
