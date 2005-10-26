@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserProgramsServlet.java,v 1.3 2005-10-26 03:23:11 gunter Exp $
+ * $Id: GetUserProgramsServlet.java,v 1.4 2005-10-26 22:33:22 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -66,5 +66,11 @@ public class GetUserProgramsServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    protected void doPost(HttpServletRequest request, 
+            HttpServletResponse response) throws IOException, 
+            ServletException {
+        doGet(request, response);
     }
 }
