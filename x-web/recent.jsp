@@ -25,11 +25,11 @@
  <c:forEach var="userEpisode" items="${userEpisodesList}">
  <tr>
   <td class="rowdata"><a href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
-  <td class="rowdata">${userEpisode.episode.season}</td>
-  <td class="rowdata">${userEpisode.episode.number}</td>
-  <td class="rowdata">${userEpisode.episode.productionCode}</td>
+  <td class="rowdatacenter">${userEpisode.episode.season}</td>
+  <td class="rowdatacenter">${userEpisode.episode.number}</td>
+  <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
   <td class="rowdatacenter">${userEpisode.episode.originalAirDate}</td>
-  <td class="rowdatacenter">${userEpisode.episode.title}</td>
+  <td class="rowdata">${userEpisode.episode.title}</td>
  </tr>
  </c:forEach>
 </table>
