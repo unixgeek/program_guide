@@ -5,7 +5,7 @@
 <title>Program Guide</title>
 </head>
 <body>
-<p>${message}</p>
+<p class="error">${message}</p>
 <form name="login" action="Login.do" method="post">
 <table class="login" width="0%">
  <tr>
