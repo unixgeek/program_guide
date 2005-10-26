@@ -1,5 +1,5 @@
 /*
- * $Id: LoginServlet.java,v 1.1 2005-10-25 22:09:45 gunter Exp $
+ * $Id: LoginServlet.java,v 1.2 2005-10-26 03:30:33 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -25,27 +25,28 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, 
             HttpServletResponse response) throws IOException, 
             ServletException {
+   
+        String username = (String) request.getParameter("username");
+        String password = (String) request.getParameter("password");
+        
+        username = (username != null) ? username : "";
+        password = (password != null) ? password : "";
+        
+        if (username.equals("")) {
+            error(request, response, "Invalid username.");
+            return;
+        }
+        
+        if (password.equals("")) {
+            error(request, response, "Invalid password.");
+            return;
+        }
+            
         try {
             InitialContext context = new InitialContext();
             DataSource source = (DataSource) 
-                context.lookup("java:comp/env/jdbc/program_guide");
+            context.lookup("java:comp/env/jdbc/program_guide");
             Connection connection = source.getConnection();
-            
-            String username = (String) request.getParameter("username");
-            String password = (String) request.getParameter("password");
-            
-            username = (username != null) ? username : "";
-            password = (password != null) ? password : "";
-            
-            if (username.equals("")) {
-                error(request, response, "Invalid username.");
-                return;
-            }
-            
-            if (password.equals("")) {
-                error(request, response, "Invalid password.");
-                return;
-            }
             
             User user = Persistor.selectUser(connection, username);
             
@@ -60,10 +61,12 @@ public class LoginServlet extends HttpServlet {
                 return;
             }
             
+            connection.close();
+            
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             request.setAttribute("user", user);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("recent.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayFrontPage.do");
             dispatcher.forward(request, response);
         } catch (NamingException e) {
             e.printStackTrace();
@@ -71,7 +74,7 @@ public class LoginServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-        
+    
     private void error(HttpServletRequest request, HttpServletResponse response,
             String message) throws IOException, ServletException {
         request.setAttribute("message", message);
