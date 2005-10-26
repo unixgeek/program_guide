@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserProgramsServlet.java,v 1.2 2005-10-25 22:09:24 gunter Exp $
+ * $Id: GetUserProgramsServlet.java,v 1.3 2005-10-26 03:23:11 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -30,31 +30,37 @@ public class GetUserProgramsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, 
             HttpServletResponse response) throws IOException, 
             ServletException {
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("E MMM d HH:mm:ss z yyyy");
+
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            request.setAttribute("message", "You must login first.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+        
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            request.setAttribute("message", "You must login first.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+            
         try {
-            HttpSession session = request.getSession(false);
-            if (session == null) {
-                request.setAttribute("message", "You must login first.");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-                dispatcher.forward(request, response);
-            }
-            else {
-                InitialContext context = new InitialContext();
-                DataSource source = (DataSource) 
-                    context.lookup("java:comp/env/jdbc/program_guide");
-                Connection connection = source.getConnection();
-                
-                User user = (User) session.getAttribute("user");
-                
-                Program[] programs = Persistor.
-                    selectAllProgramsForUser(connection, user);
-                
-                connection.close();
-                
-                request.setAttribute("programsList", programs);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("programs.jsp");
-                dispatcher.forward(request, response);   
-            }
+            InitialContext context = new InitialContext();
+            DataSource source = (DataSource) 
+            context.lookup("java:comp/env/jdbc/program_guide");
+            Connection connection = source.getConnection();
+            
+            Program[] programs = Persistor.
+            selectAllProgramsForUser(connection, user);
+            
+            connection.close();
+            
+            request.setAttribute("programsList", programs);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("programs.jsp");
+            dispatcher.forward(request, response);   
         } catch (NamingException e) {
             e.printStackTrace();
         } catch (SQLException e) {
