@@ -36,17 +36,18 @@
 .tabledata {
     margin-left: 2em;
     margin-right: auto;
+    white-space: nowrap;
     /*border-style: solid;*/
 }
 
-.rowdata {
+/*.rowdata {
     padding-left: 1em;
     padding-right: 1em;
-}
+}*/
 
 .rowdatacenter {
-    padding-left: 1em;
-    padding-right: 1em;
+   /* padding-left: 1em;
+    padding-right: 1em;*/
     text-align: center
  }
 
