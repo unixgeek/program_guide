@@ -56,9 +56,9 @@ ant distclean   remove all build files and dist files</echo>
     </target>
  
     <target name="deps">
-        <antcall name="program_guide" />
-        <antcall name="jstl" />
-        <antcall name="tomcat" />
+        <antcall target="program_guide" />
+        <antcall target="jstl" />
+        <antcall target="tomcat" />
     </target>
 
     <target name="build">
@@ -81,6 +81,7 @@ ant distclean   remove all build files and dist files</echo>
                 <exclude name="web.xml" />
                 <exclude name="src/" />
             </webinf>
+            <metainf dir="${basedir}/META-INF" />
             <fileset dir="${basedir}">
                 <include name="*.jsp" />
                 <include name="*.css" />
