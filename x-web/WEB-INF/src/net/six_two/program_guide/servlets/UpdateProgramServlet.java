@@ -1,5 +1,5 @@
 /*
- * $Id: UpdateProgramServlet.java,v 1.1 2005-10-26 22:31:10 gunter Exp $
+ * $Id: UpdateProgramServlet.java,v 1.2 2005-10-27 17:42:10 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -113,9 +113,13 @@ public class UpdateProgramServlet extends HttpServlet {
             program.setId(Integer.parseInt(request.getParameter("program_id")));
             program.setName(request.getParameter("name"));
             program.setUrl(request.getParameter("url"));
-            program.setDoUpdate(
-                    Short.parseShort(request.getParameter("do_update")));
 
+            String doUpdate = request.getParameter("do_update");
+            if (doUpdate == null)
+                program.setDoUpdate((short) 0);
+            else
+                program.setDoUpdate(Short.parseShort(doUpdate));
+            
             Persistor.updateProgram(connection, program);
             
             connection.close();
