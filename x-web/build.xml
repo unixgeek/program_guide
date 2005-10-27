@@ -23,6 +23,7 @@ ant distclean   remove all build files and dist files</echo>
         <ant dir="program_guide" target="jar" inheritAll="false" />
         <copy file="program_guide/${program_guide.name}-${program_guide.version}.jar"
               todir="${basedir}/WEB-INF/lib" />
+        <delete dir="${basedir}/program_guide" verbose="${verbose}" />
     </target>
 
     <target name="jstl">
@@ -38,6 +39,8 @@ ant distclean   remove all build files and dist files</echo>
               todir="${basedir}/WEB-INF/lib/" />
         <copy file="${basedir}/${jstl.name}-${jstl.version}/tld/c.tld"
               todir="${basedir}/WEB-INF/" />
+        <delete dir="${basedir}/${jstl.name}-${jstl.version}" verbose="${verbose}" />
+        <delete file="${basedir}/${jstl.name}-${jstl.version}.tar.gz" verbose="${verbose}" />
     </target>
  
     <target name="tomcat">
@@ -49,6 +52,7 @@ ant distclean   remove all build files and dist files</echo>
                dest="${basedir}" />
         <copy file="${basedir}/${tomcat.name}-${tomcat.version}/common/lib/servlet-api.jar"
               todir="${basedir}" />
+        <delete file="${basedir}/${tomcat.name}-${tomcat.version}.tar.gz" verbose="${verbose}" />
     </target>
  
     <target name="deps">
@@ -70,14 +74,16 @@ ant distclean   remove all build files and dist files</echo>
         <manifest file="${basedir}/MANIFEST.MF">
             <attribute name="Built-By" value="${user.name}" />
         </manifest>
-        <war destfile="${warfile}" webxml="${basedir}/WEB-INF/web.xml"
+        <war destfile="${warfile}" update="false"
+             webxml="${basedir}/WEB-INF/web.xml"
              manifest="MANIFEST.MF">
-            <lib dir="${basedir}/WEB-INF/lib" />
-            <classes dir="${basedir}/WEB-INF/classes" />
-            <webinf dir="${basedir}/WEB-INF" />
+            <webinf dir="${basedir}/WEB-INF">
+                <exclude name="web.xml" />
+                <exclude name="src/" />
+            </webinf>
             <fileset dir="${basedir}">
-                <include name="**/*.jsp" />
-                <include name="**/*.css" />
+                <include name="*.jsp" />
+                <include name="*.css" />
             </fileset>
         </war>
     </target>
