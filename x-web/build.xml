@@ -6,18 +6,18 @@
     <property name="builddir" value="${basedir}/WEB-INF/classes/" />
     <property name="distdir"
               value="${basedir}/${package.name}-${package.version}" />
-    <property name="warfile" value="${package.name}.jar" />
+    <property name="warfile" value="${package.name}.war" />
 
     <target name="help">
         <echo>ant build       compile ${package.name}
 ant deps        get ${package.name} dependencies
-ant jar         create ${warfile}
+ant war         create ${warfile}
 ant dist        create ${package.name}-${package.version}.{tar.gz,zip}
 ant clean       remove all build files
 ant distclean   remove all build files and dist files</echo>
     </target>
 
-    <target name="deps">
+    <target name="program_guide">
         <cvs cvsRoot=":ext:six-two.net:/var/cvs/program_guide"
              command="-q export -r${program_guide.tag} program_guide" />
         <ant dir="program_guide" target="jar" inheritAll="false" />
@@ -25,29 +25,66 @@ ant distclean   remove all build files and dist files</echo>
               todir="${basedir}/WEB-INF/lib" />
     </target>
 
-    <target name="build" depends="deps">
-        <javac srcdir="${basedir}/WEB-INF/src"
-               destdir="${builddir}"
-               classpath="${package.classpath}"
-               listfiles="${verbose}"
-               optimize="true" />
-        <copy todir="${builddir}/net">
-            <fileset dir="${basedir}/net" includes="**/*.properties" />
-        </copy>
+    <target name="jstl">
+        <get verbose="${verbose}" usetimestamp="true"
+             src="http://www.six-two.net/cache/${jstl.name}-${jstl.version}.tar.gz"
+             dest="${basedir}/${jstl.name}-${jstl.version}.tar.gz" />
+        <untar src="${basedir}/${jstl.name}-${jstl.version}.tar.gz"
+               compression="gzip" overwrite="yes"
+               dest="${basedir}" />
+        <copy file="${basedir}/${jstl.name}-${jstl.version}/lib/jstl.jar"
+              todir="${basedir}/WEB-INF/lib/" />
+        <copy file="${basedir}/${jstl.name}-${jstl.version}/lib/standard.jar"
+              todir="${basedir}/WEB-INF/lib/" />
+        <copy file="${basedir}/${jstl.name}-${jstl.version}/tld/c.tld"
+              todir="${basedir}/WEB-INF/" />
+    </target>
+ 
+    <target name="tomcat">
+        <get verbose="${verbose}" usetimestamp="true"
+             src="http://www.six-two.net/cache/${tomcat.name}-${tomcat.version}.tar.gz"
+             dest="${basedir}/${tomcat.name}-${tomcat.version}.tar.gz" />
+        <untar src="${basedir}/${tomcat.name}-${tomcat.version}.tar.gz"
+               compression="gzip" overwrite="yes"
+               dest="${basedir}" />
+        <copy file="${basedir}/${tomcat.name}-${tomcat.version}/common/lib/servlet-api.jar"
+              todir="${basedir}" />
+    </target>
+ 
+    <target name="deps">
+        <antcall name="program_guide" />
+        <antcall name="jstl" />
+        <antcall name="tomcat" />
     </target>
 
-    <target name="jar" depends="build">
+    <target name="build">
+        <mkdir dir="${builddir}" />
+        <javac srcdir="${basedir}/WEB-INF/src"
+               destdir="${builddir}"
+               classpath="${package.buildClasspath}:${tomcat.name}-${tomcat.version}/common/lib/servlet-api.jar"
+               listfiles="${verbose}"
+               optimize="true" />
+    </target>
+
+    <target name="war" depends="build">
         <manifest file="${basedir}/MANIFEST.MF">
             <attribute name="Built-By" value="${user.name}" />
         </manifest>
-        <jar basedir="${builddir}" 
-             destfile="${jarfile}"
-             manifest="MANIFEST.MF" />
+        <war destfile="${warfile}" webxml="${basedir}/WEB-INF/web.xml"
+             manifest="MANIFEST.MF">
+            <lib dir="${basedir}/WEB-INF/lib" />
+            <classes dir="${basedir}/WEB-INF/classes" />
+            <webinf dir="${basedir}/WEB-INF" />
+            <fileset dir="${basedir}">
+                <include name="**/*.jsp" />
+                <include name="**/*.css" />
+            </fileset>
+        </war>
     </target>
     
-    <target name="dist" depends="jar">
+    <target name="dist" depends="war">
         <mkdir dir="${distdir}" />
-        <copy file="${jarfile}" todir="${distdir}" verbose="${verbose}" />
+        <copy file="${warfile}" todir="${distdir}" verbose="${verbose}" />
         <tar destfile="${package.name}-${package.version}.tar.gz"
              compression="gzip">
             <tarfileset dir="${distdir}"
@@ -61,10 +98,8 @@ ant distclean   remove all build files and dist files</echo>
 
     <target name="clean">
         <delete dir="${builddir}" verbose="${verbose}" />
-        <delete dir="misc" />
-        <delete dir="${basedir}/net/six_two/misc" />
         <delete file="MANIFEST.MF" verbose="${verbose}" />
-        <delete file="${jarfile}" verbose="${verbose}" />
+        <delete file="${warfile}" verbose="${verbose}" />
     </target>
 
     <target name="distclean" depends="clean">
