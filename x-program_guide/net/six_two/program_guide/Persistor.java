@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.16 2005-10-26 22:20:36 gunter Exp $
+ * $Id: Persistor.java,v 1.17 2005-10-27 03:02:52 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -735,8 +735,8 @@ public class Persistor {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, user.getUsername());
         statement.setString(2, user.getPassword());
-        statement.setDate(3, new Date(user.getLastLoginDate().getTime()));
-        statement.setDate(4, new Date(user.getRegistrationDate().getTime()));
+        statement.setTimestamp(3, user.getLastLoginDate());
+        statement.setTimestamp(4, user.getRegistrationDate());
         statement.setShort(5, user.getLevel());
         statement.setInt(6, user.getId());
         
@@ -780,8 +780,8 @@ public class Persistor {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, user.getUsername());
         statement.setString(2, user.getPassword());
-        statement.setDate(3, new Date(user.getLastLoginDate().getTime()));
-        statement.setDate(4, new Date(user.getRegistrationDate().getTime()));
+        statement.setTimestamp(3, user.getLastLoginDate());
+        statement.setTimestamp(4, user.getRegistrationDate());
         statement.setShort(5, user.getLevel());
         
         statement.execute();
