@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.18 2005-10-27 17:48:14 gunter Exp $
+ * $Id: Persistor.java,v 1.19 2005-10-27 18:21:03 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -26,7 +26,7 @@ public class Persistor {
         
         String sql = "SELECT e.*, "
             + "IFNULL(q.user_id, 0) AS queued, "
-            + "IFNULL(v.user_id, 0) as viewed "
+            + "IFNULL(v.user_id, 0) AS viewed "
             + "FROM user u "
             + "LEFT JOIN subscribed s "
             + "ON u.id = s.user_id "
@@ -59,8 +59,20 @@ public class Persistor {
                     result.getString("e.production_code"),
                     result.getDate("e.original_air_date"),
                     result.getString("e.title"));
-            userEpisodes.add(new UserEpisode(program, episode, 
-                    result.getShort("queued"), result.getShort("viewed")));
+            
+            /*
+             *  The query will return user_id for queued and viewed, if it's
+             *  not null.  Force it to 1 for true.
+             */
+            short queued = result.getShort("queued");
+            if (queued != 0) {
+                queued = 1;
+            }
+            short viewed = result.getShort("viewed");
+            if (viewed != 0) {
+                viewed = 1;
+            }
+            userEpisodes.add(new UserEpisode(program, episode, queued, viewed));
         }
         result.close();
         statement.close();
@@ -120,8 +132,20 @@ public class Persistor {
                     result.getString("e.production_code"),
                     result.getDate("e.original_air_date"),
                     result.getString("e.title"));
-            userEpisodes.add(new UserEpisode(program, episode, 
-                    result.getShort("queued"), result.getShort("viewed")));
+            
+            /*
+             *  The query will return user_id for queued and viewed, if it's
+             *  not null.  Force it to 1 for true.
+             */
+            short queued = result.getShort("queued");
+            if (queued != 0) {
+                queued = 1;
+            }
+            short viewed = result.getShort("viewed");
+            if (viewed != 0) {
+                viewed = 1;
+            }
+            userEpisodes.add(new UserEpisode(program, episode, queued, viewed));
         }
         result.close();
         statement.close();
