@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.17 2005-10-27 03:02:52 gunter Exp $
+ * $Id: Persistor.java,v 1.18 2005-10-27 17:48:14 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -344,6 +344,7 @@ public class Persistor {
         
         sql = "SELECT LAST_INSERT_ID()";
         
+        statement = connection.prepareStatement(sql);
         statement.execute();
         ResultSet result = statement.getResultSet();
         result.next();
