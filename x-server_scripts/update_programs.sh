@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: update_programs.sh,v 1.3 2005-10-17 18:30:02 gunter Exp $
+# $Id: update_programs.sh,v 1.4 2005-10-27 03:15:49 gunter Exp $
 #
 . program_guide.config
 
@@ -11,7 +11,7 @@ WHERE (do_update = 1
        OR last_update is NULL)
 AND url is NOT NULL"
 
-RESULTS=`mysql -s --skip-column-names ${DATABASE} -e "${SQL}" | tr '\t' '|' | tr ' ' '_'`
+RESULTS=`mysql -u ${MYSQLUSER} -s --skip-column-names ${DATABASE} -e "${SQL}" | tr '\t' '|' | tr ' ' '_'`
 
 for result in ${RESULTS}
 do

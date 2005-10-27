@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.10 2005-10-19 15:05:07 gunter Exp $
+# $Id: scrape.sh,v 1.11 2005-10-27 03:15:49 gunter Exp $
 #
 # requires: lynx
 #
@@ -64,7 +64,7 @@ LOAD=\
 "LOAD DATA LOCAL INFILE '${DATA}' REPLACE
 INTO TABLE episode FIELDS TERMINATED BY '|'
 (program_id, season, number, production_code, original_air_date, title)"
-mysql ${DATABASE} -e "${LOAD}"
+mysql -u ${MYSQLUSER} ${DATABASE} -e "${LOAD}"
 if [ "$?" -ne "0" ]; then
     exit 1
 fi 
@@ -76,7 +76,7 @@ SQL=\
 "UPDATE program
 SET last_update = '${UPDATE_DATE}'
 WHERE id = ${ID}"
-mysql ${DATABASE} -e "${SQL}"
+mysql -u ${MYSQLUSER} ${DATABASE} -e "${SQL}"
 if [ "$?" -ne "0" ]; then
     exit 1
 fi 
