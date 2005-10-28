@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.13 2005-10-28 15:42:00 gunter Exp $
+# $Id: scrape.sh,v 1.14 2005-10-28 18:26:21 gunter Exp $
 #
 # requires: lynx gawk
 #
@@ -17,6 +17,7 @@ URL="${3}"
 RAW=`mktemp /tmp/scrape.raw.XXXXXX`
 DATA=`mktemp /tmp/scrape.data.XXXXXX`
 FIELDS="5 8 13 11 255"
+SERIAL_NUMBER=0
 
 echo "${PROGRAM} => ${RAW}"
 echo "${PROGRAM} => ${DATA}"
@@ -38,6 +39,7 @@ do
     DATE=`echo "${line}" | cut -d "|" -f 3 | tr -d '_'`
     ORIGINAL_AIR_DATE=`date -j -f %d%b%y ${DATE} +%y%m%d 2> /dev/null`
     TITLE=`echo "${line}" | cut -d "|" -f 4 | tr '_' ' ' | sed 's/^[[:space:]]*//'`
+    SERIAL_NUMBER=`expr ${SERIAL_NUMBER} + 1`
 
     # If any variable is empty, set it to null (\N).
     if [ -z "${SEASON}" ]; then
@@ -56,14 +58,14 @@ do
        TITLE=\\N
     fi 
 
-    echo "${PROGRAM} => [${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${ORIGINAL_AIR_DATE}|${TITLE}]"
-    echo "${ID}|${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${ORIGINAL_AIR_DATE}|${TITLE}" >> ${DATA}
+    echo "${PROGRAM} => [${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${ORIGINAL_AIR_DATE}|${TITLE}|${SERIAL_NUMBER}]"
+    echo "${ID}|${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${ORIGINAL_AIR_DATE}|${TITLE}|${SERIAL_NUMBER}" >> ${DATA}
 done
 
 LOAD=\
 "LOAD DATA LOCAL INFILE '${DATA}' REPLACE
 INTO TABLE episode FIELDS TERMINATED BY '|'
-(program_id, season, number, production_code, original_air_date, title)"
+(program_id, season, number, production_code, original_air_date, title, serial_number)"
 mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} ${DATABASE} -e "${LOAD}"
 if [ "$?" -ne "0" ]; then
     exit 1
