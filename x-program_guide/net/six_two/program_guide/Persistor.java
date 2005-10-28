@@ -1,10 +1,9 @@
 /*
- * $Id: Persistor.java,v 1.20 2005-10-28 18:27:09 gunter Exp $
+ * $Id: Persistor.java,v 1.21 2005-10-28 21:17:41 gunter Exp $
  */
 package net.six_two.program_guide;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,7 +42,8 @@ public class Persistor {
             + "    AND v.season = e.season "
             + "    AND v.episode_number = e.number) "
             + "WHERE u.id = ? "
-            + "AND e.program_id = ?";
+            + "AND e.program_id = ? "
+            + "ORDER BY program_id, serial_number";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
@@ -113,7 +113,8 @@ public class Persistor {
             + "    AND v.program_id = e.program_id "
             + "    AND v.season = e.season "
             + "    AND v.episode_number = e.number) "
-            + "WHERE u.id = ?";
+            + "WHERE u.id = ? "
+            + "ORDER BY program_id, serial_number";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
@@ -175,15 +176,19 @@ public class Persistor {
             + "ON s.program_id = p.id "
             + "LEFT JOIN episode e "
             + "ON s.program_id = e.program_id "
-            + "WHERE u.id = ? "
-            + "AND original_air_date >= (CURRENT_DATE() - INTERVAL ? DAY) "
-            + "AND original_air_date <= (CURRENT_DATE() + INTERVAL ? DAY) "
-            + "ORDER BY e.original_air_date DESC";
+            + "WHERE u.id = ? ";
+        if (dayRange >= 0)
+            sql += "AND original_air_date >= CURRENT_DATE() "
+                 + "AND original_air_date <= (CURRENT_DATE() + INTERVAL ? DAY) "
+                 + "ORDER BY e.original_air_date ASC";
+        else
+            sql += "AND original_air_date <= CURRENT_DATE() "
+                 + "AND original_air_date >= (CURRENT_DATE() + INTERVAL ? DAY) "
+                 + "ORDER BY e.original_air_date DESC";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
         statement.setInt(2, dayRange);
-        statement.setInt(3, dayRange);
         statement.execute();
         
         ResultSet result = statement.getResultSet();
@@ -243,7 +248,9 @@ public class Persistor {
             throws SQLException {
         ArrayList programs = new ArrayList();
         
-        String sql = "SELECT * FROM program";
+        String sql = "SELECT * "
+            + "FROM program "
+            + "ORDER BY name";
         
         Statement statement = connection.createStatement();
         statement.execute(sql);
@@ -392,7 +399,8 @@ public class Persistor {
             + "FROM program p "
             + "LEFT JOIN subscribed s "
             + "ON (p.id = s.program_id "
-            + "    AND s.user_id = ?)";
+            + "    AND s.user_id = ?) "
+            + "ORDER BY p.name";
         
         if (user == null)
             throw new SQLException("Attempted operation with a null user.");
@@ -719,7 +727,9 @@ public class Persistor {
             throws SQLException {
         ArrayList users = new ArrayList();
         
-        String sql = "SELECT * FROM user";
+        String sql = "SELECT * "
+            + "FROM user "
+            + "ORDER BY username";
 
         Statement statement = connection.createStatement();
         statement.execute(sql);
