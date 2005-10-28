@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.19 2005-10-27 18:21:03 gunter Exp $
+ * $Id: Persistor.java,v 1.20 2005-10-28 18:27:09 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -58,7 +58,8 @@ public class Persistor {
                     result.getInt("e.number"),
                     result.getString("e.production_code"),
                     result.getDate("e.original_air_date"),
-                    result.getString("e.title"));
+                    result.getString("e.title"),
+                    result.getInt("e.serial_number"));
             
             /*
              *  The query will return user_id for queued and viewed, if it's
@@ -131,7 +132,8 @@ public class Persistor {
                     result.getInt("e.number"),
                     result.getString("e.production_code"),
                     result.getDate("e.original_air_date"),
-                    result.getString("e.title"));
+                    result.getString("e.title"),
+                    result.getInt("e.serial_number"));
             
             /*
              *  The query will return user_id for queued and viewed, if it's
@@ -197,7 +199,8 @@ public class Persistor {
                     result.getInt("e.number"),
                     result.getString("e.production_code"),
                     result.getDate("e.original_air_date"),
-                    result.getString("e.title"));
+                    result.getString("e.title"),
+                    result.getInt("e.serial_number"));
             userEpisodes.add(new UserEpisode(program, episode, (short) -1, 
                     (short) -1));
         }
