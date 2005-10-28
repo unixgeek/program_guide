@@ -15,6 +15,7 @@ CREATE TABLE episode (
   production_code varchar(32) default NULL,
   original_air_date date default NULL,
   title tinytext,
+  serial_number smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (program_id,season,number)
 ) TYPE=MyISAM;
 
