@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.12 2005-10-27 15:48:21 gunter Exp $
+# $Id: scrape.sh,v 1.13 2005-10-28 15:42:00 gunter Exp $
 #
-# requires: lynx
+# requires: lynx gawk
 #
 . program_guide.config
 
@@ -26,7 +26,7 @@ lynx -nolist -dont_wrap_pre -dump "${URL}" | \
     # Find lines containing episode data.  
     egrep -e '^([[:space:]]*\<[[:alnum:]]+\.[[:space:]]+|[[:space:]]+)\<[[:alnum:]]-[([:digit:]|[:space:][:digit:])]' | \
     # Treat data as fixed length and ignore the first field. (Hack?)
-    awk -v FIELDWIDTHS="${FIELDS}" '{print $2 "|" $3 "|" $4 "|" $5}' | \
+    ${GAWK} -v FIELDWIDTHS="${FIELDS}" '{print $2 "|" $3 "|" $4 "|" $5}' | \
     # Convert spaces to _ to make the for loop work correctly.
     tr ' ' '_' > ${RAW}
 
