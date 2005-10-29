@@ -11,10 +11,9 @@
 <body>
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
+<h1>Recent Episodes</h1>
+<h2>Next 6 Days</h2>
 <table class="tabledata" cellspacing="0" border="1">
- <tr>
-  <th colspan="8">Recent Episodes</th>
- </tr>
  <tr>
   <th>Program</th>
   <th>Season</th>
@@ -23,7 +22,28 @@
   <th>Original Air Date</th>
   <th>Title</th>
  </tr>
- <c:forEach var="userEpisode" items="${userEpisodesList}">
+ <c:forEach var="userEpisode" items="${nextEpisodesList}">
+ <tr>
+  <td class="rowdata"><a href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
+  <td class="rowdatacenter">${userEpisode.episode.season}</td>
+  <td class="rowdatacenter">${userEpisode.episode.number}</td>
+  <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
+  <td class="rowdatacenter">${userEpisode.episode.originalAirDate}</td>
+  <td class="rowdata">${userEpisode.episode.title}</td>
+ </tr>
+ </c:forEach>
+</table>
+<h2>Previous 6 Days</h2>
+<table class="tabledata" cellspacing="0" border="1">
+ <tr>
+  <th>Program</th>
+  <th>Season</th>
+  <th>Episode</th>
+  <th>Production Code</th>
+  <th>Original Air Date</th>
+  <th>Title</th>
+ </tr>
+ <c:forEach var="userEpisode" items="${previousEpisodesList}">
  <tr>
   <td class="rowdata"><a href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
