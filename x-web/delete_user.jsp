@@ -9,6 +9,7 @@
 <title>Program Guide</title>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <form action="DeleteUser.do" method="post">
 <input type="hidden" name="user_id" value="${candidateUser.id}" />
@@ -37,5 +38,6 @@
  </tr>
 </table>
 </form>
+<%@ include file="footer.jsp" %>
 </body>
 </html>

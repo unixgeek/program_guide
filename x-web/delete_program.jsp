@@ -9,6 +9,7 @@
 <title>Program Guide</title>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <form action="DeleteProgram.do" method="post">
 <input type="hidden" name="program_id" value="${program.id}" />
@@ -35,5 +36,6 @@
  </tr>
 </table>
 </form>
+<%@ include file="footer.jsp" %>
 </body>
 </html>

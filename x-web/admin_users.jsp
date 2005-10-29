@@ -9,6 +9,7 @@
 <title>Program Guide</title>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
@@ -38,5 +39,6 @@
   <td colspan="7" align="right"><a href="Register.do">Add new user</a></td>
  </tr>
 </table>
+<%@ include file="footer.jsp" %>
 </body>
 </html>

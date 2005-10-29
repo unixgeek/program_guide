@@ -9,6 +9,7 @@
 <title>Program Guide</title>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <form action="InsertProgram.do" method="post">
 <table class="tabledata" cellspacing="0" border="1">
@@ -32,5 +33,6 @@
  </tr>
 </table>
 </form>
+<%@ include file="footer.jsp" %>
 </body>
 </html>

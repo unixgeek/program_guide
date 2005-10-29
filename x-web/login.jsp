@@ -9,6 +9,7 @@
 <title>Program Guide</title>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 <p class="error">${message}</p>
 <form action="Login.do" method="post">
 <table class="login" width="0%">
@@ -28,5 +29,6 @@
  </tr>
 </table>
 </form>
+<%@ include file="footer.jsp" %>
 </body>
 </html>
