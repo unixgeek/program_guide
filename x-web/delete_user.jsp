@@ -11,7 +11,7 @@
 <body>
 <%@ include file="menu.jsp" %>
 <form action="DeleteUser.do" method="post">
-<input type="hidden" name="user_id" value="${theUser.id}" />
+<input type="hidden" name="user_id" value="${candidateUser.id}" />
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
   <th colspan="5">Delete User</th>
@@ -24,11 +24,11 @@
   <th>Level</th>
  </tr>
  <tr>
-  <td class="rowdata">${theUser.username}</td>
-  <td class="rowdatacenter">${theUser.password}</td>
-  <td class="rowdatacenter">${theUser.lastLoginDate}</td>
-  <td class="rowdatacenter">${theUser.registrationDate}</td>
-  <td class="rowdatacenter">${theUser.level}</td>
+  <td class="rowdata">${candidateUser.username}</td>
+  <td class="rowdatacenter">${candidateUser.password}</td>
+  <td class="rowdatacenter">${candidateUser.lastLoginDate}</td>
+  <td class="rowdatacenter">${candidateUser.registrationDate}</td>
+  <td class="rowdatacenter">${candidateUser.level}</td>
  </tr>
  <tr>
   <td align="right" colspan="5">

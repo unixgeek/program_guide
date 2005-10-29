@@ -11,7 +11,7 @@
 <body>
 <%@ include file="menu.jsp" %>
 <form action="UpdateUser.do" method="post">
-<input type="hidden" name="user_id" value="${theUser.id}" />
+<input type="hidden" name="user_id" value="${candidateUser.id}" />
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
   <th colspan="5">Update User</th>
@@ -24,11 +24,11 @@
   <th>Level</td>
  </tr>
  <tr>
-  <td class="rowdata"><input type="text" name="username" value="${theUser.username}" /></td>
+  <td class="rowdata"><input type="text" name="username" value="${candidateUser.username}" /></td>
   <td class="rowdata"><input type="password" name="password" /></td>
-  <td class="rowdatacenter">${theUser.lastLoginDate}</td>
-  <td class="rowdatacenter">${theUser.registrationDate}</td>
-  <td class="rowdata"><input type="text" name="level" value="${theUser.level}" /></td>
+  <td class="rowdatacenter">${candidateUser.lastLoginDate}</td>
+  <td class="rowdatacenter">${candidateUser.registrationDate}</td>
+  <td class="rowdata"><input type="text" name="level" value="${candidateUser.level}" /></td>
  </tr>
  <tr>
   <td align="right" colspan="5">
