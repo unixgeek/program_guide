@@ -1,5 +1,5 @@
 /*
- * $Id: DisplayFrontPageServlet.java,v 1.2 2005-10-26 03:30:13 gunter Exp $
+ * $Id: DisplayFrontPageServlet.java,v 1.3 2005-10-29 00:59:41 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -21,27 +21,17 @@ import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.User;
 
-public class DisplayFrontPageServlet extends HttpServlet {
+public class DisplayFrontPageServlet extends GenericServlet {
     protected void doGet(HttpServletRequest request, 
             HttpServletResponse response) throws IOException, 
             ServletException {
    
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);
+        User user = getUserFromRequest(request);
+        if (user == null) {
+            redirectLogin(request, response);
             return;
         }
         
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);
-            return;
-        }
-            
-        session.setAttribute("user", user);
-        request.setAttribute("user", user);
         RequestDispatcher dispatcher = request.getRequestDispatcher("GetUserRecentEpisodes.do");
         dispatcher.forward(request, response);
     }

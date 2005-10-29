@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserRecentEpisodesServlet.java,v 1.1 2005-10-26 03:23:29 gunter Exp $
+ * $Id: GetUserRecentEpisodesServlet.java,v 1.2 2005-10-29 00:59:41 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -56,7 +56,7 @@ public class GetUserRecentEpisodesServlet extends HttpServlet {
             
             // Between next week and last week.
             UserEpisode[] userEpisodes = Persistor.
-            selectAllEpisodesForUser(connection, user, 7);
+            selectAllEpisodesForUser(connection, user, 6);
             
             connection.close();
             

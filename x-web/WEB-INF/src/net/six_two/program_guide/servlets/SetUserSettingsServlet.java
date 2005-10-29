@@ -1,5 +1,5 @@
 /*
- * $Id: SetUserSettingsServlet.java,v 1.1 2005-10-26 22:32:28 gunter Exp $
+ * $Id: SetUserSettingsServlet.java,v 1.2 2005-10-29 00:59:41 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -21,7 +21,7 @@ import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.User;
 
-public class SetUserSettingsServlet extends HttpServlet {
+public class SetUserSettingsServlet extends GenericServlet {
     protected void doGet(HttpServletRequest request, 
             HttpServletResponse response) throws IOException, 
             ServletException {
@@ -34,19 +34,16 @@ public class SetUserSettingsServlet extends HttpServlet {
             HttpServletResponse response) throws IOException, 
             ServletException {
    
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            request.setAttribute("message", "You must login first.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);
+        User user = getUserFromRequest(request);
+        if (user == null) {
+            redirectLogin(request, response);
             return;
         }
         
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            request.setAttribute("message", "You must login first.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);
+        Connection connection = getConnection();
+        if (connection == null) {
+            redirectError(request, response, 
+                    "Couldn't connect to the database.");
             return;
         }
         
@@ -65,23 +62,16 @@ public class SetUserSettingsServlet extends HttpServlet {
             error(request, response, "Invalid password.");
             return;
         }
-            
+        
+        user.setUsername(username);
+        UserManager.setPasswordForUser(user, password);
+        
         try {
-            InitialContext context = new InitialContext();
-            DataSource source = (DataSource) 
-            context.lookup("java:comp/env/jdbc/program_guide");
-            Connection connection = source.getConnection();
-            
-            user.setUsername(username);
-            UserManager.setPasswordForUser(user, password);
-            
             Persistor.updateUser(connection, user);
             connection.close();
             
             RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayFrontPage.do");
             dispatcher.forward(request, response);
-        } catch (NamingException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }

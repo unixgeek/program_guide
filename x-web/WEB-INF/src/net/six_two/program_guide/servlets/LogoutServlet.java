@@ -1,33 +1,30 @@
 /*
- * $Id: LogoutServlet.java,v 1.1 2005-10-25 22:10:03 gunter Exp $
+ * $Id: LogoutServlet.java,v 1.2 2005-10-29 00:59:41 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class LogoutServlet extends HttpServlet {
+import net.six_two.program_guide.tables.User;
+
+public class LogoutServlet extends GenericServlet {
     protected void doGet(HttpServletRequest request, 
             HttpServletResponse response) throws IOException, 
             ServletException {
         
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            request.setAttribute("message", "You must login first.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);
+        User user = getUserFromRequest(request);
+        // There isn't a session.
+        if (user == null) {
+            redirectLogin(request, response);
+            return;
         }
         else {
-            session.invalidate();
-            
-            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);   
+            request.getSession().invalidate();
+            redirectLogin(request, response);   
         }
     }
 }

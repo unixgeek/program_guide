@@ -1,5 +1,5 @@
 /*
- * $Id: LoginServlet.java,v 1.2 2005-10-26 03:30:33 gunter Exp $
+ * $Id: LoginServlet.java,v 1.3 2005-10-29 00:59:41 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -21,7 +21,7 @@ import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.User;
 
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends GenericServlet {
     protected void doPost(HttpServletRequest request, 
             HttpServletResponse response) throws IOException, 
             ServletException {
@@ -41,13 +41,15 @@ public class LoginServlet extends HttpServlet {
             error(request, response, "Invalid password.");
             return;
         }
-            
-        try {
-            InitialContext context = new InitialContext();
-            DataSource source = (DataSource) 
-            context.lookup("java:comp/env/jdbc/program_guide");
-            Connection connection = source.getConnection();
-            
+        
+        Connection connection = getConnection();
+        if (connection == null) {
+            redirectError(request, response, 
+                    "Couldn't connect to the database.");
+           return;
+        }
+        
+        try {           
             User user = Persistor.selectUser(connection, username);
             
             if (user == null) {
@@ -66,13 +68,12 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             request.setAttribute("user", user);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayFrontPage.do");
-            dispatcher.forward(request, response);
-        } catch (NamingException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
-            e.printStackTrace();
+            redirectError(request, response, e.getMessage());
         }
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayFrontPage.do");
+        dispatcher.forward(request, response);
     }
     
     private void error(HttpServletRequest request, HttpServletResponse response,
