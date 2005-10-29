@@ -1,11 +1,12 @@
 /*
- * $Id: LoginServlet.java,v 1.3 2005-10-29 00:59:41 gunter Exp $
+ * $Id: LoginServlet.java,v 1.4 2005-10-29 01:08:21 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -63,11 +64,13 @@ public class LoginServlet extends GenericServlet {
                 return;
             }
             
+            user.setLastLoginDate(new Timestamp(System.currentTimeMillis()));
+            Persistor.updateUser(connection, user);
+            
             connection.close();
             
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-            request.setAttribute("user", user);
         } catch (SQLException e) {
             redirectError(request, response, e.getMessage());
         }
