@@ -2,26 +2,23 @@
     margin: 0px 0px 0px 0px;
 }*/
 
-.menu {
-    float: left;
-    /*margin-right: 15px;
-    padding-bottom: 20px;*/
-    /*border-style: solid;*/
+.menu		{width: 23%; position: relative; top: 0; left: 0; float: left; text-align: center;}
+.menuitem		{width: auto;}
+.menuitem		{display: block;}
+a.menuitem
+{
+/*font-size: 48%;*/
+background-color: rgb(26,89,124);
+color: rgb(76,178,234);
+font-variant: normal;
+text-transform: uppercase;
+font-weight: bold;
+/*margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;
+border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px;
+border-left-style: none; border-right-style: none; border-top-style: none; border-bottom-style: none;*/
+border-color: rgb(255,255,255);
+text-align: left;
 }
-
-.menuitem {
-    text-decoration: none;
- }
- 
-.menuitem:hover {
-    text-decoration: underline;
-}
-
-.username {
-    text-align: center;
-    font-weight: bold;
-}
-
 .login {
     margin-left: auto;
     margin-right: auto;
@@ -55,10 +52,58 @@
     float: right;
 }
 
-a {
+#header {
+    font-size: 183%;
+    background-color: rgb(0,0,0);
+    color: rgb(131,173,196);
+    font-family: Georgia, serif;
+    padding: 13px 13px 13px 13px;
+    border-color: rgb(0,0,0);
+    text-align: left;
+}
+
+#title
+{
+ font-size: 99%;
+background-color: rgb(46,56,62);
+color: rgb(76,178,234);
+font-style: italic;
+font-variant: normal;
+text-transform: none;
+font-weight: normal;
+border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px;
+border-left-style: none; border-right-style: none; border-top-style: none; border-bottom-style: none;
+padding: 7px 2px 9px 0px;
+border-color: rgb(255,255,255);
+text-align: left;
+}
+
+.footer
+{
+ font-size: 80%;
+background-color: rgb(46,56,62);
+color: rgb(76,178,234);
+font-style: italic;
+font-variant: normal;
+text-transform: none;
+font-weight: normal;
+border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px;
+border-left-style: none; border-right-style: none; border-top-style: none; border-bottom-style: none;
+padding: 7px 2px 9px 0px;
+border-color: rgb(255,255,255);
+text-align: right;
+}
+.footer a {
     text-decoration: none;
- }
- 
-a:hover {
-    text-decoration: underline;
+}
+
+.menu a
+{
+text-decoration: none;
+}
+
+.menuitem:hover
+{
+background-color: rgb(76,178,234);
+color: rgb(26,89,124);
 }
