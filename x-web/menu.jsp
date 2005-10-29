@@ -1,6 +1,6 @@
 <div class="menu">
 <table>
- <tr><td class="username">${user.username}</td></tr>
+ <tr><td class="username">${sessionScope.user.username}</td></tr>
  <tr><td><a class="menuitem" href="GetUserPrograms.do">Programs</a></td></tr>
  <tr><td><a class="menuitem" href="GetUserRecentEpisodes.do">Recent Episodes</a></td></tr>
  <c:if test="${user.level == '0'}">
