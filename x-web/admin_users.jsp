@@ -35,7 +35,7 @@
  </tr>
  </c:forEach>
  <tr>
-  <td colspan="7" align="right"><a href="Register.do">Add new user.</a></td>
+  <td colspan="7" align="right"><a href="Register.do">Add new user</a></td>
  </tr>
 </table>
 </body>
