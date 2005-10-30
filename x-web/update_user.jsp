@@ -11,12 +11,11 @@
 <body>
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
+<div class="content">
+<h2 class="title">Edit User</h2>
 <form action="UpdateUser.do" method="post">
 <input type="hidden" name="user_id" value="${candidateUser.id}" />
 <table class="tabledata" cellspacing="0" border="1">
- <tr>
-  <th colspan="5">Update User</th>
- </tr>
  <tr>
   <th>Username</th>
   <th>Password</th>
@@ -38,6 +37,7 @@
  </tr>
 </table>
 </form>
+</div>
 <%@ include file="footer.jsp" %>
 </body>
 </html>

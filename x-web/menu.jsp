@@ -1,6 +1,6 @@
 <div class="menu">
  <a class="menuitem" href="GetUserPrograms.do">Programs</a>
- <a class="menuitem" href="GetUserRecentEpisodes.do">Recent Episodes</a>
+ <a class="menuitem" href="GetUserEpisodesSchedule.do">Schedule</a>
  <c:if test="${user.level == '0'}">
  <a class="menuitem" href="AdminPrograms.do">Admin Programs</a>
  <a class="menuitem" href="AdminUsers.do">Admin Users</a>

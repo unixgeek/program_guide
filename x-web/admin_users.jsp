@@ -11,10 +11,9 @@
 <body>
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
+<div class="content">
+<h2 class="title">Admin Users</h2>
 <table class="tabledata" cellspacing="0" border="1">
- <tr>
-  <th colspan="7">Users</th>
- </tr>
  <tr>
   <th>Username</th>
   <th>Password</th>
@@ -39,6 +38,8 @@
   <td colspan="7" align="right"><a href="Register.do">Add new user</a></td>
  </tr>
 </table>
+<br />
+</div>
 <%@ include file="footer.jsp" %>
 </body>
 </html>

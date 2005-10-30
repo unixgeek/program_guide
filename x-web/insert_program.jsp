@@ -11,11 +11,10 @@
 <body>
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
+<div class="content">
+<h2>Add Program</h2>
 <form action="InsertProgram.do" method="post">
 <table class="tabledata" cellspacing="0" border="1">
- <tr>
-  <th colspan="4">New Program</th>
- </tr>
  <tr>
   <th>Name</th>
   <th>Update URL</th>
@@ -33,6 +32,8 @@
  </tr>
 </table>
 </form>
+</div>
+<br />
 <%@ include file="footer.jsp" %>
 </body>
 </html>

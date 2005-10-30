@@ -2,7 +2,7 @@
     margin: 0px 0px 0px 0px;
 }*/
 
-.menu		{width: 23%; position: relative; top: 0; left: 0; float: left; text-align: center;}
+.menu		{width: 20%; position: relative; top: 0; left: 0; float: left; text-align: center;}
 .menuitem		{width: auto;}
 .menuitem		{display: block;}
 a.menuitem
@@ -31,8 +31,8 @@ text-align: left;
 }
 
 .tabledata {
-    margin-left: 2em;
-    margin-right: auto;
+    /*margin-left: 2em;*/
+    /*margin-right: auto;*/
     white-space: nowrap;
     /*border-style: solid;*/
 }
@@ -97,6 +97,16 @@ text-align: right;
     text-decoration: none;
 }
 
+h1, h2, h3, h4, h5, h6
+{
+font-family: Palatino, serif;
+font-style: normal;
+font-variant: normal;
+text-transform: none;
+font-weight: normal;
+}
+
+
 .menu a
 {
 text-decoration: none;
@@ -107,3 +117,16 @@ text-decoration: none;
 background-color: rgb(76,178,234);
 color: rgb(26,89,124);
 }
+
+.content a
+{
+color: rgb(76,178,234);
+text-decoration: underline;
+}
+
+.content a:hover, .content a:active
+{
+background-color: rgb(76,178,234);
+color: rgb(255,255,255);
+}
+.content		{margin-left: 23%; width: auto}

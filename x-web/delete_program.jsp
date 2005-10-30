@@ -11,12 +11,11 @@
 <body>
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
+<div class="content">
+<h2>Delete Program</h2>
 <form action="DeleteProgram.do" method="post">
 <input type="hidden" name="program_id" value="${program.id}" />
 <table class="tabledata" cellspacing="0" border="1">
- <tr>
-  <th colspan="4">Delete Program</th>
- </tr>
  <tr>
   <th>Name</th>
   <th>Update URL</th>
@@ -36,6 +35,8 @@
  </tr>
 </table>
 </form>
+</div>
+<br />
 <%@ include file="footer.jsp" %>
 </body>
 </html>

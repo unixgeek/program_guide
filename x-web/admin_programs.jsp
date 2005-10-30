@@ -11,10 +11,9 @@
 <body>
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
+<div class="content">
+<h2 class="title">Admin Programs</h2>
 <table class="tabledata" cellspacing="0" border="1">
- <tr>
-  <th colspan="6">Programs</th>
- </tr>
  <tr>
   <th>Name</th>
   <th>Update URL</th>
@@ -37,6 +36,8 @@
   <td colspan="6" align="right"><a href="InsertProgram.do">Add new program</a></td>
  </tr>
 </table>
+</div>
+<br />
 <%@ include file="footer.jsp" %>
 </body>
 </html>

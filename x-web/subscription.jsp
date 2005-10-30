@@ -11,11 +11,10 @@
 <body>
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
+<div class="content">
+<h2>Edit Subscriptions</h2>
 <form action="SetUserPrograms.do" method="post">
 <table class="tabledata" cellspacing="0" border="1">
- <tr>
-  <th colspan="5">Programs</th>
- </tr>
  <tr>
   <th>Subscribed</th>
   <th>Name</th>
@@ -45,6 +44,7 @@
   </td>
  </tr>
 </table>
+</div>
 <%@ include file="footer.jsp" %>
 </body>
 </html>
