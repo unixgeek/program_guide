@@ -70,12 +70,12 @@
       <url-pattern>/GetUserEpisodes.do</url-pattern>
   </servlet-mapping>
   <servlet>
-      <servlet-name>GetUserRecentEpisodes</servlet-name>
-      <servlet-class>net.six_two.program_guide.servlets.GetUserRecentEpisodesServlet</servlet-class>
+      <servlet-name>GetUserEpisodesSchedule</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.GetUserEpisodesScheduleServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-      <servlet-name>GetUserRecentEpisodes</servlet-name>
-      <url-pattern>/GetUserRecentEpisodes.do</url-pattern>
+      <servlet-name>GetUserEpisodesSchedule</servlet-name>
+      <url-pattern>/GetUserEpisodesSchedule.do</url-pattern>
   </servlet-mapping>
   <servlet>
       <servlet-name>InsertProgram</servlet-name>
