@@ -1,5 +1,5 @@
 /*
- * $Id: DisplayFrontPageServlet.java,v 1.4 2005-10-30 04:06:46 gunter Exp $
+ * $Id: DisplayFrontPageServlet.java,v 1.5 2005-11-01 03:46:31 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -28,7 +28,12 @@ public class DisplayFrontPageServlet extends GenericServlet {
    
         User user = getUserFromRequest(request);
         if (user == null) {
-            redirectLogin(request, response);
+            /*
+             * Don't use redirecLogin()--it's intended for redirection from
+             * attempts to access pages that require authorization.  
+             */ 
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
             return;
         }
         
