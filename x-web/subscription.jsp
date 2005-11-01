@@ -18,9 +18,8 @@
  <tr>
   <th>Subscribed</th>
   <th>Name</th>
-  <th>Update URL</th>
   <th>Last Update</th>
-  <th>Update</th>
+  <th>Update URL</th>
  </tr>
  <c:forEach var="program" items="${programsList}">
  <tr>
@@ -33,13 +32,12 @@
    </c:otherwise>
   </c:choose>
   <td class="rowdata">${program.program.name}</td>
-  <td class="rowdata">${program.program.url}</td>
   <td class="rowdatacenter">${program.program.lastUpdate}</td>
-  <td class="rowdatacenter">${program.program.doUpdate}</td>
+  <td class="rowdata"><a href="${program.url}">${program.program.url}</a></td>
  </tr>
  </c:forEach>
   <tr>
-  <td align="right" colspan="5">
+  <td align="right" colspan="4">
    <input type="submit" value="Update" />
   </td>
  </tr>

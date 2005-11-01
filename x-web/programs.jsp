@@ -16,16 +16,14 @@
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
   <th>Name</th>
-  <th>Update URL</th>
   <th>Last Update</th>
-  <th>Update</th>
+  <th>Update URL</th>
  </tr>
  <c:forEach var="program" items="${programsList}">
  <tr>
   <td class="rowdata"><a href="GetUserEpisodes.do?program_id=${program.id}">${program.name}</a></td>
-  <td class="rowdata">${program.url}</td>
   <td class="rowdatacenter">${program.lastUpdate}</td>
-  <td class="rowdatacenter">${program.doUpdate}</td>
+  <td class="rowdata"><a href="${program.url}">${program.url}</a></td>
  </tr>
  </c:forEach>
  <tr>
