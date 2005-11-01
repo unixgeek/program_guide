@@ -1,5 +1,5 @@
 /*
- * $Id: RegisterServlet.java,v 1.2 2005-10-29 00:59:41 gunter Exp $
+ * $Id: RegisterServlet.java,v 1.3 2005-11-01 23:47:41 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -31,18 +31,27 @@ public class RegisterServlet extends GenericServlet {
             ServletException {
    
         String username = (String) request.getParameter("username");
-        String password = (String) request.getParameter("password");
+        String password1 = (String) request.getParameter("password1");
+        String password2 = (String) request.getParameter("password2");
         
         username = (username != null) ? username : "";
-        password = (password != null) ? password : "";
+        password1 = (password1 != null) ? password1 : "";
+        password2 = (password2 != null) ? password2 : "";
         
         if (username.equals("")) {
             error(request, response, "Invalid username.");
             return;
         }
         
-        if (password.equals("")) {
+        if (password1.equals("")) {
+            request.setAttribute("username", username);
             error(request, response, "Invalid password.");
+            return;
+        }
+        
+        if (!password1.equals(password2)) {
+            request.setAttribute("username", username);
+            error(request, response, "Passwords don't match.");
             return;
         }
         
@@ -61,7 +70,7 @@ public class RegisterServlet extends GenericServlet {
                 return;
             }
             
-            user = UserManager.createUser(username, password);
+            user = UserManager.createUser(username, password1);
             Persistor.insertUser(connection, user);
             
             connection.close();

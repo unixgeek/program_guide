@@ -14,12 +14,16 @@
 <form action="Register.do" method="post">
 <table class="login" width="0%">
  <tr>
-  <td>Username:</td>
+  <td align="right">Username:</td>
   <td><input type="text" name="username" value="${username}" /></td>
  </tr>
  <tr>
-  <td>Password:</td>
-  <td><input type="password" name="password" /></td>
+  <td align="right">Password:</td>
+  <td><input type="password" name="password1" /></td>
+ </tr>
+ <tr>
+  <td align="right">Password Again:</td>
+  <td><input type="password" name="password2" /></td>
  </tr>
  <tr>
   <td align="right" colspan="2"><input type="submit" value="Register" /></td>
