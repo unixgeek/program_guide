@@ -1,5 +1,5 @@
 /*
- * $Id: RegisterServlet.java,v 1.3 2005-11-01 23:47:41 gunter Exp $
+ * $Id: RegisterServlet.java,v 1.4 2005-11-01 23:49:49 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -77,7 +77,6 @@ public class RegisterServlet extends GenericServlet {
             
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-            request.setAttribute("user", user);
         } catch (SQLException e) {
             e.printStackTrace();
         }
