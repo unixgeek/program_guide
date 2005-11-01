@@ -2,7 +2,7 @@
     margin: 0px 0px 0px 0px;
 }*/
 
-.menu		{width: 20%; position: relative; top: 0; left: 0; float: left; text-align: center;}
+.menu		{width: 190px; position: relative; top: 0; left: 0; float: left; text-align: center;}
 .menuitem		{width: auto;}
 .menuitem		{display: block;}
 a.menuitem
@@ -129,4 +129,4 @@ text-decoration: underline;
 background-color: rgb(76,178,234);
 color: rgb(255,255,255);
 }
-.content		{margin-left: 23%; width: auto}
+.content		{margin-left: 195px; width: auto}
