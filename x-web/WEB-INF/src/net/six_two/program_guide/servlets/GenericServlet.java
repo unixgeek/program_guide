@@ -1,5 +1,5 @@
 /*
- * $Id: GenericServlet.java,v 1.1 2005-10-29 00:59:41 gunter Exp $
+ * $Id: GenericServlet.java,v 1.2 2005-11-01 20:38:46 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -83,4 +83,35 @@ public class GenericServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
+    /*
+     * Filter special characters for HTML.
+     */
+    private String filterContent(String content) {
+        StringBuffer filteredContent = new StringBuffer();
+        
+        char[] characters = content.trim().toCharArray();
+        
+        for (int i = 0; i != characters.length; i++) {
+            switch (characters[i]) {
+                case '<':
+                    filteredContent.append("&lt;");
+                    break;
+                case '>':
+                    filteredContent.append("&gt;");
+                    break;
+                case '&':
+                    filteredContent.append("&amp;");
+                    break;
+                case '"':
+                    filteredContent.append("&quot;");
+                    break;
+                default:
+                    filteredContent.append(characters[i]);
+            }
+        }
+        
+        return filteredContent.toString();
+    }
 }
+
