@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserEpisodesServlet.java,v 1.9 2005-11-01 20:40:36 gunter Exp $
+ * $Id: GetUserEpisodesServlet.java,v 1.10 2005-11-01 23:34:58 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -52,7 +52,8 @@ public class GetUserEpisodesServlet extends GenericServlet {
         }
        
         for (int i = 0; i != userEpisodes.length; i++)
-            userEpisodes[i].setTitle(filterContent(userEpisodes[i].getTitle()));
+            userEpisodes[i].getEpisode().setTitle(
+                    filterContent(userEpisodes[i].getEpisode().getTitle()));
 
         request.setAttribute("userEpisodesList", userEpisodes);
         request.setAttribute("program", program);
