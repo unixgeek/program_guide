@@ -33,7 +33,7 @@
   </c:choose>
   <td class="rowdata">${program.program.name}</td>
   <td class="rowdatacenter">${program.program.lastUpdate}</td>
-  <td class="rowdata"><a href="${program.url}">${program.program.url}</a></td>
+  <td class="rowdata"><a href="${program.program.url}">${program.program.url}</a></td>
  </tr>
  </c:forEach>
   <tr>
