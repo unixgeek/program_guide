@@ -12,7 +12,7 @@
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <div class="content">
-<h2>Account Settings</h2>
+<h2 class="title">Account Settings</h2>
 <p class="error">${message}</p>
 <table width="0%">
  <tr>
