@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.15 2005-11-02 17:53:19 gunter Exp $
+# $Id: scrape.sh,v 1.16 2005-11-02 18:57:36 gunter Exp $
 #
 # requires: lynx gawk
 #
@@ -25,7 +25,7 @@ echo "${PROGRAM} => ${DATA}"
 # Dump the page to stdout.
 lynx -nolist -dont_wrap_pre -dump "${URL}" | \
     # Find lines containing episode data.  
-    egrep -e '^([[:space:]]*\<[[:alnum:]]+\.[[:space:]]+|[[:space:]]+)\<[[:alnum:]]-[([:digit:]|[:space:][:digit:])]' | \
+    egrep -e '^([[:space:]]*\<[[:alnum:]]+\.[[:space:]]+|[[:space:]]+)\<[[:alnum:]]+-[([:digit:]|[:space:][:digit:])]' | \
     # Treat data as fixed length and ignore the first field. (Hack?)
     ${GAWK} -v FIELDWIDTHS="${FIELDS}" '{print $2 "|" $3 "|" $4 "|" $5}' | \
     # Convert spaces to _ to make the for loop work correctly.
