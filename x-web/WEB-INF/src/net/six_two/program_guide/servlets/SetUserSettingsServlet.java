@@ -1,5 +1,5 @@
 /*
- * $Id: SetUserSettingsServlet.java,v 1.3 2005-11-02 03:24:10 gunter Exp $
+ * $Id: SetUserSettingsServlet.java,v 1.4 2005-11-02 04:16:53 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -62,11 +62,13 @@ public class SetUserSettingsServlet extends GenericServlet {
         }
         
         if (password1.equals("") && action.equals("password")) {
+            request.setAttribute("username", username);
             error(request, response, "Invalid password.");
             return;
         }
         
         if (!password1.equals(password2) && action.equals("password")) {
+            request.setAttribute("username", username);
             error(request, response, "Passwords don't match.");
             return;
         }
