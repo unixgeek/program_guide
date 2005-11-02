@@ -11,22 +11,35 @@
 <body>
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
+<div class="content">
+<h2>Account Settings</h2>
 <p class="error">${message}</p>
-<form action="SetUserSettings.do" method="post">
-<table class="login" width="0%">
+<table width="0%">
  <tr>
-  <td>Username:</td>
-  <td><input type="text" name="username" value="${username}" /></td>
+  <form action="SetUserSettings.do" method="post">
+  <input type="hidden" name="action" value="username" />
+  <td align="right">Username:</td>
+  <td><input type="text" name="username" value="${sessionScope.user.username}" /></td>
+  <td><input type="submit" value="Update" /></td>
+  </form>
+ </tr>
+ <tr><td>&nbsp;</td></tr>
+ <tr>
+  <form action="SetUserSettings.do" method="post">
+  <input type="hidden" name="action" value="password" />
+  <td align="right">Password:</td>
+  <td><input type="password" name="password1" /></td>
+  <td>&nbsp;</td>
  </tr>
  <tr>
-  <td>Password:</td>
-  <td><input type="password" name="password" /></td>
- </tr>
- <tr>
-  <td align="right" colspan="2"><input type="submit" value="Update" /></td>
+  <td align="right">Password Again:</td>
+  <td><input type="password" name="password2" /></td>
+  <td><input type="submit" value="Update" /></td>
+  </form>
  </tr>
 </table>
-</form>
+</div>
+<br />
 <%@ include file="footer.jsp" %>
 </body>
 </html>
