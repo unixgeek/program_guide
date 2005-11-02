@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.14 2005-10-28 18:26:21 gunter Exp $
+# $Id: scrape.sh,v 1.15 2005-11-02 17:53:19 gunter Exp $
 #
 # requires: lynx gawk
 #
@@ -62,6 +62,14 @@ do
     echo "${ID}|${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${ORIGINAL_AIR_DATE}|${TITLE}|${SERIAL_NUMBER}" >> ${DATA}
 done
 
+DELETE=\
+"DELETE FROM episode
+WHERE program_id = ${ID}"
+mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} ${DATABASE} -e "${DELETE}"
+if [ "$?" -ne "0" ]; then
+    exit 1
+fi 
+
 LOAD=\
 "LOAD DATA LOCAL INFILE '${DATA}' REPLACE
 INTO TABLE episode FIELDS TERMINATED BY '|'
@@ -74,11 +82,11 @@ echo "${PROGRAM} => Loaded ${DATA}."
 
 UPDATE_DATE=`date '+%y-%m-%d %H:%M:%S'`
 
-SQL=\
+UPDATE=\
 "UPDATE program
 SET last_update = '${UPDATE_DATE}'
 WHERE id = ${ID}"
-mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} ${DATABASE} -e "${SQL}"
+mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} ${DATABASE} -e "${UPDATE}"
 if [ "$?" -ne "0" ]; then
     exit 1
 fi 
