@@ -10,7 +10,7 @@
 
 CREATE TABLE episode (
   program_id int(11) unsigned NOT NULL default '0',
-  season char(1) NOT NULL default '',
+  season varchar(2) NOT NULL default '',
   number smallint(6) unsigned NOT NULL default '0',
   production_code varchar(32) default NULL,
   original_air_date date default NULL,
@@ -39,7 +39,7 @@ CREATE TABLE program (
 CREATE TABLE queued (
   user_id int(11) NOT NULL default '0',
   program_id int(11) unsigned NOT NULL default '0',
-  season char(1) NOT NULL default '0',
+  season varchar(2) NOT NULL default '0',
   episode_number int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (user_id,program_id,season,episode_number)
 ) TYPE=MyISAM;
@@ -76,7 +76,7 @@ CREATE TABLE user (
 CREATE TABLE viewed (
   user_id int(11) NOT NULL default '0',
   program_id int(11) unsigned NOT NULL default '0',
-  season char(1) NOT NULL default '',
+  season varchar(2) NOT NULL default '',
   episode_number int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (user_id,program_id,season,episode_number)
 ) TYPE=MyISAM;
