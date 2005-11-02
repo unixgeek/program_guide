@@ -12,6 +12,7 @@
 <%@ include file="header.jsp" %>
 <p class="error">${message}</p>
 <form action="Register.do" method="post">
+<input type="hidden" name="action" value="${pageScope.action}" />
 <table class="login" width="0%">
  <tr>
   <td align="right">Username:</td>

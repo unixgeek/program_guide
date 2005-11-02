@@ -1,5 +1,5 @@
 /*
- * $Id: RegisterServlet.java,v 1.4 2005-11-01 23:49:49 gunter Exp $
+ * $Id: RegisterServlet.java,v 1.5 2005-11-02 04:16:29 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -33,10 +33,12 @@ public class RegisterServlet extends GenericServlet {
         String username = (String) request.getParameter("username");
         String password1 = (String) request.getParameter("password1");
         String password2 = (String) request.getParameter("password2");
+        String action = (String) request.getParameter("action");
         
         username = (username != null) ? username : "";
         password1 = (password1 != null) ? password1 : "";
         password2 = (password2 != null) ? password2 : "";
+        action = (action != null) ? action : "";
         
         if (username.equals("")) {
             error(request, response, "Invalid username.");
@@ -74,15 +76,19 @@ public class RegisterServlet extends GenericServlet {
             Persistor.insertUser(connection, user);
             
             connection.close();
-            
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
+            if (!action.equals("nologin"))
+                request.getSession().setAttribute("user", user);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayFrontPage.do");
-        dispatcher.forward(request, response);
+        if (!action.equals("nologin")) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayFrontPage.do");
+            dispatcher.forward(request, response);
+        }
+        else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("AdminUsers.do");
+            dispatcher.forward(request, response);
+        }
     }
     
     private void error(HttpServletRequest request, HttpServletResponse response,
