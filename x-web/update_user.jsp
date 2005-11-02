@@ -13,31 +13,45 @@
 <%@ include file="menu.jsp" %>
 <div class="content">
 <h2 class="title">Edit User</h2>
-<form action="UpdateUser.do" method="post">
-<input type="hidden" name="user_id" value="${candidateUser.id}" />
-<table class="tabledata" cellspacing="0" border="1">
+<p class="error">${message}</p>
+<table width="0%">
  <tr>
-  <th>Username</th>
-  <th>Password</th>
-  <th>Last Login Date</th>
-  <th>Registration Date</th>
-  <th>Level</td>
+  <form action="UpdateUser.do" method="post">
+  <input type="hidden" name="action" value="username" />
+  <input type="hidden" name="user_id" value="${candidateUser.id}" />
+  <td align="right">Username:</td>
+  <td><input type="text" name="username" value="${candidateUser.username}" /></td>
+  <td><input type="submit" value="Update" /></td>
+  </form>
+ </tr>
+ <tr><td>&nbsp;</td></tr>
+ <tr>
+  <form action="UpdateUser.do" method="post">
+  <input type="hidden" name="action" value="password" />
+  <input type="hidden" name="user_id" value="${candidateUser.id}" />
+  <td align="right">Password:</td>
+  <td><input type="password" name="password1" /></td>
+  <td>&nbsp;</td>
  </tr>
  <tr>
-  <td class="rowdata"><input type="text" name="username" value="${candidateUser.username}" /></td>
-  <td class="rowdata"><input type="password" name="password" /></td>
-  <td class="rowdatacenter">${candidateUser.lastLoginDate}</td>
-  <td class="rowdatacenter">${candidateUser.registrationDate}</td>
-  <td class="rowdata"><input type="text" name="level" value="${candidateUser.level}" /></td>
+  <td align="right">Password Again:</td>
+  <td><input type="password" name="password2" /></td>
+  <td><input type="submit" value="Update" /></td>
+  </form>
  </tr>
+ <tr><td>&nbsp;</td></tr>
  <tr>
-  <td align="right" colspan="5">
-   <input type="submit" value="Update" />
-  </td>
+  <form action="UpdateUser.do" method="post">
+  <input type="hidden" name="action" value="level" />
+  <input type="hidden" name="user_id" value="${candidateUser.id}" />
+  <td align="right">Level:</td>
+  <td><input type="text" name="level" value="${candidateUser.level}" /></td>
+  <td><input type="submit" value="Update" /></td>
+  </form>
  </tr>
 </table>
-</form>
 </div>
+<br />
 <%@ include file="footer.jsp" %>
 </body>
 </html>
