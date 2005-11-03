@@ -1,12 +1,12 @@
 /*
- * $Id: UserEpisodeRelation.java,v 1.2 2005-10-16 21:14:22 gunter Exp $
+ * $Id: UserEpisodeRelation.java,v 1.3 2005-11-03 01:44:05 gunter Exp $
  */
 package net.six_two.program_guide.tables;
 
 public class UserEpisodeRelation {
     private int episodeNumber;
     private int programId;
-    private char season;
+    private String season;
     private int userId;
     
     public UserEpisodeRelation() {
@@ -20,7 +20,7 @@ public class UserEpisodeRelation {
         this.userId = user.getId();
     }
     
-    public UserEpisodeRelation(int userId, int programId, char season,
+    public UserEpisodeRelation(int userId, int programId, String season,
             int episodeNumber) {
         this.episodeNumber = episodeNumber;
         this.programId = programId;
@@ -44,11 +44,11 @@ public class UserEpisodeRelation {
         this.programId = programId;
     }
 
-    public char getSeason() {
+    public String getSeason() {
         return season;
     }
 
-    public void setSeason(char season) {
+    public void setSeason(String season) {
         this.season = season;
     }
 

@@ -1,5 +1,5 @@
 /*
- * $Id: Queued.java,v 1.2 2005-10-16 21:14:22 gunter Exp $
+ * $Id: Queued.java,v 1.3 2005-11-03 01:44:05 gunter Exp $
  */
 package net.six_two.program_guide.tables;
 
@@ -12,7 +12,7 @@ public class Queued extends UserEpisodeRelation {
         super(user, episode);
     }
 
-    public Queued(int userId, int programId, char season,
+    public Queued(int userId, int programId, String season,
             int episodeNumber) {
         super(userId, programId, season, episodeNumber);
     }

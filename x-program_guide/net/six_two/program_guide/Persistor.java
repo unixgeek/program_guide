@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.21 2005-10-28 21:17:41 gunter Exp $
+ * $Id: Persistor.java,v 1.22 2005-11-03 01:44:05 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -54,7 +54,7 @@ public class Persistor {
         
         while (result.next()) {
             Episode episode = new Episode(result.getInt("e.program_id"),
-                    result.getString("e.season").charAt(0),
+                    result.getString("e.season"),
                     result.getInt("e.number"),
                     result.getString("e.production_code"),
                     result.getDate("e.original_air_date"),
@@ -129,7 +129,7 @@ public class Persistor {
                     result.getTimestamp("p.last_update"),
                     result.getShort("p.do_update"));
             Episode episode = new Episode(result.getInt("e.program_id"),
-                    result.getString("e.season").charAt(0),
+                    result.getString("e.season"),
                     result.getInt("e.number"),
                     result.getString("e.production_code"),
                     result.getDate("e.original_air_date"),
@@ -200,7 +200,7 @@ public class Persistor {
                     result.getTimestamp("p.last_update"),
                     result.getShort("p.do_update"));
             Episode episode = new Episode(result.getInt("e.program_id"),
-                    result.getString("e.season").charAt(0),
+                    result.getString("e.season"),
                     result.getInt("e.number"),
                     result.getString("e.production_code"),
                     result.getDate("e.original_air_date"),
@@ -453,7 +453,7 @@ public class Persistor {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
         statement.setInt(2, episode.getProgramId());
-        statement.setString(3, Character.toString(episode.getSeason()));
+        statement.setString(3, episode.getSeason());
         statement.setInt(4, episode.getNumber());
         
         statement.execute();
@@ -480,7 +480,7 @@ public class Persistor {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
         statement.setInt(2, episode.getProgramId());
-        statement.setString(3, Character.toString(episode.getSeason()));
+        statement.setString(3, episode.getSeason());
         statement.setInt(4, episode.getNumber());
         
         statement.execute();
@@ -857,7 +857,7 @@ public class Persistor {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
         statement.setInt(2, episode.getProgramId());
-        statement.setString(3, Character.toString(episode.getSeason()));
+        statement.setString(3, episode.getSeason());
         statement.setInt(4, episode.getNumber());
         
         statement.execute();
@@ -884,7 +884,7 @@ public class Persistor {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
         statement.setInt(2, episode.getProgramId());
-        statement.setString(3, Character.toString(episode.getSeason()));
+        statement.setString(3, episode.getSeason());
         statement.setInt(4, episode.getNumber());
         
         statement.execute();

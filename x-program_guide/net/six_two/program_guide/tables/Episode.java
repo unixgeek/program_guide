@@ -1,5 +1,5 @@
 /*
- * $Id: Episode.java,v 1.2 2005-10-28 18:26:49 gunter Exp $
+ * $Id: Episode.java,v 1.3 2005-11-03 01:44:05 gunter Exp $
  */
 package net.six_two.program_guide.tables;
 
@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Episode {
     private int programId;
-    private char season;
+    private String season;
     private int number;
     private String productionCode;
     private Date originalAirDate;
@@ -18,7 +18,7 @@ public class Episode {
         
     }
     
-    public Episode(int programId, char season, int number,
+    public Episode(int programId, String season, int number,
             String productionCode, Date originalAirDate, String title,
             int serialNumber) {
         this.number = number;
@@ -61,11 +61,11 @@ public class Episode {
         this.programId = programId;
     }
     
-    public char getSeason() {
+    public String getSeason() {
         return season;
     }
     
-    public void setSeason(char season) {
+    public void setSeason(String season) {
         this.season = season;
     }
     
