@@ -12,8 +12,8 @@
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <div class="content">
-<h2>Edit Subscriptions</h2>
 <form action="SetUserPrograms.do" method="post">
+<h2>Edit Subscriptions&nbsp;<input type="submit" value="Update" /></h2>
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
   <th>Subscribed</th>
@@ -36,12 +36,8 @@
   <td class="rowdata"><a href="${program.program.url}">${program.program.url}</a></td>
  </tr>
  </c:forEach>
-  <tr>
-  <td align="right" colspan="4">
-   <input type="submit" value="Update" />
-  </td>
- </tr>
 </table>
+</form>
 </div>
 <%@ include file="footer.jsp" %>
 </body>
