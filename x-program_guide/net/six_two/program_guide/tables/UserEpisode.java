@@ -1,5 +1,5 @@
 /*
- * $Id: UserEpisode.java,v 1.1 2005-10-16 05:02:59 gunter Exp $
+ * $Id: UserEpisode.java,v 1.2 2005-11-03 05:07:23 gunter Exp $
  */
 package net.six_two.program_guide.tables;
 
@@ -8,6 +8,7 @@ public class UserEpisode {
     private Program program;
     private short queued;
     private short viewed;
+    private String status = "none";
     
     public UserEpisode() {
         
@@ -51,5 +52,13 @@ public class UserEpisode {
 
     public void setViewed(short viewed) {
         this.viewed = viewed;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
