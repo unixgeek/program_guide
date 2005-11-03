@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.17 2005-11-03 14:36:21 gunter Exp $
+# $Id: scrape.sh,v 1.18 2005-11-03 16:17:28 gunter Exp $
 #
 # requires: lynx gawk
 #
-. program_guide.config
+. ${HOME}/.program_guide.conf
 
 if [ "$#" -ne "3" ]; then
     echo "usage: `basename $0` id program url"

@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# $Id: update_programs.sh,v 1.7 2005-11-03 14:35:04 gunter Exp $
+# $Id: update_programs.sh,v 1.8 2005-11-03 16:17:28 gunter Exp $
 #
-. program_guide.config
+. ${HOME}/.program_guide.conf
 
 BEFORE=`mktemp /tmp/update_programs.before.XXXXXX`
 AFTER=`mktemp /tmp/update_programs.after.XXXXXX`
