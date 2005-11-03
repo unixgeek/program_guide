@@ -1,5 +1,5 @@
 /*
- * $Id: SetUserEpisodesServlet.java,v 1.3 2005-10-29 00:59:41 gunter Exp $
+ * $Id: SetUserEpisodesServlet.java,v 1.4 2005-11-03 03:29:05 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -49,7 +49,7 @@ public class SetUserEpisodesServlet extends GenericServlet {
                     String tokens[] = queued[i].split("_");
                     Episode episode = new Episode();
                     episode.setProgramId(program_id);
-                    episode.setSeason(tokens[0].charAt(0));
+                    episode.setSeason(tokens[0]);
                     episode.setNumber(Integer.parseInt(tokens[1]));
                     
                     Persistor.insertQueuedForUser(connection, user, episode);
@@ -64,7 +64,7 @@ public class SetUserEpisodesServlet extends GenericServlet {
                     String tokens[] = viewed[i].split("_");
                     Episode episode = new Episode();
                     episode.setProgramId(program_id);
-                    episode.setSeason(tokens[0].charAt(0));
+                    episode.setSeason(tokens[0]);
                     episode.setNumber(Integer.parseInt(tokens[1]));
                     
                     Persistor.insertViewedForUser(connection, user, episode);

@@ -13,6 +13,27 @@
 <%@ include file="menu.jsp" %>
 <div class="content">
 <h2>Schedule</h2>
+<h3>Today</h3>
+<table class="tabledata" cellspacing="0" border="1">
+ <tr>
+  <th>Program</th>
+  <th>Season</th>
+  <th>Episode</th>
+  <th>Production Code</th>
+  <th>Original Air Date</th>
+  <th>Title</th>
+ </tr>
+ <c:forEach var="userEpisode" items="${todaysEpisodesList}">
+ <tr>
+  <td class="rowdata"><a href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
+  <td class="rowdatacenter">${userEpisode.episode.season}</td>
+  <td class="rowdatacenter">${userEpisode.episode.number}</td>
+  <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
+  <td class="rowdatacenter">${userEpisode.episode.originalAirDate}</td>
+  <td class="rowdata">${userEpisode.episode.title}</td>
+ </tr>
+ </c:forEach>
+</table>
 <h3>Next 6 Days</h3>
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
