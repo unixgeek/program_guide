@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.22 2005-11-03 01:44:05 gunter Exp $
+ * $Id: Persistor.java,v 1.23 2005-11-03 03:27:54 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -162,7 +162,7 @@ public class Persistor {
     }
     
     public static UserEpisode[] selectAllEpisodesForUser(Connection connection,
-            User user, int dayRange) throws SQLException {
+            User user, int fromDay, int toDay) throws SQLException {
         ArrayList userEpisodes = new ArrayList();
         
         if (user == null)
@@ -177,18 +177,19 @@ public class Persistor {
             + "LEFT JOIN episode e "
             + "ON s.program_id = e.program_id "
             + "WHERE u.id = ? ";
-        if (dayRange >= 0)
-            sql += "AND original_air_date >= CURRENT_DATE() "
+        if (fromDay >= 0)
+            sql += "AND original_air_date >= (CURRENT_DATE() + INTERVAL ? DAY) "
                  + "AND original_air_date <= (CURRENT_DATE() + INTERVAL ? DAY) "
                  + "ORDER BY e.original_air_date ASC";
         else
-            sql += "AND original_air_date <= CURRENT_DATE() "
+            sql += "AND original_air_date <= (CURRENT_DATE() + INTERVAL ? DAY) "
                  + "AND original_air_date >= (CURRENT_DATE() + INTERVAL ? DAY) "
                  + "ORDER BY e.original_air_date DESC";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
-        statement.setInt(2, dayRange);
+        statement.setInt(2, fromDay);
+        statement.setInt(3, toDay);
         statement.execute();
         
         ResultSet result = statement.getResultSet();
