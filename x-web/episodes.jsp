@@ -12,9 +12,9 @@
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <div class="content">
-<h2>${program.name}</h2>
 <form action="SetUserEpisodes.do" method="post">
 <input type="hidden" name="program_id" value="${program.id}" />
+<h2>${program.name}&nbsp;<input type="submit" value="Update" /></h2>
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
   <th>Season</th>
@@ -22,8 +22,7 @@
   <th>Production Code</th>
   <th>Original Air Date</th>
   <th>Title</th>
-  <th>Queued</th>
-  <th>Viewed</th>
+  <th>Status</th>
  </tr>
  <c:forEach var="userEpisode" items="${userEpisodesList}">
  <tr>
@@ -32,29 +31,29 @@
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
   <td class="rowdatacenter">${userEpisode.episode.originalAirDate}</td>
   <td class="rowdata">${userEpisode.episode.title}</td>
-  <c:choose>
-   <c:when test='${userEpisode.queued == 1}'>
-  <td class="rowdatacenter"><input type="checkbox" name="queued" value="${userEpisode.episode.season}_${userEpisode.episode.number}" checked="checked" /></td>
-   </c:when>
-   <c:otherwise>
-  <td class="rowdatacenter"><input type="checkbox" name="queued" value="${userEpisode.episode.season}_${userEpisode.episode.number}" /></td>
-   </c:otherwise>
-  </c:choose>
-  <c:choose>
-   <c:when test='${userEpisode.viewed == 1}'>
-  <td class="rowdatacenter"><input type="checkbox" name="viewed" value="${userEpisode.episode.season}_${userEpisode.episode.number}" checked="checked" /></td>
-   </c:when>
-   <c:otherwise>
-  <td class="rowdatacenter"><input type="checkbox" name="viewed" value="${userEpisode.episode.season}_${userEpisode.episode.number}" /></td>
-   </c:otherwise>
-  </c:choose>
- </tr>
- </c:forEach>
- <tr>
-  <td align="right" colspan="7">
-   <input type="submit" value="Update" />
+  <td class="rowdatacenter">
+   <select name="status">
+   <c:choose>
+    <c:when test='${userEpisode.status == "none"}'>
+    <option value="none" selected="true">None</option>
+    <option value="queued">Queued</option>
+    <option value="viewed">Viewed</option>
+    </c:when>
+    <c:when test='${userEpisode.status == "queued"}'>
+    <option value="none" selected="true">None</option>
+    <option value="queued" selected="true">Queued</option>
+    <option value="viewed">Viewed</option>
+    </c:when>
+    <c:when test='${userEpisode.status == "viewed"}'>
+    <option value="none" selected="true">None</option>
+    <option value="queued">Queued</option>
+    <option value="viewed" selected="true">Viewed</option>
+    </c:when>
+   </c:choose>
+   </select>
   </td>
  </tr>
+ </c:forEach>
 </table>
 </form>
 </div>
