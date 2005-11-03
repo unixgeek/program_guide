@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.23 2005-11-03 03:27:54 gunter Exp $
+ * $Id: Persistor.java,v 1.24 2005-11-03 04:34:43 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -43,7 +43,7 @@ public class Persistor {
             + "    AND v.episode_number = e.number) "
             + "WHERE u.id = ? "
             + "AND e.program_id = ? "
-            + "ORDER BY program_id, serial_number";
+            + "ORDER BY program_id, serial_number DESC";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
@@ -114,7 +114,7 @@ public class Persistor {
             + "    AND v.season = e.season "
             + "    AND v.episode_number = e.number) "
             + "WHERE u.id = ? "
-            + "ORDER BY program_id, serial_number";
+            + "ORDER BY program_id, serial_number DESC";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
