@@ -25,29 +25,31 @@
   <th>Status</th>
  </tr>
  <c:forEach var="userEpisode" items="${userEpisodesList}">
- <tr>
+ <tr class="row${userEpisode.status}">
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
   <td class="rowdatacenter">${userEpisode.episode.originalAirDate}</td>
   <td class="rowdata">${userEpisode.episode.title}</td>
-  <td class="rowdatacenter">
-   <select name="status">
+  <td class="rowdata">
    <c:choose>
     <c:when test='${userEpisode.status == "none"}'>
-    <option value="none" selected="true">None</option>
-    <option value="queued">Queued</option>
-    <option value="viewed">Viewed</option>
+   <select name="status">
+    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_none" selected="true">None</option>
+    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_queued">Queued</option>
+    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_viewed">Viewed</option>
     </c:when>
     <c:when test='${userEpisode.status == "queued"}'>
-    <option value="none" selected="true">None</option>
-    <option value="queued" selected="true">Queued</option>
-    <option value="viewed">Viewed</option>
+   <select name="status">
+    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_none" selected="true">None</option>
+    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_queued" selected="true">Queued</option>
+    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_viewed">Viewed</option>
     </c:when>
     <c:when test='${userEpisode.status == "viewed"}'>
-    <option value="none" selected="true">None</option>
-    <option value="queued">Queued</option>
-    <option value="viewed" selected="true">Viewed</option>
+   <select name="status">
+    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_none" selected="true">None</option>
+    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_queued">Queued</option>
+    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_viewed" selected="true">Viewed</option>
     </c:when>
    </c:choose>
    </select>

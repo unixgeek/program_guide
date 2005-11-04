@@ -1,5 +1,5 @@
 /*
- * $Id: SetUserEpisodesServlet.java,v 1.4 2005-11-03 03:29:05 gunter Exp $
+ * $Id: SetUserEpisodesServlet.java,v 1.5 2005-11-04 03:56:35 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -41,35 +41,23 @@ public class SetUserEpisodesServlet extends GenericServlet {
         try {
             Program program = Persistor.selectProgram(connection, program_id);
             
-            Persistor.deleteQueuedForUser(connection, user, program);
+            Persistor.deleteStatusForUser(connection, user, program);
             
-            String[] queued = request.getParameterValues("queued");
-            if (queued != null) {
-                for (int i = 0; i != queued.length; i++) {
-                    String tokens[] = queued[i].split("_");
+            String[] episodeStatus = request.getParameterValues("status");
+            if (episodeStatus != null) {
+                for (int i = 0; i != episodeStatus.length; i++) {
+                    String tokens[] = episodeStatus[i].split("_");
                     Episode episode = new Episode();
                     episode.setProgramId(program_id);
                     episode.setSeason(tokens[0]);
                     episode.setNumber(Integer.parseInt(tokens[1]));
                     
-                    Persistor.insertQueuedForUser(connection, user, episode);
+                    if (tokens[2].equals("queued") || tokens[2].equals("viewed"))
+                        Persistor.insertStatusForUser(connection, user, 
+                                episode, tokens[2]);
                 }
             }
             
-            Persistor.deleteViewedForUser(connection, user, program);
-            
-            String[] viewed = request.getParameterValues("viewed");
-            if (viewed != null) {
-                for (int i = 0; i != viewed.length; i++) {
-                    String tokens[] = viewed[i].split("_");
-                    Episode episode = new Episode();
-                    episode.setProgramId(program_id);
-                    episode.setSeason(tokens[0]);
-                    episode.setNumber(Integer.parseInt(tokens[1]));
-                    
-                    Persistor.insertViewedForUser(connection, user, episode);
-                }
-            }
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
