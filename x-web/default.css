@@ -43,6 +43,14 @@ text-align: left;
     padding-right: 1em;
 }*/
 
+.rowqueued {
+    background-color: yellow;
+}
+
+.rowviewed {
+    background-color: green;
+}
+
 .rowdatacenter {
    /* padding-left: 1em;
     padding-right: 1em;*/
