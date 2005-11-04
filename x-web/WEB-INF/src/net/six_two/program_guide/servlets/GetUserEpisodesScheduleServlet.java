@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserEpisodesScheduleServlet.java,v 1.4 2005-11-03 03:29:05 gunter Exp $
+ * $Id: GetUserEpisodesScheduleServlet.java,v 1.5 2005-11-04 19:15:53 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -60,6 +60,7 @@ public class GetUserEpisodesScheduleServlet extends GenericServlet {
             request.setAttribute("previousEpisodesList", previousEpisodes);
         } catch (SQLException e) {
             redirectError(request, response, e.getMessage());
+            return;
         }
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("schedule.jsp");
