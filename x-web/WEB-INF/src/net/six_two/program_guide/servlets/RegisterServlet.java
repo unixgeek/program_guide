@@ -1,5 +1,5 @@
 /*
- * $Id: RegisterServlet.java,v 1.5 2005-11-02 04:16:29 gunter Exp $
+ * $Id: RegisterServlet.java,v 1.6 2005-11-04 04:23:34 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -11,7 +11,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.UserManager;

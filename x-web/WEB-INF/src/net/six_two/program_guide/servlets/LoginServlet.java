@@ -1,5 +1,5 @@
 /*
- * $Id: LoginServlet.java,v 1.4 2005-10-29 01:08:21 gunter Exp $
+ * $Id: LoginServlet.java,v 1.5 2005-11-04 04:23:34 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -8,15 +8,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.sql.DataSource;
 
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.UserManager;
