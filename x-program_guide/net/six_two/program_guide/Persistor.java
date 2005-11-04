@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.26 2005-11-04 04:10:17 gunter Exp $
+ * $Id: Persistor.java,v 1.27 2005-11-04 19:13:03 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -76,7 +76,8 @@ public class Persistor {
         if (user == null)
             throw new SQLException("Attempted operation with a null user.");
         
-        String sql = "SELECT p.*, e.* "
+        String sql = "SELECT p.*, e.*, "
+            + "IFNULL(t.status, 'none') AS status "
             + "FROM user u "
             + "LEFT JOIN subscribed s "
             + "ON u.id = s.user_id "
@@ -84,6 +85,11 @@ public class Persistor {
             + "ON s.program_id = p.id "
             + "LEFT JOIN episode e "
             + "ON s.program_id = e.program_id "
+            + "LEFT JOIN status t "
+            + "ON (u.id = t.user_id "
+            + "    AND t.program_id = e.program_id "
+            + "    AND t.season = e.season "
+            + "    AND t.episode_number = e.number) "
             + "WHERE u.id = ? ";
         if (fromDay >= 0)
             sql += "AND original_air_date >= (CURRENT_DATE() + INTERVAL ? DAY) "
@@ -115,7 +121,8 @@ public class Persistor {
                     result.getDate("e.original_air_date"),
                     result.getString("e.title"),
                     result.getInt("e.serial_number"));
-            userEpisodes.add(new UserEpisode(program, episode, "none"));
+            String status = result.getString("status");
+            userEpisodes.add(new UserEpisode(program, episode, status));
         }
         result.close();
         statement.close();
