@@ -24,7 +24,7 @@
   <th>Title</th>
  </tr>
  <c:forEach var="userEpisode" items="${todaysEpisodesList}">
- <tr>
+ <tr class="row${userEpisode.status}">
   <td class="rowdata"><a href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
@@ -45,7 +45,7 @@
   <th>Title</th>
  </tr>
  <c:forEach var="userEpisode" items="${nextEpisodesList}">
- <tr>
+ <tr class="row${userEpisode.status}">
   <td class="rowdata"><a href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
@@ -57,7 +57,7 @@
 </table>
 <h3>Previous 6 Days</h3>
 <table class="tabledata" cellspacing="0" border="1">
- <tr>
+ <tr class="row${userEpisode.status}">
   <th>Program</th>
   <th>Season</th>
   <th>Episode</th>
