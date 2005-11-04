@@ -15,7 +15,7 @@
   </resource-ref>
   <listener>
       <listener-class>
-          net.six_two.program_guide.servlets.ContextListener
+          net.six_two.program_guide.ContextListener
       </listener-class>
   </listener>
   <servlet>
