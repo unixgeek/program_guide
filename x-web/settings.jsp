@@ -14,32 +14,37 @@
 <div class="content">
 <h2 class="title">Account Settings</h2>
 <p class="error">${message}</p>
+<form action="SetUserSettings.do" method="post">
 <table width="0%">
  <tr>
-  <form action="SetUserSettings.do" method="post">
-  <input type="hidden" name="action" value="username" />
   <td align="right">Username:</td>
-  <td><input type="text" name="username" value="${sessionScope.user.username}" /></td>
+  <td>
+   <input type="hidden" name="action" value="username" />
+   <input type="text" name="username" value="${sessionScope.user.username}" />
+  </td>
   <td><input type="submit" value="Update" /></td>
-  </form>
  </tr>
- <tr><td>&nbsp;</td></tr>
+</table>
+</form>
+<form action="SetUserSettings.do" method="post">
+<table width="0%">
  <tr>
-  <form action="SetUserSettings.do" method="post">
-  <input type="hidden" name="action" value="password" />
   <td align="right">Password:</td>
-  <td><input type="password" name="password1" /></td>
+  <td>
+   <input type="hidden" name="action" value="password" />
+   <input type="password" name="password1" />
+  </td>
   <td>&nbsp;</td>
  </tr>
  <tr>
   <td align="right">Password Again:</td>
   <td><input type="password" name="password2" /></td>
   <td><input type="submit" value="Update" /></td>
-  </form>
  </tr>
 </table>
-</div>
+</form>
 <br />
+</div>
 <%@ include file="footer.jsp" %>
 </body>
 </html>
