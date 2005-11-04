@@ -17,7 +17,7 @@
 <form action="SetUserSettings.do" method="post">
 <table width="0%">
  <tr>
-  <td align="right">Username:</td>
+  <td>Username:</td>
   <td>
    <input type="hidden" name="action" value="username" />
    <input type="text" name="username" value="${sessionScope.user.username}" />
@@ -29,7 +29,7 @@
 <form action="SetUserSettings.do" method="post">
 <table width="0%">
  <tr>
-  <td align="right">Password:</td>
+  <td>Password:</td>
   <td>
    <input type="hidden" name="action" value="password" />
    <input type="password" name="password1" />
@@ -37,7 +37,7 @@
   <td>&nbsp;</td>
  </tr>
  <tr>
-  <td align="right">Password Again:</td>
+  <td>Password Again:</td>
   <td><input type="password" name="password2" /></td>
   <td><input type="submit" value="Update" /></td>
  </tr>
