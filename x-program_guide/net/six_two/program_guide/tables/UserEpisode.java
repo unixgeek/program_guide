@@ -1,25 +1,21 @@
 /*
- * $Id: UserEpisode.java,v 1.2 2005-11-03 05:07:23 gunter Exp $
+ * $Id: UserEpisode.java,v 1.3 2005-11-04 03:55:37 gunter Exp $
  */
 package net.six_two.program_guide.tables;
 
 public class UserEpisode {
     private Episode episode;
     private Program program;
-    private short queued;
-    private short viewed;
-    private String status = "none";
+    private String status;
     
     public UserEpisode() {
         
     }
     
-    public UserEpisode(Program program, Episode episode, short queued, 
-            short viewed) {
+    public UserEpisode(Program program, Episode episode, String status) {
         this.program = program;
         this.episode = episode;
-        this.queued = queued;
-        this.viewed = viewed;
+        this.status = status;
     }
 
     public Episode getEpisode() {
@@ -36,22 +32,6 @@ public class UserEpisode {
 
     public void setProgram(Program program) {
         this.program = program;
-    }
-
-    public short getQueued() {
-        return queued;
-    }
-
-    public void setQueued(short queued) {
-        this.queued = queued;
-    }
-
-    public short getViewed() {
-        return viewed;
-    }
-
-    public void setViewed(short viewed) {
-        this.viewed = viewed;
     }
 
     public String getStatus() {
