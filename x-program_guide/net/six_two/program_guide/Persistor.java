@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.25 2005-11-04 03:56:10 gunter Exp $
+ * $Id: Persistor.java,v 1.26 2005-11-04 04:10:17 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -47,70 +47,6 @@ public class Persistor {
         ResultSet result = statement.getResultSet();
         
         while (result.next()) {
-            Episode episode = new Episode(result.getInt("e.program_id"),
-                    result.getString("e.season"),
-                    result.getInt("e.number"),
-                    result.getString("e.production_code"),
-                    result.getDate("e.original_air_date"),
-                    result.getString("e.title"),
-                    result.getInt("e.serial_number"));
-            String status = result.getString("status");
-            
-            userEpisodes.add(new UserEpisode(program, episode, status));
-        }
-        result.close();
-        statement.close();
-        
-        UserEpisode[] userEpisodesArray = new UserEpisode[userEpisodes.size()];
-        for (int i = 0; i != userEpisodes.size(); i++) {
-            userEpisodesArray[i] = (UserEpisode) userEpisodes.get(i);
-        }
-        
-        return userEpisodesArray;
-    }
-    
-    public static UserEpisode[] selectAllEpisodesForUser(Connection connection,
-            User user) throws SQLException {
-        ArrayList userEpisodes = new ArrayList();
-        
-        if (user == null)
-            throw new SQLException("Attempted operation with a null user.");
-        
-        String sql = "SELECT p.*, e.*, "
-            + "IFNULL(q.user_id, 0) AS queued, "
-            + "IFNULL(v.user_id, 0) AS viewed "
-            + "FROM user u "
-            + "LEFT JOIN subscribed s "
-            + "ON u.id = s.user_id "
-            + "LEFT JOIN program p "
-            + "ON s.program_id = p.id "
-            + "LEFT JOIN episode e "
-            + "ON s.program_id = e.program_id "
-            + "LEFT JOIN queued q "
-            + "ON (u.id = q.user_id "
-            + "    AND q.program_id = e.program_id "
-            + "    AND q.season = e.season "
-            + "    AND q.episode_number = e.number) "
-            + "LEFT JOIN viewed v "
-            + "ON (u.id = v.user_id "
-            + "    AND v.program_id = e.program_id "
-            + "    AND v.season = e.season "
-            + "    AND v.episode_number = e.number) "
-            + "WHERE u.id = ? "
-            + "ORDER BY program_id, serial_number DESC";
-        
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, user.getId());
-        statement.execute();
-        
-        ResultSet result = statement.getResultSet();
-        
-        while (result.next()) {
-            Program program = new Program(result.getInt("p.id"),
-                    result.getString("p.name"),
-                    result.getString("p.url"),
-                    result.getTimestamp("p.last_update"),
-                    result.getShort("p.do_update"));
             Episode episode = new Episode(result.getInt("e.program_id"),
                     result.getString("e.season"),
                     result.getInt("e.number"),
@@ -437,33 +373,6 @@ public class Persistor {
     }
     
     public static int deleteStatusForUser(Connection connection, User user, 
-            Episode episode) throws SQLException {
-        String sql = "DELETE FROM status "
-            + "WHERE user_id = ? "
-            + "AND program_id = ? "
-            + "AND season = ? "
-            + "AND episode_number = ?";
-        
-        if (user == null)
-            throw new SQLException("Attempted operation with a null user.");
-        if (episode == null)
-            throw new SQLException("Attempted operation with a null episode.");
-        
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, user.getId());
-        statement.setInt(2, episode.getProgramId());
-        statement.setString(3, episode.getSeason());
-        statement.setInt(4, episode.getNumber());
-        
-        statement.execute();
-        int count = statement.getUpdateCount();
-        
-        statement.close();
-        
-        return count;
-    }
-    
-    public static int deleteStatusForUser(Connection connection, User user, 
             Program program) throws SQLException {
         String sql = "DELETE FROM status "
             + "WHERE user_id = ? "
@@ -525,68 +434,12 @@ public class Persistor {
     /* status table **********************************************************/
     
     /* subscribed table ******************************************************/    
-    public static Subscribed[] selectSubscribedForUser(Connection connection,
-            User user) throws SQLException {
-        ArrayList subscriptions = new ArrayList();
-        
-        String sql = "SELECT * FROM subscribed "
-            + "WHERE user_id = ?";
-        
-        if (user == null)
-            throw new SQLException("Attempted operation with a null user.");
-        
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, user.getId());
-        statement.execute();;
-        ResultSet result = statement.getResultSet();
-        
-        while (result.next()) {
-            Subscribed subscribed = new Subscribed();
-            subscribed.setUserId(result.getInt("user_id"));
-            subscribed.setProgramId(result.getInt("program_id"));
-            
-            subscriptions.add(subscribed);
-        }
-        result.close();
-        statement.close();
-        
-        Subscribed[] subscriptionsArray = new Subscribed[subscriptions.size()];
-        for (int i = 0; i != subscriptions.size(); i++) {
-            subscriptionsArray[i] = (Subscribed) subscriptions.get(i);
-        }
-        
-        return subscriptionsArray;
-    }
-    
     public static int insertSubscribedForUser(Connection connection, 
             User user, Program program) throws SQLException {
         String sql = "INSERT INTO subscribed VALUES (?, ?)";
         
         if (user == null)
             throw new SQLException("Attempted operation with a null user.");
-        
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, user.getId());
-        statement.setInt(2, program.getId());
-        
-        statement.execute();
-        int count = statement.getUpdateCount();
-        
-        statement.close();
-        
-        return count;
-    }
-    
-    public static int deleteSubscribedForUser(Connection connection, User user, 
-            Program program) throws SQLException {
-        String sql = "DELETE FROM subscribed "
-            + "WHERE user_id = ? "
-            + "AND program_id = ?";
-        
-        if (user == null)
-            throw new SQLException("Attempted operation with a null user.");
-        if (program == null)
-            throw new SQLException("Attempted operation with a null program.");
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
