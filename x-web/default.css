@@ -105,7 +105,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: palatino, serif;
 }
 
-#footer {
+.footer {
     font-size: 75%;
     background-color: #2E383E;
     color: #4CB2EA;
@@ -113,6 +113,6 @@ h1, h2, h3, h4, h5, h6 {
     text-align: right;
 }
 
-a#footer {
+a.footer {
     text-decoration: none;
 }

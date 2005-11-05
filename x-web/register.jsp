@@ -33,7 +33,7 @@
  </tr>
 </table>
 </form>
-<br />
+<div><br /></div>
 <%@ include file="footer.jsp" %>
 </body>
 </html>

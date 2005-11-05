@@ -14,7 +14,7 @@
 <div class="content">
 <h2>Edit Program</h2>
 <form action="UpdateProgram.do" method="post">
-<input type="hidden" name="program_id" value="${program.id}" />
+<p><input type="hidden" name="program_id" value="${program.id}" /></p>
 <table cellspacing="0" border="1">
  <tr>
   <th class="rowheader">Name</th>
@@ -28,7 +28,7 @@
   <td class="rowdatacenter">${program.lastUpdate}</td>
   <c:choose>
    <c:when test='${program.doUpdate == 1}'>
-  <td class="rowdatacenter"><input type="checkbox" name="do_update" checked value="1" /></td>
+  <td class="rowdatacenter"><input type="checkbox" name="do_update" checked="checked" value="1" /></td>
    </c:when>
    <c:otherwise>
   <td class="rowdatacenter"><input type="checkbox" name="do_update" value="1" /></td>

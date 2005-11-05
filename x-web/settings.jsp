@@ -26,6 +26,7 @@
  </tr>
 </table>
 </form>
+<br />
 <form action="SetUserSettings.do" method="post">
 <table width="0%">
  <tr>

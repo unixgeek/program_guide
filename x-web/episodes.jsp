@@ -13,7 +13,7 @@
 <%@ include file="menu.jsp" %>
 <div class="content">
 <form action="SetUserEpisodes.do" method="post">
-<input type="hidden" name="program_id" value="${program.id}" />
+<p><input type="hidden" name="program_id" value="${program.id}" /></p>
 <h2>${program.name}&nbsp;<input type="submit" value="Update" /></h2>
 <table cellspacing="0" border="1">
  <tr>
@@ -35,21 +35,21 @@
    <c:choose>
     <c:when test='${userEpisode.status == "none"}'>
    <select name="status">
-    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_none" selected="true">None</option>
+    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_none" selected="selected">None</option>
     <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_queued">Queued</option>
     <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_viewed">Viewed</option>
     </c:when>
     <c:when test='${userEpisode.status == "queued"}'>
    <select name="status">
-    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_none" selected="true">None</option>
-    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_queued" selected="true">Queued</option>
+    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_none">None</option>
+    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_queued" selected="selected">Queued</option>
     <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_viewed">Viewed</option>
     </c:when>
     <c:when test='${userEpisode.status == "viewed"}'>
    <select name="status">
-    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_none" selected="true">None</option>
+    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_none">None</option>
     <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_queued">Queued</option>
-    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_viewed" selected="true">Viewed</option>
+    <option value="${userEpisode.episode.season}_${userEpisode.episode.number}_viewed" selected="selected">Viewed</option>
     </c:when>
    </c:choose>
    </select>

@@ -76,9 +76,8 @@
  </tr>
  </c:forEach>
 </table>
-</form>
-</div>
 <br />
+</div>
 <%@ include file="footer.jsp" %>
 </body>
 </html>

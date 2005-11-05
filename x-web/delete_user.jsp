@@ -14,7 +14,7 @@
 <div class="content">
 <h2 class="title">Delete User</h2>
 <form action="DeleteUser.do" method="post">
-<input type="hidden" name="user_id" value="${candidateUser.id}" />
+<p><input type="hidden" name="user_id" value="${candidateUser.id}" /></p>
 <table cellspacing="0" border="1">
  <tr>
   <th class="rowheader">Username</th>
@@ -37,8 +37,8 @@
  </tr>
 </table>
 </form>
-</div>
 <br />
+</div>
 <%@ include file="footer.jsp" %>
 </body>
 </html>

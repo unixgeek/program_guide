@@ -36,8 +36,8 @@
   <td colspan="6" align="right"><a class="rowdata" href="InsertProgram.do">Add new program</a></td>
  </tr>
 </table>
-</div>
 <br />
+</div>
 <%@ include file="footer.jsp" %>
 </body>
 </html>
