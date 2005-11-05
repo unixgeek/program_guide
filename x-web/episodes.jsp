@@ -15,7 +15,7 @@
 <form action="SetUserEpisodes.do" method="post">
 <input type="hidden" name="program_id" value="${program.id}" />
 <h2>${program.name}&nbsp;<input type="submit" value="Update" /></h2>
-<table class="tabledata" cellspacing="0" border="1">
+<table cellspacing="0" border="1">
  <tr>
   <th class="rowheader">Season</th>
   <th class="rowheader">Episode</th>

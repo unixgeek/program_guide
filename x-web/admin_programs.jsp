@@ -13,7 +13,7 @@
 <%@ include file="menu.jsp" %>
 <div class="content">
 <h2 class="title">Admin Programs</h2>
-<table class="tabledata" cellspacing="0" border="1">
+<table cellspacing="0" border="1">
  <tr>
   <th class="rowheader">Name</th>
   <th class="rowheader">Update URL</th>

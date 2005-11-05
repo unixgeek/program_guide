@@ -15,7 +15,7 @@
 <h2>Delete Program</h2>
 <form action="DeleteProgram.do" method="post">
 <input type="hidden" name="program_id" value="${program.id}" />
-<table class="tabledata" cellspacing="0" border="1">
+<table cellspacing="0" border="1">
  <tr>
   <th class="rowheader">Name</th>
   <th class="rowheader">Update URL</th>

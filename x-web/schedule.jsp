@@ -14,7 +14,7 @@
 <div class="content">
 <h2>Schedule</h2>
 <h3>Today</h3>
-<table class="tabledata" cellspacing="0" border="1">
+<table cellspacing="0" border="1">
  <tr>
   <th class="rowheader">Program</th>
   <th class="rowheader">Season</th>
@@ -35,7 +35,7 @@
  </c:forEach>
 </table>
 <h3>Next 6 Days</h3>
-<table class="tabledata" cellspacing="0" border="1">
+<table cellspacing="0" border="1">
  <tr>
   <th class="rowheader">Program</th>
   <th class="rowheader">Season</th>
@@ -56,7 +56,7 @@
  </c:forEach>
 </table>
 <h3>Previous 6 Days</h3>
-<table class="tabledata" cellspacing="0" border="1">
+<table cellspacing="0" border="1">
  <tr class="row${userEpisode.status}">
   <th class="rowheader">Program</th>
   <th class="rowheader">Season</th>
