@@ -28,7 +28,7 @@
   <td class="rowdatacenter">${program.lastUpdate}</td>
   <c:choose>
    <c:when test='${program.doUpdate == 1}'>
-  <td class="rowdatacenter"><input type="checkbox" name="do_update" checked value="0" /></td>
+  <td class="rowdatacenter"><input type="checkbox" name="do_update" checked value="1" /></td>
    </c:when>
    <c:otherwise>
   <td class="rowdatacenter"><input type="checkbox" name="do_update" value="1" /></td>
