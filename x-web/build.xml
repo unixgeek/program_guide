@@ -68,6 +68,7 @@ ant distclean   remove all build files and dist files</echo>
                classpath="${package.buildClasspath}:${tomcat.name}-${tomcat.version}/common/lib/servlet-api.jar"
                listfiles="${verbose}"
                optimize="true" />
+        <copy file="${propertyfile}" todir="${builddir}/net/six_two/program_guide/servlets" />
     </target>
 
     <target name="war" depends="build">
