@@ -1,4 +1,4 @@
-<div class="menu">
+<div id="menu">
  <a class="menuitem" href="GetUserPrograms.do">Programs</a>
  <a class="menuitem" href="GetUserEpisodesSchedule.do">Schedule</a>
  <c:if test="${user.level == '0'}">

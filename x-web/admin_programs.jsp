@@ -15,12 +15,12 @@
 <h2 class="title">Admin Programs</h2>
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
-  <th>Name</th>
-  <th>Update URL</th>
-  <th>Last Update</th>
-  <th>Update</th>
-  <th>&nbsp;</th>
-  <th>&nbsp;</th>
+  <th class="rowheader">Name</th>
+  <th class="rowheader">Update URL</th>
+  <th class="rowheader">Last Update</th>
+  <th class="rowheader">Update</th>
+  <th class="rowheader">&nbsp;</th>
+  <th class="rowheader">&nbsp;</th>
  </tr>
  <c:forEach var="program" items="${programsList}">
  <tr>
@@ -28,12 +28,12 @@
   <td class="rowdata">${program.url}</td>
   <td class="rowdatacenter">${program.lastUpdate}</td>
   <td class="rowdatacenter">${program.doUpdate}</td>
-  <td class="rowdatacenter"><a href="UpdateProgram.do?program_id=${program.id}">Edit</a></td>
-  <td class="rowdatacenter"><a href="DeleteProgram.do?program_id=${program.id}">Delete</a></td>
+  <td class="rowdatacenter"><a class="rowdata" href="UpdateProgram.do?program_id=${program.id}">Edit</a></td>
+  <td class="rowdatacenter"><a class="rowdata" href="DeleteProgram.do?program_id=${program.id}">Delete</a></td>
  </tr>
  </c:forEach>
  <tr>
-  <td colspan="6" align="right"><a href="InsertProgram.do">Add new program</a></td>
+  <td colspan="6" align="right"><a class="rowdata" href="InsertProgram.do">Add new program</a></td>
  </tr>
 </table>
 </div>

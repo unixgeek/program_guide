@@ -10,11 +10,9 @@
 </head>
 <body>
 <%@ include file="header.jsp" %>
-<div class="content">
-<h2 class="title">Registration</h2>
 <p class="error">${message}</p>
 <form action="Register.do" method="post">
-<table class="login" width="0%">
+<table id="login" width="0%">
  <tr>
   <td align="right">Username:</td>
   <td>
@@ -36,7 +34,6 @@
 </table>
 </form>
 <br />
-</div>
 <%@ include file="footer.jsp" %>
 </body>
 </html>

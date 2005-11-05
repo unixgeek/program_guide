@@ -16,16 +16,16 @@
 <h3>Today</h3>
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
-  <th>Program</th>
-  <th>Season</th>
-  <th>Episode</th>
-  <th>Production Code</th>
-  <th>Original Air Date</th>
-  <th>Title</th>
+  <th class="rowheader">Program</th>
+  <th class="rowheader">Season</th>
+  <th class="rowheader">Episode</th>
+  <th class="rowheader">Production Code</th>
+  <th class="rowheader">Original Air Date</th>
+  <th class="rowheader">Title</th>
  </tr>
  <c:forEach var="userEpisode" items="${todaysEpisodesList}">
  <tr class="row${userEpisode.status}">
-  <td class="rowdata"><a href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
+  <td class="rowdata"><a class="row${userEpisode.status}" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
@@ -37,16 +37,16 @@
 <h3>Next 6 Days</h3>
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
-  <th>Program</th>
-  <th>Season</th>
-  <th>Episode</th>
-  <th>Production Code</th>
-  <th>Original Air Date</th>
-  <th>Title</th>
+  <th class="rowheader">Program</th>
+  <th class="rowheader">Season</th>
+  <th class="rowheader">Episode</th>
+  <th class="rowheader">Production Code</th>
+  <th class="rowheader">Original Air Date</th>
+  <th class="rowheader">Title</th>
  </tr>
  <c:forEach var="userEpisode" items="${nextEpisodesList}">
  <tr class="row${userEpisode.status}">
-  <td class="rowdata"><a href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
+  <td class="rowdata"><a class="row${userEpisode.status}" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
@@ -58,16 +58,16 @@
 <h3>Previous 6 Days</h3>
 <table class="tabledata" cellspacing="0" border="1">
  <tr class="row${userEpisode.status}">
-  <th>Program</th>
-  <th>Season</th>
-  <th>Episode</th>
-  <th>Production Code</th>
-  <th>Original Air Date</th>
-  <th>Title</th>
+  <th class="rowheader">Program</th>
+  <th class="rowheader">Season</th>
+  <th class="rowheader">Episode</th>
+  <th class="rowheader">Production Code</th>
+  <th class="rowheader">Original Air Date</th>
+  <th class="rowheader">Title</th>
  </tr>
  <c:forEach var="userEpisode" items="${previousEpisodesList}">
- <tr>
-  <td class="rowdata"><a href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
+ <tr class="row${userEpisode.status}">
+  <td class="rowdata"><a class="row${userEpisode.status}" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>

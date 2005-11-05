@@ -13,21 +13,21 @@
 <%@ include file="menu.jsp" %>
 <div class="content">
 <h2>Programs</h2>
-<table class="tabledata" cellspacing="0" border="1">
+<table cellspacing="0" border="1">
  <tr>
-  <th>Name</th>
-  <th>Last Update</th>
-  <th>Update URL</th>
+  <th class="rowheader">Name</th>
+  <th class="rowheader">Last Update</th>
+  <th class="rowheader">Update URL</th>
  </tr>
  <c:forEach var="program" items="${programsList}">
  <tr>
-  <td class="rowdata"><a href="GetUserEpisodes.do?program_id=${program.id}">${program.name}</a></td>
+  <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${program.id}">${program.name}</a></td>
   <td class="rowdatacenter">${program.lastUpdate}</td>
-  <td class="rowdata"><a href="${program.url}">${program.url}</a></td>
+  <td class="rowdata"><a class="rowdata" href="${program.url}">${program.url}</a></td>
  </tr>
  </c:forEach>
  <tr>
-  <td align="right" colspan="4"><a href="SetUserPrograms.do">Edit Subscriptions</a></td>
+  <td align="right" colspan="4"><a class="rowdata" href="SetUserPrograms.do">Edit Subscriptions</a></td>
  </tr>
 </table>
 <br />

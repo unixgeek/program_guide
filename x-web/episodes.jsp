@@ -17,12 +17,12 @@
 <h2>${program.name}&nbsp;<input type="submit" value="Update" /></h2>
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
-  <th>Season</th>
-  <th>Episode</th>
-  <th>Production Code</th>
-  <th>Original Air Date</th>
-  <th>Title</th>
-  <th>Status</th>
+  <th class="rowheader">Season</th>
+  <th class="rowheader">Episode</th>
+  <th class="rowheader">Production Code</th>
+  <th class="rowheader">Original Air Date</th>
+  <th class="rowheader">Title</th>
+  <th class="rowheader">Status</th>
  </tr>
  <c:forEach var="userEpisode" items="${userEpisodesList}">
  <tr class="row${userEpisode.status}">

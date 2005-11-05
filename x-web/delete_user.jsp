@@ -17,11 +17,11 @@
 <input type="hidden" name="user_id" value="${candidateUser.id}" />
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
-  <th>Username</th>
-  <th>Password</th>
-  <th>Last Login Date</th>
-  <th>Registration Date</th>
-  <th>Level</th>
+  <th class="rowheader">Username</th>
+  <th class="rowheader">Password</th>
+  <th class="rowheader">Last Login Date</th>
+  <th class="rowheader">Registration Date</th>
+  <th class="rowheader">Level</th>
  </tr>
  <tr>
   <td class="rowdata">${candidateUser.username}</td>

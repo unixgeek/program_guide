@@ -16,10 +16,10 @@
 <h2>Edit Subscriptions&nbsp;<input type="submit" value="Update" /></h2>
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
-  <th>Subscribed</th>
-  <th>Name</th>
-  <th>Last Update</th>
-  <th>Update URL</th>
+  <th class="rowheader">Subscribed</th>
+  <th class="rowheader">Name</th>
+  <th class="rowheader">Last Update</th>
+  <th class="rowheader">Update URL</th>
  </tr>
  <c:forEach var="program" items="${programsList}">
  <tr>
@@ -33,7 +33,7 @@
   </c:choose>
   <td class="rowdata">${program.program.name}</td>
   <td class="rowdatacenter">${program.program.lastUpdate}</td>
-  <td class="rowdata"><a href="${program.program.url}">${program.program.url}</a></td>
+  <td class="rowdata"><a class="rowdata" href="${program.program.url}">${program.program.url}</a></td>
  </tr>
  </c:forEach>
 </table>

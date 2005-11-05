@@ -17,10 +17,10 @@
 <input type="hidden" name="program_id" value="${program.id}" />
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
-  <th>Name</th>
-  <th>Update URL</th>
-  <th>Last Update</th>
-  <th>Update</th>
+  <th class="rowheader">Name</th>
+  <th class="rowheader">Update URL</th>
+  <th class="rowheader">Last Update</th>
+  <th class="rowheader">Update</th>
  </tr>
  <tr>
   <td class="rowdata"><input type="text" name="name" value="${program.name}" /></td>

@@ -12,7 +12,7 @@
 <%@ include file="header.jsp" %>
 <p class="error">${message}</p>
 <form action="Login.do" method="post">
-<table class="login" width="0%">
+<table id="login" width="0%">
  <tr>
   <td>Username:</td>
   <td><input type="text" name="username" value="${username}" /></td>
@@ -25,7 +25,7 @@
   <td align="right" colspan="2"><input type="submit" value="Login" /></td>
  </tr>
  <tr>
-  <td align="left" colspan="2"><a href="Register.do">Register</a></td>
+  <td align="left" colspan="2"><a class="generic" href="Register.do">Register</a></td>
  </tr>
 </table>
 </form>

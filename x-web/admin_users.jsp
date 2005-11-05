@@ -15,13 +15,13 @@
 <h2 class="title">Admin Users</h2>
 <table class="tabledata" cellspacing="0" border="1">
  <tr>
-  <th>Username</th>
-  <th>Password</th>
-  <th>Last Login Date</th>
-  <th>Registration Date</th>
-  <th>Level</th>
-  <th>&nbsp;</th>
-  <th>&nbsp;</th>
+  <th class="rowheader">Username</th>
+  <th class="rowheader">Password</th>
+  <th class="rowheader">Last Login Date</th>
+  <th class="rowheader">Registration Date</th>
+  <th class="rowheader">Level</th>
+  <th class="rowheader">&nbsp;</th>
+  <th class="rowheader">&nbsp;</th>
  </tr>
  <c:forEach var="user" items="${usersList}">
  <tr>
@@ -30,12 +30,12 @@
   <td class="rowdatacenter">${user.lastLoginDate}</td>
   <td class="rowdatacenter">${user.registrationDate}</td>
   <td class="rowdatacenter">${user.level}</td>
-  <td class="rowdatacenter"><a href="UpdateUser.do?user_id=${user.id}">Edit</a></td>
-  <td class="rowdatacenter"><a href="DeleteUser.do?user_id=${user.id}">Delete</a></td>
+  <td class="rowdatacenter"><a class="rowdata" href="UpdateUser.do?user_id=${user.id}">Edit</a></td>
+  <td class="rowdatacenter"><a class="rowdata" href="DeleteUser.do?user_id=${user.id}">Delete</a></td>
  </tr>
  </c:forEach>
  <tr>
-  <td colspan="7" align="right"><a href="Register.do?action=nologin">Add new user</a></td>
+  <td colspan="7" align="right"><a class="rowdata" href="Register.do?action=nologin">Add new user</a></td>
  </tr>
 </table>
 <br />
