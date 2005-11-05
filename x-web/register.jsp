@@ -16,7 +16,7 @@
  <tr>
   <td align="right">Username:</td>
   <td>
-   <input type="hidden" name="action" value="${pageScope.action}" />
+   <input type="hidden" name="action" value="${action}" />
    <input type="text" name="username" value="${username}" />
   </td>
  </tr>

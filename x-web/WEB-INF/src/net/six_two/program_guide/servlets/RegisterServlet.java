@@ -1,5 +1,5 @@
 /*
- * $Id: RegisterServlet.java,v 1.6 2005-11-04 04:23:34 gunter Exp $
+ * $Id: RegisterServlet.java,v 1.7 2005-11-05 03:35:00 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -20,7 +20,7 @@ public class RegisterServlet extends GenericServlet {
     protected void doGet(HttpServletRequest request, 
             HttpServletResponse response) throws IOException, 
             ServletException {
-        
+        request.setAttribute("action", request.getParameter("action"));
         RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
         dispatcher.forward(request, response);
     }
