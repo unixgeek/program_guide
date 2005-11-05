@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: update_programs.sh,v 1.8 2005-11-03 16:17:28 gunter Exp $
+# $Id: update_programs.sh,v 1.9 2005-11-05 07:30:15 gunter Exp $
 #
 . ${HOME}/.program_guide.conf
 
@@ -30,7 +30,7 @@ do
     NAME="`echo ${result} | cut -d "|" -f 2 | tr '_' ' '`"
     URL="`echo ${result} | cut -d "|" -f 3`"
     echo "${NAME} => ${SCRAPE} ${ID} ${NAME} ${URL}"
-    ./scrape.sh "${ID}" "${NAME}" "${URL}"
+    ${SCRAPE} "${ID}" "${NAME}" "${URL}"
 done
 
 mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} --skip-column-names ${DATABASE} \
