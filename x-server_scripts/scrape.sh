@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.18 2005-11-03 16:17:28 gunter Exp $
+# $Id: scrape.sh,v 1.19 2005-11-09 17:39:13 gunter Exp $
 #
 # requires: lynx gawk
 #
@@ -62,6 +62,13 @@ do
     echo "${ID}|${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${ORIGINAL_AIR_DATE}|${TITLE}|${SERIAL_NUMBER}" >> ${DATA}
 done
 
+EPISODE_COUNT=`wc -l ${DATA} | tr -s ' ' | cut -d " "  -f 2`
+echo "${PROGRAM} => ${EPISODE_COUNT} episodes"
+if [ "${EPISODE_COUNT}" -eq "0" ]; then
+    echo "${PROGRAM} => Nothing to load"
+    exit 0
+fi
+
 DELETE=\
 "DELETE FROM episode
 WHERE program_id = ${ID}"
@@ -78,7 +85,7 @@ mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} ${DATABASE} -e "${LOAD}"
 if [ "$?" -ne "0" ]; then
     exit 1
 fi 
-echo "${PROGRAM} => Loaded ${DATA}."
+echo "${PROGRAM} => Loaded ${DATA}"
 
 UPDATE_DATE=`date '+%y-%m-%d %H:%M:%S'`
 
