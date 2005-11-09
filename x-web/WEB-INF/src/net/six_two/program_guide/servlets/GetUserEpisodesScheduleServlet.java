@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserEpisodesScheduleServlet.java,v 1.5 2005-11-04 19:15:53 gunter Exp $
+ * $Id: GetUserEpisodesScheduleServlet.java,v 1.6 2005-11-09 17:44:41 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -46,12 +46,16 @@ public class GetUserEpisodesScheduleServlet extends GenericServlet {
             
             connection.close();
            
+            for (int i = 0; i != todaysEpisodes.length; i++)
+                todaysEpisodes[i].getEpisode().setTitle(
+                    filterContent(todaysEpisodes[i].getEpisode().getTitle()));
+
             for (int i = 0; i != previousEpisodes.length; i++)
                 previousEpisodes[i].getEpisode().setTitle(
                     filterContent(
                             previousEpisodes[i].getEpisode().getTitle()));
 
-            for (int i = 0; i != previousEpisodes.length; i++)
+            for (int i = 0; i != nextEpisodes.length; i++)
                 nextEpisodes[i].getEpisode().setTitle(
                     filterContent(nextEpisodes[i].getEpisode().getTitle()));
 
