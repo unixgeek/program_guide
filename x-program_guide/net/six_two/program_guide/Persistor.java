@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.27 2005-11-04 19:13:03 gunter Exp $
+ * $Id: Persistor.java,v 1.28 2005-11-11 16:37:12 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -497,6 +497,27 @@ public class Persistor {
         return count;
     }
     /* subscribed table ******************************************************/
+    
+    /* torrent_site table ****************************************************/
+    public static TorrentSite selectTorrentSite(Connection connection) 
+            throws SQLException {
+        String sql = "SELECT * FROM torrent_site";
+        Statement statement = connection.createStatement();
+        
+        statement.execute(sql);
+        ResultSet result = statement.getResultSet();
+        
+        TorrentSite site = null;
+        if (result.next()) {
+            site = new TorrentSite(result.getInt("id"), 
+                    result.getString("name"),
+                    result.getString("search_string"),
+                    result.getString("url"));
+        }
+        
+        return site;
+    }
+    /* torrent_site table ****************************************************/
     
     /* user table ************************************************************/
     public static User selectUser(Connection connection, String username)
