@@ -105,14 +105,23 @@ h1, h2, h3, h4, h5, h6 {
     font-family: palatino, serif;
 }
 
-.footer {
+#footerlist {
     font-size: 11px;
     background-color: #2E383E;
-    color: #4CB2EA;
-    padding: 5px 5px 5px 5px;
+    list-style: none;
+    padding: 4px;
     text-align: right;
 }
 
-a.footer {
+#footerlist li {
+    color: #4CB2EA;
+    padding: 0 1em 0 1em;
+    display: inline;
+    border-left: 1px solid #4CB2EA;
+}
+
+#footerlist li a {
+    color: #4CB2EA;
     text-decoration: none;
 }
+
