@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserProgramsServlet.java,v 1.5 2005-10-29 00:59:41 gunter Exp $
+ * $Id: GetUserProgramsServlet.java,v 1.6 2005-11-11 16:37:45 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.tables.Program;
+import net.six_two.program_guide.tables.TorrentSite;
 import net.six_two.program_guide.tables.User;
 
 public class GetUserProgramsServlet extends GenericServlet {
@@ -38,9 +39,12 @@ public class GetUserProgramsServlet extends GenericServlet {
             Program[] programs = Persistor.
             selectAllProgramsForUser(connection, user);
             
+            TorrentSite site = Persistor.selectTorrentSite(connection);
+            
             connection.close();
             
-            request.setAttribute("programsList", programs);  
+            request.setAttribute("programsList", programs);
+            request.setAttribute("site", site);
         } catch (SQLException e) {
             redirectError(request, response, e.getMessage());
         }

@@ -18,12 +18,14 @@
   <th class="rowheader">Name</th>
   <th class="rowheader">Last Update</th>
   <th class="rowheader">Update URL</th>
+  <th class="rowheader">Torrent</th>
  </tr>
  <c:forEach var="program" items="${programsList}">
  <tr>
   <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${program.id}">${program.name}</a></td>
   <td class="rowdatacenter">${program.lastUpdate}</td>
   <td class="rowdata"><a class="rowdata" href="${program.url}">${program.url}</a></td>
+  <td class="rowdatacenter"><a class="rowdata" href="${site.searchString}${program.name}">${site.name}</a></td>
  </tr>
  </c:forEach>
  <tr>

@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserEpisodesServlet.java,v 1.10 2005-11-01 23:34:58 gunter Exp $
+ * $Id: GetUserEpisodesServlet.java,v 1.11 2005-11-11 16:37:45 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.tables.Program;
+import net.six_two.program_guide.tables.TorrentSite;
 import net.six_two.program_guide.tables.User;
 import net.six_two.program_guide.tables.UserEpisode;
 
@@ -38,26 +39,30 @@ public class GetUserEpisodesServlet extends GenericServlet {
         int program_id = 
             Integer.parseInt(request.getParameter("program_id"));
         
-        Program program = null;
-        UserEpisode[] userEpisodes = null;
         try {
-            program = Persistor.selectProgram(connection, program_id);
-            userEpisodes = Persistor.
+            Program program = Persistor.selectProgram(connection, program_id);
+            UserEpisode[] userEpisodes = Persistor.
                 selectAllEpisodesForUser(connection, user, program);
             
+            TorrentSite site = Persistor.selectTorrentSite(connection);
+            
             connection.close();
+            
+            for (int i = 0; i != userEpisodes.length; i++)
+                userEpisodes[i].getEpisode().setTitle(
+                        filterContent(
+                                userEpisodes[i].getEpisode().getTitle()));
+
+            request.setAttribute("userEpisodesList", userEpisodes);
+            request.setAttribute("program", program);
+            request.setAttribute("site", site);
         } catch (SQLException e) {
             redirectError(request, response, e.getMessage());
             return;
         }
-       
-        for (int i = 0; i != userEpisodes.length; i++)
-            userEpisodes[i].getEpisode().setTitle(
-                    filterContent(userEpisodes[i].getEpisode().getTitle()));
 
-        request.setAttribute("userEpisodesList", userEpisodes);
-        request.setAttribute("program", program);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("episodes.jsp");
+        RequestDispatcher dispatcher = 
+            request.getRequestDispatcher("episodes.jsp");
         dispatcher.forward(request, response);
     }
     

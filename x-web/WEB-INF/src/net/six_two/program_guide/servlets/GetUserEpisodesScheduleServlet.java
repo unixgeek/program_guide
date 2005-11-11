@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserEpisodesScheduleServlet.java,v 1.6 2005-11-09 17:44:41 gunter Exp $
+ * $Id: GetUserEpisodesScheduleServlet.java,v 1.7 2005-11-11 16:37:45 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.six_two.program_guide.Persistor;
+import net.six_two.program_guide.tables.TorrentSite;
 import net.six_two.program_guide.tables.User;
 import net.six_two.program_guide.tables.UserEpisode;
 
@@ -44,6 +45,8 @@ public class GetUserEpisodesScheduleServlet extends GenericServlet {
             UserEpisode[] nextEpisodes = Persistor.
                 selectAllEpisodesForUser(connection, user, 1, 6);
             
+            TorrentSite site = Persistor.selectTorrentSite(connection);
+            
             connection.close();
            
             for (int i = 0; i != todaysEpisodes.length; i++)
@@ -62,6 +65,7 @@ public class GetUserEpisodesScheduleServlet extends GenericServlet {
             request.setAttribute("todaysEpisodesList", todaysEpisodes);
             request.setAttribute("nextEpisodesList", nextEpisodes);
             request.setAttribute("previousEpisodesList", previousEpisodes);
+            request.setAttribute("site", site);
         } catch (SQLException e) {
             redirectError(request, response, e.getMessage());
             return;

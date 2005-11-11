@@ -22,6 +22,7 @@
   <th class="rowheader">Production Code</th>
   <th class="rowheader">Original Air Date</th>
   <th class="rowheader">Title</th>
+  <th class="rowheader">Torrent</th>
   <th class="rowheader">Status</th>
  </tr>
  <c:forEach var="userEpisode" items="${userEpisodesList}">
@@ -31,6 +32,7 @@
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
   <td class="rowdatacenter">${userEpisode.episode.originalAirDate}</td>
   <td class="rowdata">${userEpisode.episode.title}</td>
+    <td class="rowdatacenter"><a class="row${userEpisode.status}" href="${site.searchString}${userEpisode.program.name}+${userEpisode.episode.number}">${site.name}</a></td>
   <td class="rowdata">
    <c:choose>
     <c:when test='${userEpisode.status == "none"}'>
