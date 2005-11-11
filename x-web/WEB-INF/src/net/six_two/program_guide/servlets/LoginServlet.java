@@ -1,5 +1,5 @@
 /*
- * $Id: LoginServlet.java,v 1.5 2005-11-04 04:23:34 gunter Exp $
+ * $Id: LoginServlet.java,v 1.6 2005-11-11 22:44:09 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -66,6 +66,7 @@ public class LoginServlet extends GenericServlet {
             connection.close();
             
             HttpSession session = request.getSession();
+            session.setMaxInactiveInterval(-1);
             session.setAttribute("user", user);
         } catch (SQLException e) {
             redirectError(request, response, e.getMessage());
