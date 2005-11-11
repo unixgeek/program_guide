@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: program_guide
 -- ------------------------------------------------------
--- Server version	4.0.26
+-- Server version	4.0.24-log
 
 --
 -- Table structure for table `episode`
@@ -28,7 +28,7 @@ CREATE TABLE program (
   name tinytext NOT NULL,
   url tinytext,
   last_update datetime default NULL,
-  do_update tinyint(4) default NULL,
+  do_update tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
@@ -53,6 +53,18 @@ CREATE TABLE subscribed (
   user_id int(11) NOT NULL default '0',
   program_id int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (user_id,program_id)
+) TYPE=MyISAM;
+
+--
+-- Table structure for table `torrent_site`
+--
+
+CREATE TABLE torrent_site (
+  id int(10) unsigned NOT NULL auto_increment,
+  name tinytext NOT NULL,
+  url tinytext NOT NULL,
+  search_string tinytext NOT NULL,
+  PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
 --
