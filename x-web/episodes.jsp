@@ -3,6 +3,7 @@
      PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
+<%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <link rel="stylesheet" href="default.css" type="text/css" />
@@ -32,7 +33,7 @@
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
   <td class="rowdatacenter">${userEpisode.episode.originalAirDate}</td>
   <td class="rowdata">${userEpisode.episode.title}</td>
-    <td class="rowdatacenter"><a class="row${userEpisode.status}" href="${site.searchString}${userEpisode.program.name}+${userEpisode.episode.number}">${site.name}</a></td>
+    <td class="rowdatacenter"><a class="row${userEpisode.status}" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
   <td class="rowdata">
    <c:choose>
     <c:when test='${userEpisode.status == "none"}'>

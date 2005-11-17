@@ -3,6 +3,7 @@
      PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
+<%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <link rel="stylesheet" href="default.css" type="text/css" />
@@ -25,7 +26,7 @@
   <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${program.id}">${program.name}</a></td>
   <td class="rowdatacenter">${program.lastUpdate}</td>
   <td class="rowdata"><a class="rowdata" href="${program.url}">${program.url}</a></td>
-  <td class="rowdatacenter"><a class="rowdata" href="${site.searchString}${program.name}">${site.name}</a></td>
+  <td class="rowdatacenter"><a class="rowdata" href="${site.searchString}<str:encodeUrl>${program.name}</str:encodeUrl>">${site.name}</a></td>
  </tr>
  </c:forEach>
  <tr>
