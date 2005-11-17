@@ -18,7 +18,7 @@ ant distclean   remove all build files and dist files</echo>
     </target>
 
     <target name="program_guide">
-        <cvs cvsRoot=":ext:six-two.net:/var/cvs/program_guide"
+        <cvs cvsRoot="${program_guide.cvsroot}"
              command="-q export -r${program_guide.tag} program_guide" />
         <ant dir="program_guide" target="jar" inheritAll="false" />
         <copy file="program_guide/${program_guide.name}-${program_guide.version}.jar"
@@ -28,22 +28,22 @@ ant distclean   remove all build files and dist files</echo>
 
     <target name="taglibs">
         <get verbose="${verbose}" usetimestamp="true"
-             src="http://www.six-two.net/cache/${jstl.name}-${jstl.version}.tar.gz"
-             dest="${basedir}/${jstl.name}-${jstl.version}.tar.gz" />
-        <untar src="${basedir}/${jstl.name}-${jstl.version}.tar.gz"
+             src="${standard_taglib.url}/${standard_taglib.name}-${standard_taglib.version}.tar.gz"
+             dest="${basedir}/${standard_taglib.name}-${standard_taglib.version}.tar.gz" />
+        <untar src="${basedir}/${standard_taglib.name}-${standard_taglib.version}.tar.gz"
                compression="gzip" overwrite="yes"
                dest="${basedir}" />
-        <copy file="${basedir}/${jstl.name}-${jstl.version}/lib/jstl.jar"
+        <copy file="${basedir}/${standard_taglib.name}-${standard_taglib.version}/lib/jstl.jar"
               todir="${basedir}/WEB-INF/lib/" />
-        <copy file="${basedir}/${jstl.name}-${jstl.version}/lib/standard.jar"
+        <copy file="${basedir}/${standard_taglib.name}-${standard_taglib.version}/lib/standard.jar"
               todir="${basedir}/WEB-INF/lib/" />
-        <copy file="${basedir}/${jstl.name}-${jstl.version}/tld/c.tld"
+        <copy file="${basedir}/${standard_taglib.name}-${standard_taglib.version}/tld/c.tld"
               todir="${basedir}/WEB-INF/" />
-        <delete dir="${basedir}/${jstl.name}-${jstl.version}" verbose="${verbose}" />
-        <delete file="${basedir}/${jstl.name}-${jstl.version}.tar.gz" verbose="${verbose}" />
+        <delete dir="${basedir}/${standard_taglib.name}-${standard_taglib.version}" verbose="${verbose}" />
+        <delete file="${basedir}/${standard_taglib.name}-${standard_taglib.version}.tar.gz" verbose="${verbose}" />
         
         <get verbose="${verbose}" usetimestamp="true"
-             src="http://www.six-two.net/cache/${string_taglib.name}-${string_taglib.version}.tar.gz"
+             src="${string_taglib.url}/${string_taglib.name}-${string_taglib.version}.tar.gz"
              dest="${basedir}/${string_taglib.name}-${string_taglib.version}.tar.gz" />
         <untar src="${basedir}/${string_taglib.name}-${string_taglib.version}.tar.gz"
                compression="gzip" overwrite="yes"
@@ -58,7 +58,7 @@ ant distclean   remove all build files and dist files</echo>
  
     <target name="tomcat">
         <get verbose="${verbose}" usetimestamp="true"
-             src="http://www.six-two.net/cache/${tomcat.name}-${tomcat.version}.tar.gz"
+             src="${tomcat.url}/${tomcat.name}-${tomcat.version}.tar.gz"
              dest="${basedir}/${tomcat.name}-${tomcat.version}.tar.gz" />
         <untar src="${basedir}/${tomcat.name}-${tomcat.version}.tar.gz"
                compression="gzip" overwrite="yes"
@@ -70,7 +70,7 @@ ant distclean   remove all build files and dist files</echo>
  
     <target name="deps">
         <antcall target="program_guide" />
-        <antcall target="jstl" />
+        <antcall target="taglibs" />
         <antcall target="tomcat" />
     </target>
 
