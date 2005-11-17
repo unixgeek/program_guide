@@ -75,6 +75,14 @@
       <url-pattern>/GetUserEpisodes.do</url-pattern>
   </servlet-mapping>
   <servlet>
+      <servlet-name>GetUserEpisodesQueued</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.GetUserEpisodesQueuedServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>GetUserEpisodesQueued</servlet-name>
+      <url-pattern>/GetUserEpisodesQueued.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
       <servlet-name>GetUserEpisodesSchedule</servlet-name>
       <servlet-class>net.six_two.program_guide.servlets.GetUserEpisodesScheduleServlet</servlet-class>
   </servlet>
