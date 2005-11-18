@@ -26,7 +26,7 @@ CREATE TABLE episode (
 CREATE TABLE program (
   id int(11) unsigned NOT NULL auto_increment,
   name tinytext NOT NULL,
-  url tinytext,
+  url tinytext NOT NULL,
   last_update datetime default NULL,
   do_update tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (id)
@@ -42,6 +42,7 @@ CREATE TABLE status (
   season char(2) NOT NULL default '0',
   episode_number int(11) unsigned NOT NULL default '0',
   status enum('queued','viewed') NOT NULL default 'queued',
+  create_date datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (user_id,program_id,season,episode_number)
 ) TYPE=MyISAM;
 
