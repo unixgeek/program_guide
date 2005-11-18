@@ -11,7 +11,8 @@
 <body>
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
-<p class="error">${message}</p>
+<h2>Oh No!</h2>
+<p class="error">${message}</p><br />
 <%@ include file="footer.jsp" %>
 </body>
 </html>
