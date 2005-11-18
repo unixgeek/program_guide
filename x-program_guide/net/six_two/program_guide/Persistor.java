@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.29 2005-11-17 04:54:29 gunter Exp $
+ * $Id: Persistor.java,v 1.30 2005-11-18 03:41:00 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import net.six_two.program_guide.tables.*;
@@ -416,7 +417,7 @@ public class Persistor {
     /* status table **********************************************************/
     public static int insertStatusForUser(Connection connection, User user, 
             Episode episode, String status) throws SQLException {
-        String sql = "INSERT INTO status VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO status VALUES (?, ?, ?, ?, ?, ?)";
         
         if (user == null)
             throw new SQLException("Attempted operation with a null user.");
@@ -429,6 +430,7 @@ public class Persistor {
         statement.setString(3, episode.getSeason());
         statement.setInt(4, episode.getNumber());
         statement.setString(5, status);
+        statement.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
         
         statement.execute();
         int count = statement.getUpdateCount();
