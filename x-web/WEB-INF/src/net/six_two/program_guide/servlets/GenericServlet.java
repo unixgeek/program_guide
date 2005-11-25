@@ -1,5 +1,5 @@
 /*
- * $Id: GenericServlet.java,v 1.4 2005-11-03 03:37:57 gunter Exp $
+ * $Id: GenericServlet.java,v 1.5 2005-11-25 05:20:16 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.tables.User;
 
 public class GenericServlet extends HttpServlet {
@@ -31,6 +32,25 @@ public class GenericServlet extends HttpServlet {
             return null;
         }
         
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            try {
+                Connection connection = getConnection();
+                int programCount = 
+                    Persistor.selectProgramCountForUser(connection, user);
+                int queueCount = 
+                    Persistor.selectQueuedEpisodeCountForUser(connection, user);
+                int todayCount =
+                    Persistor.selectEpisodeCountForUser(connection, user, 0, 0);
+                
+                session.setAttribute("programCount", 
+                        new Integer(programCount));
+                session.setAttribute("queueCount", new Integer(queueCount));
+                session.setAttribute("todayCount", new Integer(todayCount));
+                connection.close();
+            } catch (SQLException e) {
+            }
+        }
         return (User) session.getAttribute("user");
     }
     
