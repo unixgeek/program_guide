@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.30 2005-11-18 03:41:00 gunter Exp $
+ * $Id: Persistor.java,v 1.31 2005-11-25 05:17:34 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -136,6 +136,51 @@ public class Persistor {
         return userEpisodesArray;
     }
     
+    public static int selectEpisodeCountForUser(Connection connection,
+            User user, int fromDay, int toDay) throws SQLException {
+        
+        if (user == null)
+            throw new SQLException("Attempted operation with a null user.");
+        
+        String sql = "SELECT COUNT(*) "
+            + "FROM user u "
+            + "LEFT JOIN subscribed s "
+            + "ON u.id = s.user_id "
+            + "LEFT JOIN program p "
+            + "ON s.program_id = p.id "
+            + "LEFT JOIN episode e "
+            + "ON s.program_id = e.program_id "
+            + "LEFT JOIN status t "
+            + "ON (u.id = t.user_id "
+            + "    AND t.program_id = e.program_id "
+            + "    AND t.season = e.season "
+            + "    AND t.episode_number = e.number) "
+            + "WHERE u.id = ? ";
+        if (fromDay >= 0)
+            sql += "AND original_air_date >= (CURRENT_DATE() + INTERVAL ? DAY) "
+                 + "AND original_air_date <= (CURRENT_DATE() + INTERVAL ? DAY) ";
+        else
+            sql += "AND original_air_date <= (CURRENT_DATE() + INTERVAL ? DAY) "
+                 + "AND original_air_date >= (CURRENT_DATE() + INTERVAL ? DAY) ";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.setInt(2, fromDay);
+        statement.setInt(3, toDay);
+        statement.execute();
+        
+        ResultSet result = statement.getResultSet();
+        
+        int count = 0;
+        if (result.next()) {
+            count = result.getInt(1);
+        }
+        result.close();
+        statement.close();
+        
+        return count;
+    }
+    
     public static UserEpisode[] selectAllQueuedEpisodesForUser(Connection connection,
             User user) throws SQLException {
         ArrayList userEpisodes = new ArrayList();
@@ -193,6 +238,45 @@ public class Persistor {
         }
         
         return userEpisodesArray;
+    }
+    
+    public static int selectQueuedEpisodeCountForUser(Connection connection,
+            User user) throws SQLException {
+        
+        if (user == null)
+            throw new SQLException("Attempted operation with a null user.");
+        
+        String sql = "SELECT COUNT(*) "
+            + "FROM user u "
+            + "LEFT JOIN subscribed s "
+            + "ON u.id = s.user_id "
+            + "LEFT JOIN program p "
+            + "ON s.program_id = p.id "
+            + "LEFT JOIN episode e "
+            + "ON s.program_id = e.program_id "
+            + "LEFT JOIN status t "
+            + "ON (u.id = t.user_id "
+            + "    AND t.program_id = e.program_id "
+            + "    AND t.season = e.season "
+            + "    AND t.episode_number = e.number) "
+            + "WHERE u.id = ? "
+            + "AND IFNULL(t.status, 'none') = 'queued'";
+            
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.execute();
+        
+        ResultSet result = statement.getResultSet();
+        
+        int count = 0;
+        if (result.next()) {
+            count = result.getInt(1);
+        }
+        result.close();
+        statement.close();
+        
+        return count;
     }
     /* episode table *********************************************************/
     
@@ -287,6 +371,33 @@ public class Persistor {
         }
         
         return programsArray;
+    }
+    
+    public static int selectProgramCountForUser(Connection connection,
+            User user) throws SQLException {
+        if (user == null)
+            throw new SQLException("Attempted operation with a null user.");
+        
+        String sql = "SELECT COUNT(*) "
+            + "FROM subscribed s "
+            + "LEFT JOIN program p "
+            + "ON s.program_id = p.id "
+            + "WHERE user_id = ? "
+            + "ORDER BY p.name";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.execute();
+        ResultSet result = statement.getResultSet();
+        
+        int count = 0;
+        if (result.next()) {
+            count = result.getInt(1);
+        }
+        result.close();
+        statement.close();
+        
+        return count;
     }
     
     public static int updateProgram(Connection connection, Program program)
