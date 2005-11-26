@@ -1,5 +1,5 @@
 /*
- * $Id: LoginServlet.java,v 1.6 2005-11-11 22:44:09 gunter Exp $
+ * $Id: LoginServlet.java,v 1.7 2005-11-26 19:36:30 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -70,6 +70,7 @@ public class LoginServlet extends GenericServlet {
             session.setAttribute("user", user);
         } catch (SQLException e) {
             redirectError(request, response, e.getMessage());
+            return;
         }
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayFrontPage.do");
