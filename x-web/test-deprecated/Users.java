@@ -9,7 +9,7 @@ import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.User;
 
 /*
- * $Id: Users.java,v 1.3 2005-10-22 22:46:35 gunter Exp $
+ * $Id: Users.java,v 1.4 2005-11-26 19:35:36 gunter Exp $
  */
 
 public class Users {
@@ -20,7 +20,7 @@ public class Users {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://outlands.six-two.net/program_guide",
+                    "jdbc:mysql://six-two.net/program_guide",
                     dbUsername, dbPassword);
             User[] users = Persistor.selectAllUsers(connection);
             for (int i = 0; i != users.length; i++) {
