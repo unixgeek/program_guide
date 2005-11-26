@@ -1,5 +1,5 @@
 /*
- * $Id: User.java,v 1.3 2005-10-23 05:56:58 gunter Exp $
+ * $Id: User.java,v 1.4 2005-11-26 19:35:06 gunter Exp $
  */
 package net.six_two.program_guide.tables;
 
@@ -11,20 +11,21 @@ public class User {
     private String password;
     private Timestamp lastLoginDate;
     private Timestamp registrationDate;
-    private short level;
+    private int permissions;
     
     public User() {
         
     }
     
     public User(int id, String username, String password, 
-            Timestamp lastLoginDate, Timestamp registrationDate, short level) {
+            Timestamp lastLoginDate, Timestamp registrationDate, 
+            int permissions) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.lastLoginDate = lastLoginDate;
         this.registrationDate = registrationDate;
-        this.level = level;
+        this.permissions = permissions;
     }
 
     public int getId() {
@@ -67,11 +68,11 @@ public class User {
         this.username = username;
     }
 
-    public short getLevel() {
-        return level;
+    public int getPermissions() {
+        return permissions;
     }
 
-    public void setLevel(short level) {
-        this.level = level;
+    public void setPermissions(int permissions) {
+        this.permissions = permissions;
     }
 }

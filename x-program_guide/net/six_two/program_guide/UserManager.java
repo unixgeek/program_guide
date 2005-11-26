@@ -1,5 +1,5 @@
 /*
- * $Id: UserManager.java,v 1.3 2005-10-23 05:56:58 gunter Exp $
+ * $Id: UserManager.java,v 1.4 2005-11-26 19:34:53 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -16,7 +16,7 @@ public class UserManager {
         user.setUsername(username);
         user.setRegistrationDate(timestamp);
         user.setLastLoginDate(timestamp);
-        user.setLevel((short) 1);
+        user.setPermissions(Permissions.USAGE);
         setPasswordForUser(user, password);
         
         return user;
@@ -34,5 +34,9 @@ public class UserManager {
             return true;
         else
             return false;
+    }
+    
+    public static boolean authorizeUser(User user, int permission) {
+        return ((user.getPermissions() & permission) == permission);
     }
 }

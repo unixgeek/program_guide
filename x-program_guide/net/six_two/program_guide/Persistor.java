@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.31 2005-11-25 05:17:34 gunter Exp $
+ * $Id: Persistor.java,v 1.32 2005-11-26 19:34:54 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -713,7 +713,7 @@ public class Persistor {
             user.setPassword(result.getString("password"));
             user.setLastLoginDate(result.getTimestamp("last_login_date"));
             user.setRegistrationDate(result.getTimestamp("registration_date"));
-            user.setLevel(result.getShort("level"));
+            user.setPermissions(result.getInt("permissions"));
         }
         
         result.close();
@@ -739,7 +739,7 @@ public class Persistor {
             user.setPassword(result.getString("password"));
             user.setLastLoginDate(result.getTimestamp("last_login_date"));
             user.setRegistrationDate(result.getTimestamp("registration_date"));
-            user.setLevel(result.getShort("level"));
+            user.setPermissions(result.getInt("permissions"));
         }
 
         result.close();
@@ -767,7 +767,7 @@ public class Persistor {
             user.setPassword(result.getString("password"));
             user.setLastLoginDate(result.getTimestamp("last_login_date"));
             user.setRegistrationDate(result.getTimestamp("registration_date"));
-            user.setLevel(result.getShort("level"));;
+            user.setPermissions(result.getInt("permissions"));;
             
             users.add(user);
         }
@@ -800,7 +800,7 @@ public class Persistor {
         statement.setString(2, user.getPassword());
         statement.setTimestamp(3, user.getLastLoginDate());
         statement.setTimestamp(4, user.getRegistrationDate());
-        statement.setShort(5, user.getLevel());
+        statement.setInt(5, user.getPermissions());
         statement.setInt(6, user.getId());
         
         statement.execute();
@@ -844,7 +844,7 @@ public class Persistor {
         statement.setString(2, user.getPassword());
         statement.setTimestamp(3, user.getLastLoginDate());
         statement.setTimestamp(4, user.getRegistrationDate());
-        statement.setShort(5, user.getLevel());
+        statement.setInt(5, user.getPermissions());
         
         statement.execute();
         int count = statement.getUpdateCount();
