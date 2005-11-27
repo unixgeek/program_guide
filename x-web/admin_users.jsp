@@ -19,9 +19,13 @@
   <th class="rowheader">Password</th>
   <th class="rowheader">Last Login Date</th>
   <th class="rowheader">Registration Date</th>
-  <th class="rowheader">Level</th>
+  <th class="rowheader">Permissions</th>
+  <c:if test='${canEdit == "true"}'>
   <th class="rowheader">&nbsp;</th>
+  </c:if>
+  <c:if test='${canDelete == "true"}'>
   <th class="rowheader">&nbsp;</th>
+  </c:if>
  </tr>
  <c:forEach var="user" items="${usersList}">
  <tr>
@@ -29,14 +33,20 @@
   <td class="rowdatacenter">${user.password}</td>
   <td class="rowdatacenter">${user.lastLoginDate}</td>
   <td class="rowdatacenter">${user.registrationDate}</td>
-  <td class="rowdatacenter">${user.level}</td>
+  <td class="rowdatacenter">${user.permissions}</td>
+  <c:if test='${canEdit == "true"}'>
   <td class="rowdatacenter"><a class="rowdata" href="UpdateUser.do?user_id=${user.id}">Edit</a></td>
+  </c:if>
+  <c:if test='${canDelete == "true"}'>
   <td class="rowdatacenter"><a class="rowdata" href="DeleteUser.do?user_id=${user.id}">Delete</a></td>
+  </c:if>
  </tr>
  </c:forEach>
+ <c:if test='${canAdd == "true"}'>
  <tr>
   <td colspan="7" align="right"><a class="rowdata" href="Register.do?action=nologin">Add new user</a></td>
  </tr>
+ </c:if>
 </table>
 <br />
 </div>

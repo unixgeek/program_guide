@@ -1,5 +1,5 @@
 /*
- * $Id: AdminUsersServlet.java,v 1.2 2005-10-29 00:59:41 gunter Exp $
+ * $Id: AdminUsersServlet.java,v 1.3 2005-11-27 20:13:19 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -12,7 +12,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.six_two.program_guide.Permissions;
 import net.six_two.program_guide.Persistor;
+import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.User;
 
 public class AdminUsersServlet extends GenericServlet {
@@ -33,9 +35,16 @@ public class AdminUsersServlet extends GenericServlet {
             return;
         }
         
-        if (user.getLevel() != 0) {
+        boolean canAddUser = UserManager.authorizeUser(user, 
+                Permissions.ADD_USER);
+        boolean canDeleteUser = UserManager.authorizeUser(user, 
+                Permissions.DELETE_USER);
+        boolean canEditUser = UserManager.authorizeUser(user, 
+                Permissions.EDIT_USER);
+        
+        if (!canAddUser && !canDeleteUser && !canEditUser) {
             redirectError(request, response, 
-                    "You must login with admin rights first.");
+                    "You have insufficient rights to this resource.  Loser.");
             return;
         }
         
@@ -49,6 +58,9 @@ public class AdminUsersServlet extends GenericServlet {
             redirectError(request, response, e.getMessage());
         }
         
+        request.setAttribute("canAdd", new Boolean(canAddUser));
+        request.setAttribute("canDelete", new Boolean(canDeleteUser));
+        request.setAttribute("canEdit", new Boolean(canEditUser));
         RequestDispatcher dispatcher = 
             request.getRequestDispatcher("admin_users.jsp");
         dispatcher.forward(request, response);

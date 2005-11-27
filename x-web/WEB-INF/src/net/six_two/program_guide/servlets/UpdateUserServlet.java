@@ -1,17 +1,19 @@
 /*
- * $Id: UpdateUserServlet.java,v 1.3 2005-11-02 04:17:21 gunter Exp $
+ * $Id: UpdateUserServlet.java,v 1.4 2005-11-27 20:13:19 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.six_two.program_guide.Permissions;
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.User;
@@ -34,9 +36,9 @@ public class UpdateUserServlet extends GenericServlet {
             return;
         }
         
-        if (user.getLevel() != 0) {
+        if (!UserManager.authorizeUser(user, Permissions.EDIT_USER)) {
             redirectError(request, response, 
-                    "You must login with admin rights first.");
+                    "You have insufficient rights to this resource.  Loser.");
             return;
         }
         
@@ -48,6 +50,31 @@ public class UpdateUserServlet extends GenericServlet {
             
             connection.close();
             
+            boolean canUse = UserManager.authorizeUser(candidateUser, 
+                    Permissions.USAGE);
+            boolean canAddProgram = UserManager.authorizeUser(candidateUser, 
+                    Permissions.ADD_PROGRAM);
+            boolean canDeleteProgram = UserManager.authorizeUser(candidateUser, 
+                    Permissions.DELETE_PROGRAM);
+            boolean canEditProgram = UserManager.authorizeUser(candidateUser,
+                    Permissions.EDIT_PROGRAM);
+            boolean canAddUser = UserManager.authorizeUser(candidateUser, 
+                    Permissions.ADD_USER);
+            boolean canDeleteUser = UserManager.authorizeUser(candidateUser, 
+                    Permissions.DELETE_USER);
+            boolean canEditUser = UserManager.authorizeUser(candidateUser, 
+                    Permissions.EDIT_USER);
+            
+            /*
+             * TODO Do permissions correctly...I need a barf bag.
+             */
+            request.setAttribute("canUse", new Boolean(canUse));
+            request.setAttribute("canAddProgram", new Boolean(canAddProgram));
+            request.setAttribute("canDeleteProgram", new Boolean(canDeleteProgram));
+            request.setAttribute("canEditProgram", new Boolean(canEditProgram));
+            request.setAttribute("canAddUser", new Boolean(canAddUser));
+            request.setAttribute("canDeleteUser", new Boolean(canDeleteUser));
+            request.setAttribute("canEditUser", new Boolean(canEditUser));
             request.setAttribute("candidateUser", candidateUser);
         } catch (SQLException e) {
             redirectError(request, response, e.getMessage());
@@ -74,22 +101,20 @@ public class UpdateUserServlet extends GenericServlet {
             return;
         }
         
-        if (user.getLevel() != 0) {
+        if (!UserManager.authorizeUser(user, Permissions.EDIT_USER)) {
             redirectError(request, response, 
-                "You must login with admin rights first.");
+                    "You have insufficient rights to this resource.  Loser.");
             return;
         }
         
         String username = (String) request.getParameter("username");
         String password1 = (String) request.getParameter("password1");
         String password2 = (String) request.getParameter("password2");
-        String level = (String) request.getParameter("level");
         String action = (String) request.getParameter("action");
         
         username = (username != null) ? username : "";
         password1 = (password1 != null) ? password1 : "";
         password2 = (password2 != null) ? password2 : "";
-        level = (level != null) ? level : "";
         
         int user_id = 
             Integer.parseInt(request.getParameter("user_id"));
@@ -114,12 +139,6 @@ public class UpdateUserServlet extends GenericServlet {
                 return;
             }
             
-            if (level.equals("") && action.equals("level")) {
-                request.setAttribute("candidateUser", candidateUser);
-                error(request, response, "Invalid level.");
-                return;
-            }
-            
             if (action.equals("username")) {
                 User testUser = Persistor.selectUser(connection, username);
                 
@@ -132,8 +151,22 @@ public class UpdateUserServlet extends GenericServlet {
             }
             else if (action.equals("password"))
                 UserManager.setPasswordForUser(candidateUser, password1);
-            else if (action.equals("level")) {
-                candidateUser.setLevel(Short.parseShort(level));
+            else if (action.equals("permissions")) {
+                String[] grants = request.getParameterValues("granted");
+                if (grants != null) {
+                    Permissions p = new Permissions();
+                    HashMap map = p.getPermissionsMap();
+                    int permissions = 0;
+                    for (int i = 0; i != grants.length; i++) {
+                        String tokens[] = grants[i].split("\\|");
+                        if (tokens[1].equals("1")) {
+                            permissions |= ((Integer) map.get(tokens[0])).intValue();
+                        }
+                    }
+                    candidateUser.setPermissions(permissions);
+                }
+                else
+                    candidateUser.setPermissions(0);
             }
 
             Persistor.updateUser(connection, candidateUser);

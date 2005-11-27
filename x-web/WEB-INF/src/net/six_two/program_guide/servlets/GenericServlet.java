@@ -1,5 +1,5 @@
 /*
- * $Id: GenericServlet.java,v 1.5 2005-11-25 05:20:16 gunter Exp $
+ * $Id: GenericServlet.java,v 1.6 2005-11-27 20:13:19 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -17,7 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import net.six_two.program_guide.Permissions;
 import net.six_two.program_guide.Persistor;
+import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.User;
 
 public class GenericServlet extends HttpServlet {
@@ -43,6 +45,36 @@ public class GenericServlet extends HttpServlet {
                 int todayCount =
                     Persistor.selectEpisodeCountForUser(connection, user, 0, 0);
                 
+                boolean canAddProgram = UserManager.authorizeUser(user, 
+                        Permissions.ADD_PROGRAM);
+                boolean canDeleteProgram = UserManager.authorizeUser(user, 
+                        Permissions.DELETE_PROGRAM);
+                boolean canEditProgram = UserManager.authorizeUser(user, 
+                        Permissions.EDIT_PROGRAM);
+                
+                boolean showAdminPrograms;
+                if (canAddProgram || canDeleteProgram || canEditProgram) {
+                    showAdminPrograms = true;
+                }
+                else
+                    showAdminPrograms = false;
+                
+                boolean canAddUser = UserManager.authorizeUser(user, 
+                        Permissions.ADD_USER);
+                boolean canDeleteUser = UserManager.authorizeUser(user, 
+                        Permissions.DELETE_USER);
+                boolean canEditUser = UserManager.authorizeUser(user, 
+                        Permissions.EDIT_USER);
+                
+                boolean showAdminUsers;
+                if (canAddUser || canDeleteUser || canEditUser) {
+                    showAdminUsers = true;
+                }
+                else
+                    showAdminUsers = false;
+                
+                session.setAttribute("showAdminPrograms", new Boolean(showAdminPrograms));
+                session.setAttribute("showAdminUsers", new Boolean(showAdminUsers));
                 session.setAttribute("programCount", 
                         new Integer(programCount));
                 session.setAttribute("queueCount", new Integer(queueCount));

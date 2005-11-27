@@ -1,5 +1,5 @@
 /*
- * $Id: LoginServlet.java,v 1.7 2005-11-26 19:36:30 gunter Exp $
+ * $Id: LoginServlet.java,v 1.8 2005-11-27 20:13:19 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.six_two.program_guide.Permissions;
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.User;
@@ -57,6 +58,13 @@ public class LoginServlet extends GenericServlet {
             if (!UserManager.authenticateUser(user, password)) {
                 request.setAttribute("username", username);
                 error(request, response, "Incorrect password.");
+                return;
+            }
+            
+            if (!UserManager.authorizeUser(user, Permissions.USAGE)) {
+                request.setAttribute("username", username);
+                error(request, response, 
+                        "You're account is disabled.  Loser.");
                 return;
             }
             

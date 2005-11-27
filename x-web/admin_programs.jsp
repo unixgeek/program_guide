@@ -19,8 +19,12 @@
   <th class="rowheader">Update URL</th>
   <th class="rowheader">Last Update</th>
   <th class="rowheader">Update</th>
+  <c:if test='${canEdit == "true"}'>
   <th class="rowheader">&nbsp;</th>
+  </c:if>
+  <c:if test='${canDelete == "true"}'>
   <th class="rowheader">&nbsp;</th>
+  </c:if>
  </tr>
  <c:forEach var="program" items="${programsList}">
  <tr>
@@ -28,13 +32,19 @@
   <td class="rowdata">${program.url}</td>
   <td class="rowdatacenter">${program.lastUpdate}</td>
   <td class="rowdatacenter">${program.doUpdate}</td>
+  <c:if test='${canEdit == "true"}'>
   <td class="rowdatacenter"><a class="rowdata" href="UpdateProgram.do?program_id=${program.id}">Edit</a></td>
+  </c:if>
+  <c:if test='${canDelete == "true"}'>
   <td class="rowdatacenter"><a class="rowdata" href="DeleteProgram.do?program_id=${program.id}">Delete</a></td>
+  </c:if>
  </tr>
  </c:forEach>
+ <c:if test='${canAdd == "true"}'>
  <tr>
   <td colspan="6" align="right"><a class="rowdata" href="InsertProgram.do">Add new program</a></td>
  </tr>
+ </c:if>
 </table>
 <br />
 </div>

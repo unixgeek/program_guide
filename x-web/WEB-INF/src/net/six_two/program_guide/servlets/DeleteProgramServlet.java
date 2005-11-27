@@ -1,5 +1,5 @@
 /*
- * $Id: DeleteProgramServlet.java,v 1.3 2005-11-04 04:23:34 gunter Exp $
+ * $Id: DeleteProgramServlet.java,v 1.4 2005-11-27 20:13:19 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -12,7 +12,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.six_two.program_guide.Permissions;
 import net.six_two.program_guide.Persistor;
+import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.Program;
 import net.six_two.program_guide.tables.User;
 
@@ -34,9 +36,9 @@ public class DeleteProgramServlet extends GenericServlet {
             return;
         }
         
-        if (user.getLevel() != 0) {
+        if (!UserManager.authorizeUser(user, Permissions.DELETE_PROGRAM)) {
             redirectError(request, response, 
-                    "You must login with admin rights first.");
+                    "You have insufficient rights to this resource.  Loser.");
             return;
         }
         
@@ -72,9 +74,9 @@ public class DeleteProgramServlet extends GenericServlet {
             return;
         }
         
-        if (user.getLevel() != 0) {
+        if (!UserManager.authorizeUser(user, Permissions.DELETE_PROGRAM)) {
             redirectError(request, response, 
-                    "You must login with admin rights first.");
+                    "You have insufficient rights to this resource.  Loser.");
             return;
         }
         

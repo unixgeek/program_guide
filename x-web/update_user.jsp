@@ -48,15 +48,94 @@
 </form>
 <br />
 <form action="UpdateUser.do" method="post">
-<table>
+<p>
+ <input type="hidden" name="action" value="permissions" />
+ <input type="hidden" name="user_id" value="${candidateUser.id}" />
+</p>
+<table cellspacing="0" border="1">
  <tr>
-  <td>Level:</td>
-  <td>
-   <input type="hidden" name="action" value="level" />
-   <input type="hidden" name="user_id" value="${candidateUser.id}" />
-   <input type="text" name="level" value="${candidateUser.level}" />
-  </td>
-  <td><input type="submit" value="Update" /></td>
+  <th class="rowheader">Granted</th>
+  <th class="rowheader">Name</th>
+ </tr>
+ <tr>
+   <c:choose>
+   <c:when test='${canUse == "true"}'>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="USAGE|1" checked="checked" /></td>
+   </c:when>
+   <c:otherwise>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="USAGE|1" /></td>
+   </c:otherwise>
+  </c:choose>
+  <td class="rowdata">USAGE</td>
+ </tr>
+ <tr>
+   <c:choose>
+   <c:when test='${canAddProgram == "true"}'>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="ADD_PROGRAM|1" checked="checked" /></td>
+   </c:when>
+   <c:otherwise>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="ADD_PROGRAM|1" /></td>
+   </c:otherwise>
+  </c:choose>
+  <td class="rowdata">ADD_PROGRAM</td>
+ </tr>
+ <tr>
+   <c:choose>
+   <c:when test='${canDeleteProgram == "true"}'>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="DELETE_PROGRAM|1" checked="checked" /></td>
+   </c:when>
+   <c:otherwise>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="DELETE_PROGRAM|1" /></td>
+   </c:otherwise>
+  </c:choose>
+  <td class="rowdata">DELETE_PROGRAM</td>
+ </tr>
+ <tr>
+   <c:choose>
+   <c:when test='${canEditProgram == "true"}'>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="EDIT_PROGRAM|1" checked="checked" /></td>
+   </c:when>
+   <c:otherwise>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="EDIT_PROGRAM|1" /></td>
+   </c:otherwise>
+  </c:choose>
+  <td class="rowdata">EDIT_PROGRAM</td>
+ </tr>
+ <tr>
+   <c:choose>
+   <c:when test='${canAddUser == "true"}'>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="ADD_USER|1" checked="checked" /></td>
+   </c:when>
+   <c:otherwise>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="ADD_USER|1" /></td>
+   </c:otherwise>
+  </c:choose>
+  <td class="rowdata">ADD_USER</td>
+ </tr>
+ <tr>
+   <c:choose>
+   <c:when test='${canDeleteUser == "true"}'>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="DELETE_USER|1" checked="checked" /></td>
+   </c:when>
+   <c:otherwise>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="DELETE_USER|1" /></td>
+   </c:otherwise>
+  </c:choose>
+  <td class="rowdata">DELETE_USER</td>
+ </tr>
+ <tr>
+   <c:choose>
+   <c:when test='${canEditUser == "true"}'>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="EDIT_USER|1" checked="checked" /></td>
+   </c:when>
+   <c:otherwise>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="EDIT_USER|1" /></td>
+   </c:otherwise>
+  </c:choose>
+  <td class="rowdata">EDIT_USER</td>
+ </tr>
+ <tr>
+  <td colspan="2" align="right"><input type="submit" value="Update" /></td>
  </tr>
 </table>
 </form>

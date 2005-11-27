@@ -21,14 +21,14 @@
   <th class="rowheader">Password</th>
   <th class="rowheader">Last Login Date</th>
   <th class="rowheader">Registration Date</th>
-  <th class="rowheader">Level</th>
+  <th class="rowheader">Permissions</th>
  </tr>
  <tr>
   <td class="rowdata">${candidateUser.username}</td>
   <td class="rowdatacenter">${candidateUser.password}</td>
   <td class="rowdatacenter">${candidateUser.lastLoginDate}</td>
   <td class="rowdatacenter">${candidateUser.registrationDate}</td>
-  <td class="rowdatacenter">${candidateUser.level}</td>
+  <td class="rowdatacenter">${candidateUser.permissions}</td>
  </tr>
  <tr>
   <td align="right" colspan="5">

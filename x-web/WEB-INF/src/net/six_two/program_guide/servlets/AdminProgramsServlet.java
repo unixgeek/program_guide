@@ -1,5 +1,5 @@
 /*
- * $Id: AdminProgramsServlet.java,v 1.3 2005-11-04 04:23:34 gunter Exp $
+ * $Id: AdminProgramsServlet.java,v 1.4 2005-11-27 20:13:19 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -12,7 +12,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.six_two.program_guide.Permissions;
 import net.six_two.program_guide.Persistor;
+import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.Program;
 import net.six_two.program_guide.tables.User;
 
@@ -34,9 +36,16 @@ public class AdminProgramsServlet extends GenericServlet {
             return;
         }
         
-        if (user.getLevel() != 0) {
+        boolean canAddProgram = UserManager.authorizeUser(user, 
+                Permissions.ADD_PROGRAM);
+        boolean canDeleteProgram = UserManager.authorizeUser(user, 
+                Permissions.DELETE_PROGRAM);
+        boolean canEditProgram = UserManager.authorizeUser(user, 
+                Permissions.EDIT_PROGRAM);
+        
+        if (!canAddProgram && !canDeleteProgram && !canEditProgram) {
             redirectError(request, response, 
-                    "You must login with admin rights first.");
+                    "You have insufficient rights to this resource.  Loser.");
             return;
         }
         
@@ -50,6 +59,9 @@ public class AdminProgramsServlet extends GenericServlet {
             redirectError(request, response, e.getMessage());
         }
         
+        request.setAttribute("canAdd", new Boolean(canAddProgram));
+        request.setAttribute("canDelete", new Boolean(canDeleteProgram));
+        request.setAttribute("canEdit", new Boolean(canEditProgram));
         RequestDispatcher dispatcher = 
             request.getRequestDispatcher("admin_programs.jsp");
         dispatcher.forward(request, response);
