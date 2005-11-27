@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.32 2005-11-26 19:34:54 gunter Exp $
+ * $Id: Persistor.java,v 1.33 2005-11-27 18:10:14 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -789,7 +789,7 @@ public class Persistor {
             + "password = ?, "
             + "last_login_date = ?, "
             + "registration_date = ?, "
-            + "level = ? "
+            + "permissions = ? "
             + "WHERE id = ?";
         
         if (user == null)
