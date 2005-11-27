@@ -20,6 +20,7 @@ ant distclean   remove all build files and dist files</echo>
     <target name="program_guide">
         <cvs cvsRoot="${program_guide.cvsroot}"
              command="-q export -r${program_guide.tag} program_guide" />
+        <ant dir="program_guide" target="deps" inheritAll="false" />
         <ant dir="program_guide" target="jar" inheritAll="false" />
         <copy file="program_guide/${program_guide.name}-${program_guide.version}.jar"
               todir="${basedir}/WEB-INF/lib" />
