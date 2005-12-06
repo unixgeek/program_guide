@@ -19,6 +19,22 @@
       </listener-class>
   </listener>
   <servlet>
+      <servlet-name>GetLog</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.GetLogServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>GetLog</servlet-name>
+      <url-pattern>/GetLog.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+      <servlet-name>GetLogEntry</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.GetLogEntryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>GetLogEntry</servlet-name>
+      <url-pattern>/GetLogEntry.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
       <servlet-name>AdminPrograms</servlet-name>
       <servlet-class>net.six_two.program_guide.servlets.AdminProgramsServlet</servlet-class>
   </servlet>
