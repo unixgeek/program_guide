@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: program_guide
 -- ------------------------------------------------------
--- Server version	4.0.24-log
+-- Server version	4.0.26-log
 
 --
 -- Table structure for table `episode`
@@ -17,6 +17,18 @@ CREATE TABLE episode (
   title tinytext,
   serial_number smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (program_id,season,number)
+) TYPE=MyISAM;
+
+--
+-- Table structure for table `log`
+--
+
+CREATE TABLE log (
+  id int(11) NOT NULL auto_increment,
+  source tinytext NOT NULL,
+  create_date datetime NOT NULL default '0000-00-00 00:00:00',
+  content text NOT NULL,
+  PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
 --
