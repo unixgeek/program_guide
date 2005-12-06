@@ -135,6 +135,17 @@
   <td class="rowdata">EDIT_USER</td>
  </tr>
  <tr>
+   <c:choose>
+   <c:when test='${canAdminLog == "true"}'>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="ADMIN_LOG|1" checked="checked" /></td>
+   </c:when>
+   <c:otherwise>
+  <td class="rowdatacenter"><input type="checkbox" name="granted" value="ADMIN_LOG|1" /></td>
+   </c:otherwise>
+  </c:choose>
+  <td class="rowdata">ADMIN_LOG</td>
+ </tr>
+ <tr>
   <td colspan="2" align="right"><input type="submit" value="Update" /></td>
  </tr>
 </table>

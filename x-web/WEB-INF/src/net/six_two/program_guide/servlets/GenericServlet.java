@@ -1,5 +1,5 @@
 /*
- * $Id: GenericServlet.java,v 1.6 2005-11-27 20:13:19 gunter Exp $
+ * $Id: GenericServlet.java,v 1.7 2005-12-06 05:34:13 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -51,6 +51,8 @@ public class GenericServlet extends HttpServlet {
                         Permissions.DELETE_PROGRAM);
                 boolean canEditProgram = UserManager.authorizeUser(user, 
                         Permissions.EDIT_PROGRAM);
+                boolean showAdminLog = UserManager.authorizeUser(user,
+                        Permissions.ADMIN_LOG);
                 
                 boolean showAdminPrograms;
                 if (canAddProgram || canDeleteProgram || canEditProgram) {
@@ -75,6 +77,7 @@ public class GenericServlet extends HttpServlet {
                 
                 session.setAttribute("showAdminPrograms", new Boolean(showAdminPrograms));
                 session.setAttribute("showAdminUsers", new Boolean(showAdminUsers));
+                session.setAttribute("showAdminLog", new Boolean(showAdminLog));
                 session.setAttribute("programCount", 
                         new Integer(programCount));
                 session.setAttribute("queueCount", new Integer(queueCount));

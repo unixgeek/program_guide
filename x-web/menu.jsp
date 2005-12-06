@@ -8,6 +8,9 @@
  <c:if test='${showAdminUsers == "true"}'>
  <a class="menuitem" href="AdminUsers.do">Admin Users</a>
  </c:if>
+ <c:if test='${showAdminLog == "true"}'>
+ <a class="menuitem" href="GetLog.do">Admin Log</a>
+ </c:if>
  <a class="menuitem" href="SetUserSettings.do">Account Settings</a>
  <a class="menuitem" href="Logout.do">Logout</a>
 </div>

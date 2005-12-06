@@ -1,5 +1,5 @@
 /*
- * $Id: UpdateUserServlet.java,v 1.4 2005-11-27 20:13:19 gunter Exp $
+ * $Id: UpdateUserServlet.java,v 1.5 2005-12-06 05:34:13 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -64,6 +64,8 @@ public class UpdateUserServlet extends GenericServlet {
                     Permissions.DELETE_USER);
             boolean canEditUser = UserManager.authorizeUser(candidateUser, 
                     Permissions.EDIT_USER);
+            boolean canAdminLog = UserManager.authorizeUser(candidateUser, 
+                    Permissions.ADMIN_LOG);
             
             /*
              * TODO Do permissions correctly...I need a barf bag.
@@ -75,6 +77,7 @@ public class UpdateUserServlet extends GenericServlet {
             request.setAttribute("canAddUser", new Boolean(canAddUser));
             request.setAttribute("canDeleteUser", new Boolean(canDeleteUser));
             request.setAttribute("canEditUser", new Boolean(canEditUser));
+            request.setAttribute("canAdminLog", new Boolean(canAdminLog));
             request.setAttribute("candidateUser", candidateUser);
         } catch (SQLException e) {
             redirectError(request, response, e.getMessage());
