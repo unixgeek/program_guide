@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.33 2005-11-27 18:10:14 gunter Exp $
+ * $Id: Persistor.java,v 1.34 2005-12-06 05:33:01 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -867,4 +867,72 @@ public class Persistor {
         return count;
     }
     /* user table ************************************************************/
+    
+    /* log table *************************************************************/
+    public static Log[] selectAllLogEntries(Connection connection)
+            throws SQLException {
+        String sql = "SELECT * FROM log";
+        
+        Statement statement = connection.createStatement();
+        
+        statement.execute(sql);
+        ResultSet result = statement.getResultSet();
+        
+        ArrayList logEntries = new ArrayList();
+        Log log;
+        while (result.next()) {
+            log = new Log(result.getInt("id"), result.getString("source"), 
+                    result.getTimestamp("create_date"), 
+                    result.getString("content"));
+            logEntries.add(log);
+        }
+        
+        result.close();
+        statement.close();
+        
+        Log[] logEntriesArray = new Log[logEntries.size()];
+        for (int i = 0; i != logEntries.size(); i++) {
+            logEntriesArray[i] = (Log) logEntries.get(i);
+        }
+        
+        return logEntriesArray;
+    }
+    
+    public static Log selectLogEntry(Connection connection, int id)
+            throws SQLException {
+        String sql = "SELECT * FROM log WHERE id = ?";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        
+        statement.setInt(1, id);
+        statement.execute();
+        ResultSet result = statement.getResultSet();
+        
+        Log log = null;
+        if (result.next()) {
+            log = new Log(result.getInt("id"), result.getString("source"), 
+                    result.getTimestamp("create_date"), 
+                    result.getString("content"));
+        }
+        
+        result.close();
+        statement.close();
+        
+        return log;
+    }
+    
+    public static int clearLog(Connection connection)
+            throws SQLException {
+        String sql = "DELETE FROM log";
+        
+        Statement statement = connection.createStatement();
+        
+        statement.execute(sql);
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
+    }
+    /* log table *************************************************************/
 }
