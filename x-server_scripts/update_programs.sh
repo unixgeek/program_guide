@@ -1,11 +1,13 @@
 #!/bin/sh
 #
-# $Id: update_programs.sh,v 1.9 2005-11-05 07:30:15 gunter Exp $
+# $Id: update_programs.sh,v 1.10 2005-12-06 05:03:00 gunter Exp $
 #
 . ${HOME}/.program_guide.conf
 
 BEFORE=`mktemp /tmp/update_programs.before.XXXXXX`
 AFTER=`mktemp /tmp/update_programs.after.XXXXXX`
+LOG=`mktemp /tmp/update_programs.log.XXXXXX`
+LOG_INSERT=`mktemp /tmp/update_programs.insert.XXXXXX` 
 
 EPISODE_SQL=\
 "SELECT *
@@ -29,15 +31,23 @@ do
     ID="`echo ${result} | cut -d "|" -f 1`"
     NAME="`echo ${result} | cut -d "|" -f 2 | tr '_' ' '`"
     URL="`echo ${result} | cut -d "|" -f 3`"
-    echo "${NAME} => ${SCRAPE} ${ID} ${NAME} ${URL}"
-    ${SCRAPE} "${ID}" "${NAME}" "${URL}"
+    echo "${NAME} => ${SCRAPE} ${ID} ${NAME} ${URL}" >> ${LOG} 2>&1
+    ${SCRAPE} "${ID}" "${NAME}" "${URL}" >> ${LOG} 2>&1
 done
 
 mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} --skip-column-names ${DATABASE} \
     -e "${EPISODE_SQL}" > ${AFTER}
 
-diff -u ${BEFORE} ${AFTER}
+diff -u ${BEFORE} ${AFTER} >> ${LOG} 2>&1
 
-rm -f ${BEFORE} ${AFTER}
+# Add log entry.
+echo -n "INSERT INTO log VALUES (null, 'update_programs.sh', CURRENT_TIMESTAMP(), '" > ${LOG_INSERT}
+cat ${LOG} | sed "s/'/''/g" >> ${LOG_INSERT}
+echo "');" >> ${LOG_INSERT}
+
+mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} ${DATABASE} < ${LOG_INSERT}
+
+rm -f ${BEFORE} ${AFTER} ${LOG} ${LOG_INSERT}
 
 exit 0
+
