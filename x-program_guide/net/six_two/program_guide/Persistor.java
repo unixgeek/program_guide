@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.34 2005-12-06 05:33:01 gunter Exp $
+ * $Id: Persistor.java,v 1.35 2005-12-07 05:39:44 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -921,7 +921,7 @@ public class Persistor {
         return log;
     }
     
-    public static int clearLog(Connection connection)
+    public static int deleteLog(Connection connection)
             throws SQLException {
         String sql = "DELETE FROM log";
         
