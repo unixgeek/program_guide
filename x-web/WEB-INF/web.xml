@@ -51,6 +51,14 @@
       <url-pattern>/AdminUsers.do</url-pattern>
   </servlet-mapping>
   <servlet>
+      <servlet-name>DeleteLog</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.DeleteLogServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>DeleteLog</servlet-name>
+      <url-pattern>/DeleteLog.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
       <servlet-name>DeleteProgram</servlet-name>
       <servlet-class>net.six_two.program_guide.servlets.DeleteProgramServlet</servlet-class>
   </servlet>
