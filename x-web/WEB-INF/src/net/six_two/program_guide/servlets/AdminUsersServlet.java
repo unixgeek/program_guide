@@ -1,5 +1,5 @@
 /*
- * $Id: AdminUsersServlet.java,v 1.3 2005-11-27 20:13:19 gunter Exp $
+ * $Id: AdminUsersServlet.java,v 1.4 2005-12-07 05:43:09 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -28,13 +28,6 @@ public class AdminUsersServlet extends GenericServlet {
             return;
         }
         
-        Connection connection = getConnection();
-        if (connection == null) {
-            redirectError(request, response, 
-                    "Couldn't connect to the database.");
-            return;
-        }
-        
         boolean canAddUser = UserManager.authorizeUser(user, 
                 Permissions.ADD_USER);
         boolean canDeleteUser = UserManager.authorizeUser(user, 
@@ -45,6 +38,13 @@ public class AdminUsersServlet extends GenericServlet {
         if (!canAddUser && !canDeleteUser && !canEditUser) {
             redirectError(request, response, 
                     "You have insufficient rights to this resource.  Loser.");
+            return;
+        }
+        
+        Connection connection = getConnection();
+        if (connection == null) {
+            redirectError(request, response, 
+                    "Couldn't connect to the database.");
             return;
         }
         
