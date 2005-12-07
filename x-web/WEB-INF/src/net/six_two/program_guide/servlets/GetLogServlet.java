@@ -1,5 +1,5 @@
 /*
- * $Id: GetLogServlet.java,v 1.1 2005-12-06 05:33:48 gunter Exp $
+ * $Id: GetLogServlet.java,v 1.2 2005-12-07 05:41:40 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -12,7 +12,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.six_two.program_guide.Permissions;
 import net.six_two.program_guide.Persistor;
+import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.Log;
 import net.six_two.program_guide.tables.User;
 
@@ -27,13 +29,19 @@ public class GetLogServlet extends GenericServlet {
             return;
         }
         
+        if (!UserManager.authorizeUser(user, Permissions.ADMIN_LOG)) {
+            redirectError(request, response, 
+                "You have insufficient rights to this resource.  Loser.");
+            return;
+        }
+        
         Connection connection = getConnection();
         if (connection == null) {
             redirectError(request, response, 
                     "Couldn't connect to the database.");
             return;
         }
-                
+        
         try {
             Log[] logEntries = Persistor.selectAllLogEntries(connection); 
             
