@@ -12,10 +12,11 @@
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <div class="content">
-<h2 class="title">${log.source} ${log.createDate}</h2>
+<h2 class="title">Log Entry</h2>
+<h3 class="title">(${log.source}:&nbsp;&nbsp;${log.createDate})</h3>
 <br />
 <textarea cols="80" rows="30" readonly="readonly">
-${log.message}
+${log.content}
 </textarea>
 </div>
 <%@ include file="footer.jsp" %>

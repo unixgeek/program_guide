@@ -12,7 +12,8 @@
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <div class="content">
-<h2 class="title">Log</h2>
+<form action="DeleteLog.do" method="post">
+<h2 class="title">Log&nbsp;<input type="submit" value="Clear Log" /></h2>
 <table cellspacing="0" border="1">
  <tr>
   <th class="rowheader">Source</th>
@@ -25,6 +26,7 @@
  </tr>
  </c:forEach>
 </table>
+</form>
 <br />
 </div>
 <%@ include file="footer.jsp" %>
