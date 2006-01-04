@@ -12,7 +12,7 @@
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <div class="content">
-<form action="SetUserPrograms.do" method="post">
+<form action="SetUserProgramsSubmit.do" method="post">
 <h2>Edit Subscriptions&nbsp;<input type="submit" value="Update" /></h2>
 <table cellspacing="0" border="1">
  <tr>
