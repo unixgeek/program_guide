@@ -7,5 +7,6 @@
 	<classpathentry kind="src" path="WEB-INF/src"/>
 	<classpathentry output="work" kind="src" path="work"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/net.six_two.program_guide-20051209.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/struts.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>
