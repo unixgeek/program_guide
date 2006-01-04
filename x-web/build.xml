@@ -1,6 +1,6 @@
 <project name="program_guide" default="help" basedir=".">
     <property name="propertyfile"
-              value="WEB-INF/src/net/six_two/program_guide/servlets/program_guide.properties" />
+              value="WEB-INF/src/net/six_two/program_guide/web/web.properties" />
     <property file="${propertyfile}" />
     <property name="verbose" value="false" />
     <property name="builddir" value="${basedir}/WEB-INF/classes/" />
