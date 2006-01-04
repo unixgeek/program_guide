@@ -1,0 +1,138 @@
+<struts-config>
+    <controller
+        processorClass="org.apache.struts.action.RequestProcessor"
+        contentType="text/html" />
+    <message-resources
+        parameter="net.six_two.program_guide.web.resources.messages"
+        null="false" />
+    <form-beans>
+        <form-bean
+            name="loginForm"
+            type="net.six_two.program_guide.web.forms.LoginForm" />
+        <form-bean
+            name="registerForm"
+            type="net.six_two.program_guide.web.forms.RegisterForm" />
+    </form-beans>
+    <global-forwards>
+    </global-forwards>
+    <action-mappings>
+        <action
+            path="/Register"
+            type="org.apache.struts.actions.ForwardAction"
+            parameter="/register.jsp" />
+        <action
+            path="/DeleteLog"
+            type="net.six_two.program_guide.web.actions.DeleteLogAction"
+            scope="request"
+            unknown="false">
+            <forward 
+                name="success"
+                path="/GetLog.do" />
+        </action>
+        <action
+            path="/Error"
+            type="org.apache.struts.actions.ForwardAction"
+            parameter="/error.jsp" />
+        <action
+            path="/Login"
+            type="org.apache.struts.actions.ForwardAction"
+            parameter="/login.jsp" />
+        <action
+            path="/GetLog"
+            type="net.six_two.program_guide.web.actions.GetLogAction"
+            scope="request"
+            unknown="false">
+            <forward 
+                name="success"
+                path="/log.jsp" />
+        </action>
+        <action
+            path="/GetLogEntry"
+            type="net.six_two.program_guide.web.actions.GetLogEntryAction"
+            scope="request"
+            unknown="false">
+            <forward 
+                name="success"
+                path="/log_entry.jsp" />
+        </action>
+        <action
+            path="/GetUserPrograms"
+            type="net.six_two.program_guide.web.actions.GetUserProgramsAction"
+            scope="request"
+            unknown="false">
+            <forward 
+                name="programs"
+                path="/programs.jsp" />
+        </action>
+        <action
+            path="/GetUserEpisodesQueued"
+            type="net.six_two.program_guide.web.actions.GetUserEpisodesQueuedAction"
+            scope="request"
+            unknown="false">
+            <forward 
+                name="queued"
+                path="/queued.jsp" />
+        </action>
+        <action
+            path="/GetUserEpisodesSchedule"
+            type="net.six_two.program_guide.web.actions.GetUserEpisodesScheduleAction"
+            scope="request"
+            unknown="false">
+            <forward 
+                name="schedule"
+                path="/schedule.jsp" />
+        </action>
+        <action
+            path="/LoginSubmit"
+            type="net.six_two.program_guide.web.actions.LoginSubmitAction"
+            name="loginForm"
+            scope="request"
+            input="/login.jsp"
+            unknown="false"
+            validate="true">
+            <forward
+                name="success"
+                path="/GetUserEpisodesSchedule.do" />
+        </action>
+        <action
+            path="/Logout"
+            type="net.six_two.program_guide.web.actions.LogoutAction"
+            scope="request"
+            unknown="false" />
+        <action
+            path="/RegisterSubmit"
+            type="net.six_two.program_guide.web.actions.RegisterSubmitAction"
+            name="registerForm"
+            scope="request"
+            input="/register.jsp"
+            unknown="false"
+            validate="true">
+            <forward
+                name="success"
+                path="/GetUserEpisodesSchedule.do" />
+            <forward
+                name="admin"
+                path="/AdminUsers.do" />
+        </action>
+        <action
+            path="/SetUserPrograms"
+            type="net.six_two.program_guide.web.actions.SetUserProgramsAction"
+            scope="request"
+            unknown="false"
+            validate="true">
+            <forward
+                name="success"
+                path="/subscription.jsp" />
+        </action>
+        <action
+            path="/SetUserProgramsSubmit"
+            type="net.six_two.program_guide.web.actions.SetUserProgramsSubmitAction"
+            scope="request"
+            unknown="false"
+            validate="true">
+            <forward
+                name="success"
+                path="/GetUserPrograms.do" />
+        </action>
+    </action-mappings>
+</struts-config>
