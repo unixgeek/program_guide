@@ -1,3 +1,4 @@
+<%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
 <div id="header">Program Guide</div>
 <c:choose>
 <c:when test='${not empty sessionScope.user.username}'>
