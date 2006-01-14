@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: find_outdated.sh,v 1.1 2006-01-14 22:41:22 gunter Exp $
+# $Id: find_outdated.sh,v 1.2 2006-01-14 22:50:12 gunter Exp $
 #
 # requires: lynx
 #
@@ -13,7 +13,6 @@
 # In other words: it's a date, not a timestamp.
 . ${HOME}/.program_guide.conf
 
-PAGE=`mktemp /tmp/find_outdated.page.XXXXXX` 
 LOG=`mktemp /tmp/find_outdated.log.XXXXXX`
 LOG_INSERT=`mktemp /tmp/find_outdate.insert.XXXXXX` 
 
@@ -63,7 +62,7 @@ echo "');" >> ${LOG_INSERT}
 
 mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} ${DATABASE} < ${LOG_INSERT}
 
-rm -f ${DATA} ${LOG} ${LOG_INSERT}
+rm -f ${LOG} ${LOG_INSERT}
 
 exit 0
 
