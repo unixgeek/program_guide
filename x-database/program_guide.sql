@@ -27,7 +27,7 @@ CREATE TABLE log (
   id int(11) NOT NULL auto_increment,
   source tinytext NOT NULL,
   create_date datetime NOT NULL default '0000-00-00 00:00:00',
-  content text NOT NULL,
+  content mediumtext NOT NULL,
   PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
