@@ -65,6 +65,15 @@
                 path="/programs.jsp" />
         </action>
         <action
+            path="/GetUserEpisodes"
+            type="net.six_two.program_guide.web.actions.GetUserEpisodesAction"
+            scope="request"
+            unknown="false">
+            <forward 
+                name="episodes"
+                path="/episodes.jsp" />
+        </action>
+        <action
             path="/GetUserEpisodesQueued"
             type="net.six_two.program_guide.web.actions.GetUserEpisodesQueuedAction"
             scope="request"
@@ -113,6 +122,15 @@
             <forward
                 name="admin"
                 path="/AdminUsers.do" />
+        </action>
+        <action
+            path="/SetUserEpisodes"
+            type="net.six_two.program_guide.web.actions.SetUserEpisodesSubmitAction"
+            scope="request"
+            unknown="false">
+            <forward 
+                name="episodes"
+                path="/GetUserEpisodes.do" />
         </action>
         <action
             path="/SetUserPrograms"
