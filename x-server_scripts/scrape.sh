@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.19 2005-11-09 17:39:13 gunter Exp $
+# $Id: scrape.sh,v 1.20 2006-02-10 01:52:44 gunter Exp $
 #
 # requires: lynx gawk
 #
@@ -81,7 +81,7 @@ LOAD=\
 "LOAD DATA LOCAL INFILE '${DATA}' REPLACE
 INTO TABLE episode FIELDS TERMINATED BY '|'
 (program_id, season, number, production_code, original_air_date, title, serial_number)"
-mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} ${DATABASE} -e "${LOAD}"
+mysql --local-infile=1 -u ${MYSQLUSER} -p${MYSQLPASSWORD} ${DATABASE} -e "${LOAD}"
 if [ "$?" -ne "0" ]; then
     exit 1
 fi 
