@@ -29,7 +29,7 @@
  <c:forEach var="userEpisode" items="${userEpisodesList}">
  <tr class="row${userEpisode.status}">
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
-  <td class="rowdatacenter">${userEpisode.episode.number}</td>
+  <td class="rowdatacenter"><a name="${userEpisode.episode.serialNumber}" />${userEpisode.episode.number}</td>
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
   <td class="rowdatacenter">${userEpisode.episode.originalAirDate}</td>
   <td class="rowdata">${userEpisode.episode.title}</td>

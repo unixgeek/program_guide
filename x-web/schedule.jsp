@@ -27,7 +27,7 @@
  </tr>
  <c:forEach var="userEpisode" items="${todaysEpisodesList}">
  <tr class="row${userEpisode.status}">
-  <td class="rowdata"><a class="row${userEpisode.status}" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
+  <td class="rowdata"><a class="row${userEpisode.status}" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#${userEpisode.episode.serialNumber}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
@@ -50,7 +50,7 @@
  </tr>
  <c:forEach var="userEpisode" items="${nextEpisodesList}">
  <tr class="row${userEpisode.status}">
-  <td class="rowdata"><a class="row${userEpisode.status}" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
+  <td class="rowdata"><a class="row${userEpisode.status}" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#${userEpisode.episode.serialNumber}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
@@ -73,7 +73,7 @@
  </tr>
  <c:forEach var="userEpisode" items="${previousEpisodesList}">
  <tr class="row${userEpisode.status}">
-  <td class="rowdata"><a class="row${userEpisode.status}" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
+  <td class="rowdata"><a class="row${userEpisode.status}" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#${userEpisode.episode.serialNumber}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
