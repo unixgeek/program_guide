@@ -54,7 +54,20 @@ ant distclean   remove all build files and dist files</echo>
         <copy file="${basedir}/${string_taglib.name}-${string_taglib.version}/taglibs-string.tld"
               todir="${basedir}/WEB-INF/" />
         <delete dir="${basedir}/${string_taglib.name}-${string_taglib.version}" verbose="${verbose}" />
-        <delete file="${basedir}/${string_taglib.name}-${string_taglib.version}.tar.gz" verbose="${verbose}" />   
+        <delete file="${basedir}/${string_taglib.name}-${string_taglib.version}.tar.gz" verbose="${verbose}" />
+    	
+        <get verbose="${verbose}" usetimestamp="true"
+             src="${datetime.base_url}/${datetime.name}-${datetime.version}.tar.gz"
+             dest="${basedir}/${datetime.name}-${datetime.version}.tar.gz" />
+        <untar src="${basedir}/${datetime.name}-${datetime.version}.tar.gz"
+               compression="gzip" overwrite="yes"
+               dest="${basedir}" />
+        <copy file="${basedir}/${datetime.name}-${datetime.version}/taglibs-datetime.jar"
+              todir="${basedir}/WEB-INF/lib/" />
+        <copy file="${basedir}/${datetime.name}-${datetime.version}/taglibs-datetime.tld"
+              todir="${basedir}/WEB-INF/" />
+        <delete dir="${basedir}/${datetime.name}-${datetime.version}" verbose="${verbose}" />
+        <delete file="${basedir}/${datetime.name}-${datetime.version}.tar.gz" verbose="${verbose}" />
     </target>
  
     <target name="tomcat">
