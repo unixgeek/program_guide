@@ -1,5 +1,5 @@
 /*
- * $Id: PackageProperties.java,v 1.1 2005-11-04 20:59:19 gunter Exp $
+ * $Id: PackageProperties.java,v 1.2 2006-02-22 06:31:50 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -12,6 +12,8 @@ public class PackageProperties {
         "net/six_two/program_guide/servlets/program_guide.properties";
     private String name = "unknown";
     private String version = "unknown";
+    private String dateDisplayFormat = "yyyy-MM-dd";
+    private String timestampDisplayFormat = "yyyy-MM-dd hh:mm:ss.S";
     
     public PackageProperties() {
         ClassLoader cl = this.getClass().getClassLoader(); 
@@ -23,6 +25,8 @@ public class PackageProperties {
                 p.load(stream);
                 name = p.getProperty("package.name");
                 version = p.getProperty("package.version");
+                dateDisplayFormat = p.getProperty("date.displayFormat");
+                timestampDisplayFormat = p.getProperty("time.displayFormat");
             } catch (IOException e) {
             }
         }
@@ -34,5 +38,13 @@ public class PackageProperties {
     
     public String getVersion() {
         return version;
+    }
+
+    public String getDateDisplayFormat() {
+        return dateDisplayFormat;
+    }
+
+    public String getTimestampDisplayFormat() {
+        return timestampDisplayFormat;
     }
 }
