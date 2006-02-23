@@ -15,7 +15,7 @@
 <div class="content">
 <form action="SetUserPrograms.do" method="post">
 <h2>Edit Subscriptions&nbsp;<input type="submit" value="Update" /></h2>
-<table cellspacing="0" border="1">
+<table class="data">
  <tr>
   <th class="rowheader">Subscribed</th>
   <th class="rowheader">Name</th>

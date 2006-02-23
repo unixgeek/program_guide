@@ -51,22 +51,44 @@ a.menuitem:hover {
     width: auto;
 }
 
+.data {
+    background-color: #83ADC4;
+    border-collapse: separate;
+    border: 3px solid #2E383E;
+}
+
 .rowheader {
     font-family: monospace;
+    background: #2E383E;
+    color: #FFFFFF;
+    border: 1px solid #2E383E;
+    padding: 3x;
+    vertical-align: top;
 }
 
 .rowdata {
     font-family: monospace;
+    border: 1px solid #2E383E;
+    margin: 3px;
+    padding: 3px;
+    vertical-align: top;
+    background: #FFFFFF;
 }
 
 a.rowdata {
     color: #000000;
+    border: none;
     background-color: transparent;
 }
 
 .rowdatacenter {
     text-align: center;
     font-family: monospace;
+    border: 1px solid #2E383E;
+    margin: 3px;
+    padding: 3px;
+    vertical-align: top;
+    background: #FFFFFF;
  }
 
 .rownone {

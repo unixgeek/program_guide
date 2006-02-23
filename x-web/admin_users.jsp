@@ -14,7 +14,7 @@
 <%@ include file="menu.jsp" %>
 <div class="content">
 <h2 class="title">Admin Users</h2>
-<table cellspacing="0" border="1">
+<table class="data">
  <tr>
   <th class="rowheader">Username</th>
   <th class="rowheader">Password</th>

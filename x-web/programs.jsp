@@ -15,7 +15,7 @@
 <%@ include file="menu.jsp" %>
 <div class="content">
 <h2>Programs</h2>
-<table cellspacing="0" border="1">
+<table class="data">
  <tr>
   <th class="rowheader">Name</th>
   <th class="rowheader">Last Update</th>

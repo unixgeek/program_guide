@@ -14,7 +14,7 @@
 <div class="content">
 <h2>Add Program</h2>
 <form action="InsertProgram.do" method="post">
-<table cellspacing="0" border="1">
+<table class="data">
  <tr>
   <th class="rowheader">Name</th>
   <th class="rowheader">Update URL</th>

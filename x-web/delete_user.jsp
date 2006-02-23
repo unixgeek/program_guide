@@ -16,7 +16,7 @@
 <h2 class="title">Delete User</h2>
 <form action="DeleteUser.do" method="post">
 <p><input type="hidden" name="user_id" value="${candidateUser.id}" /></p>
-<table cellspacing="0" border="1">
+<table class="data">
  <tr>
   <th class="rowheader">Username</th>
   <th class="rowheader">Password</th>
