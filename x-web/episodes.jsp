@@ -33,9 +33,11 @@
   <td class="rowdatacenter"><a name="${userEpisode.episode.serialNumber}" />${userEpisode.episode.number}</td>
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
   <td class="rowdatacenter">
-   <dt:format patternId="dateDisplayFormat"><dt:parse patternId="dateInputFormat">
-    ${userEpisode.episode.originalAirDate}
-   </dt:parse></dt:format>
+   <c:if test='${not empty userEpisode.episode.originalAirDate}'>
+    <dt:format patternId="dateDisplayFormat"><dt:parse patternId="dateInputFormat">
+     ${userEpisode.episode.originalAirDate}
+    </dt:parse></dt:format>
+   </c:if>
   </td>
   <td class="rowdata">${userEpisode.episode.title}</td>
     <td class="rowdatacenter"><a class="row${userEpisode.status}" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
