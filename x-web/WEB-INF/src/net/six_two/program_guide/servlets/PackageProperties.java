@@ -1,5 +1,5 @@
 /*
- * $Id: PackageProperties.java,v 1.2 2006-02-22 06:31:50 gunter Exp $
+ * $Id: PackageProperties.java,v 1.3 2006-02-23 01:54:01 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -26,7 +26,7 @@ public class PackageProperties {
                 name = p.getProperty("package.name");
                 version = p.getProperty("package.version");
                 dateDisplayFormat = p.getProperty("date.displayFormat");
-                timestampDisplayFormat = p.getProperty("time.displayFormat");
+                timestampDisplayFormat = p.getProperty("timestamp.displayFormat");
             } catch (IOException e) {
             }
         }
