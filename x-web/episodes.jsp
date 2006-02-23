@@ -4,6 +4,7 @@
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <link rel="stylesheet" href="default.css" type="text/css" />
@@ -31,7 +32,11 @@
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter"><a name="${userEpisode.episode.serialNumber}" />${userEpisode.episode.number}</td>
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
-  <td class="rowdatacenter">${userEpisode.episode.originalAirDate}</td>
+  <td class="rowdatacenter">
+   <dt:format patternId="dateDisplayFormat"><dt:parse patternId="dateInputFormat">
+    ${userEpisode.episode.originalAirDate}
+   </dt:parse></dt:format>
+  </td>
   <td class="rowdata">${userEpisode.episode.title}</td>
     <td class="rowdatacenter"><a class="row${userEpisode.status}" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
   <td class="rowdata">

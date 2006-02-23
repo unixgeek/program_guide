@@ -3,6 +3,7 @@
      PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <link rel="stylesheet" href="default.css" type="text/css" />
@@ -25,7 +26,11 @@
  <tr>
   <td class="rowdata"><input type="text" name="name" value="${program.name}" /></td>
   <td class="rowdata"><input type="text" name="url" value="${program.url}" /></td>
-  <td class="rowdatacenter">${program.lastUpdate}</td>
+  <td class="rowdatacenter">
+   <dt:format patternId="timestampDisplayFormat"><dt:parse patternId="timestampInputFormat">
+    ${program.lastUpdate}
+   </dt:parse></dt:format>  
+  </td>
   <c:choose>
    <c:when test='${program.doUpdate == 1}'>
   <td class="rowdatacenter"><input type="checkbox" name="do_update" checked="checked" value="1" /></td>
