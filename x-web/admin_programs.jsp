@@ -36,7 +36,12 @@
     ${program.lastUpdate}
    </dt:parse></dt:format>
   </td>
-  <td class="rowdatacenter">${program.doUpdate}</td>
+  <td class="rowdatacenter">
+   <c:choose>
+    <c:when test='${program.doUpdate == "1"}'>yes</c:when>
+    <c:otherwise>no</c:otherwise>
+   </c:choose>
+  </td>
   <c:if test='${canEdit == "true"}'>
   <td class="rowdatacenter"><a class="rowdata" href="UpdateProgram.do?program_id=${program.id}">Edit</a></td>
   </c:if>
@@ -47,7 +52,7 @@
  </c:forEach>
  <c:if test='${canAdd == "true"}'>
  <tr>
-  <td colspan="6" align="right"><a class="rowdata" href="InsertProgram.do">Add new program</a></td>
+  <td class="rowdata" colspan="6" align="right"><a class="rowdata" href="InsertProgram.do">Add new program</a></td>
  </tr>
  </c:if>
 </table>

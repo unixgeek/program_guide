@@ -27,7 +27,12 @@
   <td class="rowdata">${program.name}</td>
   <td class="rowdata">${program.url}</td>
   <td class="rowdatacenter">${program.lastUpdate}</td>
-  <td class="rowdatacenter">${program.doUpdate}</td>
+  <td class="rowdatacenter">
+   <c:choose>
+    <c:when test='${program.doUpdate == "1"}'>yes</c:when>
+    <c:otherwise>no</c:otherwise>
+   </c:choose>
+  </td>
  </tr>
  <tr>
   <td align="right" colspan="4">
