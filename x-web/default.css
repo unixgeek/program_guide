@@ -52,58 +52,46 @@ a.menuitem:hover {
 }
 
 .data {
-    background-color: #83ADC4;
+    background-color: #1A597C;
     border-collapse: separate;
-    border: 3px solid #2E383E;
+    border: 3px solid #000000;
 }
 
 .rowheader {
+    background: #000000;
+    border: 1px solid #1A597C;
+    color: #83ADC4;
     font-family: monospace;
-    background: #2E383E;
-    color: #FFFFFF;
-    border: 1px solid #2E383E;
-    padding: 3x;
-    vertical-align: top;
+    padding: 3px;
+    vertical-align: middle;
+    whitespace: nowrap;
 }
 
 .rowdata {
-    font-family: monospace;
+    background: #FFFFFF;
     border: 1px solid #2E383E;
+    color: #000000;
+    font-family: monospace;
     margin: 3px;
     padding: 3px;
     vertical-align: top;
-    background: #FFFFFF;
-}
-
-a.rowdata {
-    color: #000000;
-    border: none;
-    background-color: transparent;
+    whitespace: nowrap;
 }
 
 .rowdatacenter {
-    text-align: center;
-    font-family: monospace;
+    background: #FFFFFF;
     border: 1px solid #2E383E;
+    color: #000000;
+    font-family: monospace;
     margin: 3px;
     padding: 3px;
+    text-align: center;
     vertical-align: top;
-    background: #FFFFFF;
+    whitespace: nowrap;
  }
 
-.rownone {
-    background-color: #FFFFFF;
-    color: #000000;
-}
-
-.rowqueued {
-    background-color: #4CB2EA;
-    color: #1A597C;
-}
-
-.rowviewed {
-    background-color: #1A597C;
-    color: #4CB2EA;
+a.rowdatacenter, a.rowdata {
+    border: none;
 }
 
 #login {
