@@ -28,7 +28,7 @@
   <th class="rowheader">Status</th>
  </tr>
  <c:forEach var="userEpisode" items="${userEpisodesList}">
- <tr class="row${userEpisode.status}">
+ <tr>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter"><a name="${userEpisode.episode.serialNumber}" />${userEpisode.episode.number}</td>
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
@@ -40,7 +40,7 @@
    </c:if>
   </td>
   <td class="rowdata">${userEpisode.episode.title}</td>
-    <td class="rowdatacenter"><a class="row${userEpisode.status}" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
+    <td class="rowdatacenter"><a class="rowdatacenter" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
   <td class="rowdata">
    <c:choose>
     <c:when test='${userEpisode.status == "none"}'>
