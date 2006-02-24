@@ -24,6 +24,7 @@
   <th class="rowheader">Production Code</th>
   <th class="rowheader">Original Air Date</th>
   <th class="rowheader">Title</th>
+  <th class="rowheader">Status</th>
   <th class="rowheader">Torrent</th>
  </tr>
  <c:forEach var="userEpisode" items="${todaysEpisodesList}">
@@ -38,6 +39,7 @@
    </dt:parse></dt:format>
   </td>
   <td class="rowdata">${userEpisode.episode.title}</td>
+  <td class="rowdatacenter">${userEpisode.status}</td>
   <td class="rowdatacenter"><a class="rowdatacenter" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
  </tr>
  </c:forEach>
@@ -51,6 +53,7 @@
   <th class="rowheader">Production Code</th>
   <th class="rowheader">Original Air Date</th>
   <th class="rowheader">Title</th>
+  <th class="rowheader">Status</th>
   <th class="rowheader">Torrent</th>
  </tr>
  <c:forEach var="userEpisode" items="${nextEpisodesList}">
@@ -65,6 +68,7 @@
    </dt:parse></dt:format>
   </td>
   <td class="rowdata">${userEpisode.episode.title}</td>
+  <td class="rowdatacenter">${userEpisode.status}</td>
   <td class="rowdatacenter"><a class="rowdatacenter" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
  </tr>
  </c:forEach>
@@ -78,6 +82,7 @@
   <th class="rowheader">Production Code</th>
   <th class="rowheader">Original Air Date</th>
   <th class="rowheader">Title</th>
+  <th class="rowheader">Status</th>
   <th class="rowheader">Torrent</th>
  </tr>
  <c:forEach var="userEpisode" items="${previousEpisodesList}">
@@ -92,6 +97,7 @@
    </dt:parse></dt:format>
   </td>
   <td class="rowdata">${userEpisode.episode.title}</td>
+  <td class="rowdatacenter">${userEpisode.status}</td>
   <td class="rowdatacenter"><a class="rowdatacenter" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
  </tr>
  </c:forEach>
