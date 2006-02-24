@@ -16,18 +16,20 @@ body {
     background-color: #2E383E;
     color: #4CB2EA;
     font-style: italic;
-    padding: 5px 5px 5px 5px;
+    padding: 5px;
 }
 
 #menu {
-    width: 180px; 
+    background-color: #1A597C;
+    float: left;
     position: relative; 
-    float: left; 
     text-align: center;
+    width: 160px; 
 }
 
 .menuitem {
     width: auto;
+    margin: 5px;
     display: block;
 }
 
@@ -39,6 +41,7 @@ a.menuitem {
     font-weight: bold;
     text-align: left;
     text-decoration: none;
+    margin: 5px;
 }
 
 a.menuitem:hover {
@@ -72,9 +75,8 @@ a.menuitem:hover {
     border: 1px solid #2E383E;
     color: #000000;
     font-family: monospace;
-    margin: 3px;
     padding: 3px;
-    vertical-align: top;
+    vertical-align: middle;
     whitespace: nowrap;
 }
 
@@ -83,15 +85,15 @@ a.menuitem:hover {
     border: 1px solid #2E383E;
     color: #000000;
     font-family: monospace;
-    margin: 3px;
     padding: 3px;
     text-align: center;
-    vertical-align: top;
+    vertical-align: middle;
     whitespace: nowrap;
  }
 
 a.rowdatacenter, a.rowdata {
     border: none;
+    background: transparent;
 }
 
 #login {
