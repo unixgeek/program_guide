@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.35 2005-12-07 05:39:44 gunter Exp $
+ * $Id: Persistor.java,v 1.36 2006-02-24 21:50:09 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -91,15 +91,10 @@ public class Persistor {
             + "    AND t.program_id = e.program_id "
             + "    AND t.season = e.season "
             + "    AND t.episode_number = e.number) "
-            + "WHERE u.id = ? ";
-        if (fromDay >= 0)
-            sql += "AND original_air_date >= (CURRENT_DATE() + INTERVAL ? DAY) "
-                 + "AND original_air_date <= (CURRENT_DATE() + INTERVAL ? DAY) "
-                 + "ORDER BY e.original_air_date ASC";
-        else
-            sql += "AND original_air_date <= (CURRENT_DATE() + INTERVAL ? DAY) "
-                 + "AND original_air_date >= (CURRENT_DATE() + INTERVAL ? DAY) "
-                 + "ORDER BY e.original_air_date DESC";
+            + "WHERE u.id = ? "
+            + "AND original_air_date >= (CURRENT_DATE() + INTERVAL ? DAY) "
+            + "AND original_air_date <= (CURRENT_DATE() + INTERVAL ? DAY) "
+            + "ORDER BY e.original_air_date DESC";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
