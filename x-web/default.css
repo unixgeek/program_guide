@@ -96,6 +96,29 @@ a.rowdatacenter, a.rowdata {
     background: transparent;
 }
 
+.none {
+    background: #1A597C;
+    padding: 3px;
+}
+
+.today {
+    background: #FFFF00;
+    border: 1px solid #2E383E;
+    padding: 3px;
+}
+
+.tomorrow {
+    background: #00FF00;
+    border: 1px solid #2E383E;
+    padding: 3px;
+}
+
+.yesterday {
+    background: #FF0000;
+    border: 1px solid #2E383E;
+    padding: 3px;
+}
+
 #login {
     margin-left: auto;
     margin-right: auto;
