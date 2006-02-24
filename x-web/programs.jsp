@@ -21,7 +21,7 @@
   <th class="rowheader">Last Update</th>
   <th class="rowheader">Update URL</th>
   <th class="rowheader">Torrent</th>
- </tr><!--H:m:s z yyyy -->
+ </tr>
  <c:forEach var="program" items="${programsList}">
  <tr>
   <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${program.id}">${program.name}</a></td>
@@ -35,7 +35,7 @@
  </tr>
  </c:forEach>
  <tr>
-  <td align="right" colspan="4"><a class="rowdata" href="SetUserPrograms.do">Edit Subscriptions</a></td>
+  <td class="rowdata" align="right" colspan="4"><a class="rowdata" href="SetUserPrograms.do">Edit Subscriptions</a></td>
  </tr>
 </table>
 <br />
