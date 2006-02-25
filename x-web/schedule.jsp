@@ -15,7 +15,7 @@
 <%@ include file="menu.jsp" %>
 <div class="content">
 <h2>Schedule</h2>
-<h3><dt:format patternId="dateDisplayFormat"><dt:parse pattern="EE MMM dd HH:mm:ss z yyyy">${fromDate}</dt:parse></dt:format> to <dt:format patternId="dateDisplayFormat"><dt:parse pattern="EE MMM dd HH:mm:ss z yyyy">${toDate}</dt:parse></dt:format></h3>
+<h3><dt:format patternId="dateDisplayFormat">${fromDate.time}</dt:format> to <dt:format patternId="dateDisplayFormat">${toDate.time}</dt:format></h3>
 <table class="data">
  <tr>
   <th class="none">&nbsp;</th>
