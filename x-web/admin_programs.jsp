@@ -32,9 +32,9 @@
   <td class="rowdata">${program.name}</td>
   <td class="rowdata">${program.url}</td>
   <td class="rowdatacenter">
-   <dt:format patternId="timestampDisplayFormat"><dt:parse patternId="timestampInputFormat">
-    ${program.lastUpdate}
-   </dt:parse></dt:format>
+   <c:if test='${not empty program.lastUpdate}'>
+    <dt:format patternId="timestampDisplayFormat">${program.lastUpdate.time}</dt:format>
+   </c:if>
   </td>
   <td class="rowdatacenter">
    <c:choose>

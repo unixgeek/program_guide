@@ -33,14 +33,14 @@
   <td class="rowdata">${user.username}</td>
   <td class="rowdatacenter">${user.password}</td>
   <td class="rowdatacenter">
-   <dt:format patternId="timestampDisplayFormat"><dt:parse patternId="timestampInputFormat">
-    ${user.lastLoginDate}
-   </dt:parse></dt:format>
+   <c:if test='${not empty user.lastLoginDate}'>
+    <dt:format patternId="timestampDisplayFormat">${user.lastLoginDate.time}</dt:format>
+   </c:if>
   </td>
   <td class="rowdatacenter">
-   <dt:format patternId="timestampDisplayFormat"><dt:parse patternId="timestampInputFormat">
-    ${user.registrationDate}
-   </dt:parse></dt:format>
+   <c:if test='${not empty user.registrationDate}'>
+    <dt:format patternId="timestampDisplayFormat">${user.registrationDate.time}</dt:format>
+   </c:if>
   </td>
   <td class="rowdatacenter">${user.permissions}</td>
   <c:if test='${canEdit == "true"}'>

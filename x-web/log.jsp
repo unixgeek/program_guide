@@ -24,9 +24,9 @@
  <tr>
   <td class="rowdata"><a class="rowdata" href="GetLogEntry.do?log_id=${log.id}">${log.source}</a></td>
   <td class="rowdata">
-   <dt:format patternId="timestampDisplayFormat"><dt:parse patternId="timestampInputFormat">
-    ${log.createDate}
-   </dt:parse></dt:format>
+   <c:if test='${not empty log.createDate}'>
+    <dt:format patternId="timestampDisplayFormat">${log.createDate.time}</dt:format>
+   </c:if>
   </td>
  </tr>
  </c:forEach>

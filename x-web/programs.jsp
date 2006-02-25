@@ -26,9 +26,9 @@
  <tr>
   <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${program.id}">${program.name}</a></td>
   <td class="rowdatacenter">
-   <dt:format patternId="timestampDisplayFormat"><dt:parse patternId="timestampInputFormat">
-    ${program.lastUpdate}
-   </dt:parse></dt:format>
+   <c:if test='${not empty program.lastUpdate}'>
+    <dt:format patternId="timestampDisplayFormat">${program.lastUpdate.time}</dt:format>
+   </c:if>
   </td>
   <td class="rowdata"><a class="rowdata" href="${program.url}">${program.url}</a></td>
   <td class="rowdatacenter"><a class="rowdata" href="${site.searchString}<str:encodeUrl>${program.name}</str:encodeUrl>">${site.name}</a></td>

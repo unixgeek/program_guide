@@ -27,9 +27,9 @@
   <td class="rowdata"><input type="text" name="name" value="${program.name}" /></td>
   <td class="rowdata"><input type="text" name="url" value="${program.url}" /></td>
   <td class="rowdatacenter">
-   <dt:format patternId="timestampDisplayFormat"><dt:parse patternId="timestampInputFormat">
-    ${program.lastUpdate}
-   </dt:parse></dt:format>  
+   <c:if test='${not empty program.lastUpdate}'>
+    <dt:format patternId="timestampDisplayFormat">${program.lastUpdate.time}</dt:format>
+   </c:if>
   </td>
   <c:choose>
    <c:when test='${program.doUpdate == 1}'>

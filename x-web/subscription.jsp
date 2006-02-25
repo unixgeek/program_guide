@@ -34,9 +34,9 @@
   </c:choose>
   <td class="rowdata">${program.program.name}</td>
   <td class="rowdatacenter">
-   <dt:format patternId="timestampDisplayFormat"><dt:parse patternId="timestampInputFormat">
-    ${program.program.lastUpdate}
-   </dt:parse></dt:format> 
+   <c:if test='${not empty program.program.lastUpdate}'>
+    <dt:format patternId="timestampDisplayFormat">${program.program.lastUpdate.time}</dt:format>
+   </c:if>
   </td>
   <td class="rowdata"><a class="rowdata" href="${program.program.url}">${program.program.url}</a></td>
  </tr>
