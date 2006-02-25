@@ -49,9 +49,7 @@
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
   <td class="rowdatacenter">
-   <dt:format patternId="dateDisplayFormat"><dt:parse patternId="dateInputFormat">
-    ${userEpisode.episode.originalAirDate}
-   </dt:parse></dt:format>
+   <dt:format patternId="dateDisplayFormat">${userEpisode.episode.originalAirDate.time}</dt:format>
   </td>
   <td class="rowdata">${userEpisode.episode.title}</td>
   <td class="rowdatacenter">${userEpisode.status}</td>

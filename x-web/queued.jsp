@@ -31,9 +31,9 @@
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
   <td class="rowdatacenter">
    <c:if test='${not empty userEpisode.episode.originalAirDate}'>
-    <dt:format patternId="dateDisplayFormat"><dt:parse patternId="dateInputFormat">
-     ${userEpisode.episode.originalAirDate}
-    </dt:parse></dt:format>
+    <dt:format patternId="dateDisplayFormat">
+     ${userEpisode.episode.originalAirDate.time}
+    </dt:format>
    </c:if>
   </td>
   <td class="rowdata">${userEpisode.episode.title}</td>

@@ -14,12 +14,11 @@
 <%@ include file="menu.jsp" %>
 <div class="content">
 <h2 class="title">Log Entry</h2>
-<h3 class="title">(${log.source}:&nbsp;&nbsp;
- <dt:format patternId="timestampDisplayFormat"><dt:parse patternId="timestampInputFormat">
-  ${log.createDate}
- </dt:parse></dt:format>)
+<h3 class="title">${log.source}:&nbsp;&nbsp;
+ <c:if test='${not empty log.createDate}'>
+  <dt:format patternId="timestampDisplayFormat">${log.createDate.time}</dt:format>
+ </c:if>
 </h3>
-<br />
 <textarea cols="80" rows="30" readonly="readonly">
 ${log.content}
 </textarea>
