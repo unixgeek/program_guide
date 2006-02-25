@@ -53,7 +53,7 @@
  </c:forEach>
  <c:if test='${canAdd == "true"}'>
  <tr>
-  <td colspan="7" align="right"><a class="rowdata" href="Register.do?action=nologin">Add new user</a></td>
+  <td class="rowdata" colspan="7" align="right"><a class="rowdata" href="Register.do?action=nologin">Add new user</a></td>
  </tr>
  </c:if>
 </table>

@@ -146,7 +146,7 @@
   <td class="rowdata">ADMIN_LOG</td>
  </tr>
  <tr>
-  <td colspan="2" align="right"><input type="submit" value="Update" /></td>
+  <td class="rowdata" colspan="2" align="right"><input type="submit" value="Update" /></td>
  </tr>
 </table>
 </form>

@@ -35,7 +35,7 @@
   </td>
  </tr>
  <tr>
-  <td align="right" colspan="4">
+  <td class="rowdata" align="right" colspan="4">
    <input type="submit" value="Confirm" />
   </td>
  </tr>

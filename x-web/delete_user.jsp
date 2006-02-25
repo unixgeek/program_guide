@@ -32,7 +32,7 @@
   <td class="rowdatacenter">${candidateUser.permissions}</td>
  </tr>
  <tr>
-  <td align="right" colspan="5">
+  <td class="rowdata" align="right" colspan="5">
    <input type="submit" value="Confirm" />
   </td>
  </tr>

@@ -41,7 +41,7 @@
   </c:choose>
  </tr>
  <tr>
-  <td align="right" colspan="4">
+  <td class="rowdata" align="right" colspan="4">
    <input type="submit" value="Update" />
   </td>
  </tr>
