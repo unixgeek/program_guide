@@ -64,7 +64,7 @@ a.menuitem:hover {
     background: #000000;
     border: 1px solid #1A597C;
     color: #83ADC4;
-    font-family: monospace;
+    font-family: fantasy;
     padding: 3px;
     vertical-align: middle;
     whitespace: nowrap;
@@ -74,7 +74,7 @@ a.menuitem:hover {
     background: #FFFFFF;
     border: 1px solid #2E383E;
     color: #000000;
-    font-family: monospace;
+    font-family: fantasy;
     padding: 3px;
     vertical-align: middle;
     whitespace: nowrap;
@@ -84,7 +84,7 @@ a.menuitem:hover {
     background: #FFFFFF;
     border: 1px solid #2E383E;
     color: #000000;
-    font-family: monospace;
+    font-family: fantasy;
     padding: 3px;
     text-align: center;
     vertical-align: middle;
