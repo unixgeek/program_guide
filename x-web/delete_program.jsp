@@ -26,7 +26,11 @@
  <tr>
   <td class="rowdata">${program.name}</td>
   <td class="rowdata">${program.url}</td>
-  <td class="rowdatacenter">${program.lastUpdate}</td>
+  <td class="rowdata">
+   <c:if test='${not empty program.lastUpdate}'>
+    <dt:format patternId="timestampDisplayFormat">${program.lastUpdate.time}</dt:format>
+   </c:if>
+  </td>
   <td class="rowdatacenter">
    <c:choose>
     <c:when test='${program.doUpdate == "1"}'>yes</c:when>
