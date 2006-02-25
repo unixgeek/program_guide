@@ -27,8 +27,16 @@
  <tr>
   <td class="rowdata">${candidateUser.username}</td>
   <td class="rowdatacenter">${candidateUser.password}</td>
-  <td class="rowdatacenter">${candidateUser.lastLoginDate}</td>
-  <td class="rowdatacenter">${candidateUser.registrationDate}</td>
+  <td class="rowdatacenter">
+   <c:if test='${not empty candidateUser.lastLoginDate}'>
+    <dt:format patternId="timestampDisplayFormat">${candidateUser.lastLoginDate.time}</dt:format>
+   </c:if>
+  </td>
+  <td class="rowdatacenter">
+   <c:if test='${not empty candidateUser.registrationDate}'>
+    <dt:format patternId="timestampDisplayFormat">${candidateUser.registrationDate.time}</dt:format>
+   </c:if>
+  </td>
   <td class="rowdatacenter">${candidateUser.permissions}</td>
  </tr>
  <tr>
