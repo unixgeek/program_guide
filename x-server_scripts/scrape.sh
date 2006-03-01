@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.20 2006-02-10 01:52:44 gunter Exp $
+# $Id: scrape.sh,v 1.21 2006-03-01 02:34:41 gunter Exp $
 #
 # requires: lynx gawk
 #
@@ -36,11 +36,20 @@ do
     SEASON=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 1 | tr -d '_'`
     EPISODE=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 2 | tr -d '_'`
     PRODUCTION_CODE=`echo "${line}" | cut -d "|" -f 2 | tr -d '_'`
-    DATE=`echo "${line}" | cut -d "|" -f 3 | tr -d '_'`
-    ORIGINAL_AIR_DATE=`date -j -f %d%b%y ${DATE} +%y%m%d 2> /dev/null`
+    DATE=`echo "${line}" | cut -d "|" -f 3 | tr -d '_' | awk '{printf "%07s", $1}'`
     TITLE=`echo "${line}" | cut -d "|" -f 4 | tr '_' ' ' | sed 's/^[[:space:]]*//'`
     SERIAL_NUMBER=`expr ${SERIAL_NUMBER} + 1`
 
+    # The year is two digits and MySQL adds 2000 for 00-69 
+    # and adds 1900 for 70-99.  That is undesirable in this context.
+    YEARPART=`echo ${DATE} | cut -c 6-8`
+    if [ "${YEARPART}" -ge "30" ]; then
+        YEAR=19${YEARPART}
+    else # < 30
+        YEAR=20${YEARPART}
+    fi
+    FULLDATE=`echo ${DATE} | cut -c 1-5`${YEAR}
+    ORIGINAL_AIR_DATE=`mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} -s --skip-column-names -e "SELECT STR_TO_DATE('${FULLDATE}', '%d%b%Y')"`
     # If any variable is empty, set it to null (\N).
     if [ -z "${SEASON}" ]; then
         SEASON=\\N
