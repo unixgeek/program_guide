@@ -24,7 +24,7 @@ body {
     float: left;
     position: relative; 
     text-align: center;
-    width: 160px; 
+    width: 140px; 
 }
 
 .menuitem {
@@ -34,7 +34,7 @@ body {
 }
 
 a.menuitem {
-    font-size: 80%;
+    font-size: 12px;
     background-color: #1A597C;
     color: #4CB2EA;
     text-transform: uppercase;
@@ -50,7 +50,7 @@ a.menuitem:hover {
 }
 
 .content {
-    margin-left: 185px;
+    margin-left: 155px;
     width: auto;
 }
 
@@ -64,7 +64,8 @@ a.menuitem:hover {
     background: #000000;
     border: 1px solid #1A597C;
     color: #83ADC4;
-    font-family: fantasy;
+    font-family: georgia, serif;
+    font-size: 12px;
     padding: 3px;
     vertical-align: middle;
     whitespace: nowrap;
@@ -74,7 +75,8 @@ a.menuitem:hover {
     background: #FFFFFF;
     border: 1px solid #2E383E;
     color: #000000;
-    font-family: fantasy;
+    font-family: georgia, serif;
+    font-size: 11px;
     padding: 3px;
     vertical-align: middle;
     whitespace: nowrap;
@@ -84,7 +86,8 @@ a.menuitem:hover {
     background: #FFFFFF;
     border: 1px solid #2E383E;
     color: #000000;
-    font-family: fantasy;
+    font-family: georgia, serif;
+    font-size: 11px;
     padding: 3px;
     text-align: center;
     vertical-align: middle;
@@ -137,7 +140,7 @@ a.generic {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: palatino, serif;
+    font-family: georgia, serif;
 }
 
 #footerlist {
