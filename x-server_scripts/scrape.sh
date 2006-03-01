@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.21 2006-03-01 02:34:41 gunter Exp $
+# $Id: scrape.sh,v 1.22 2006-03-01 04:42:53 gunter Exp $
 #
 # requires: lynx gawk
 #
@@ -49,7 +49,11 @@ do
         YEAR=20${YEARPART}
     fi
     FULLDATE=`echo ${DATE} | cut -c 1-5`${YEAR}
-    ORIGINAL_AIR_DATE=`mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} -s --skip-column-names -e "SELECT STR_TO_DATE('${FULLDATE}', '%d%b%Y')"`
+    if [ "${DATE}" != "0000000" ]; then
+        ORIGINAL_AIR_DATE=`mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} -s --skip-column-names -e "SELECT STR_TO_DATE('${FULLDATE}', '%d%b%Y')"`
+    else
+        ORIGINAL_AIR_DATE=""
+    fi
     # If any variable is empty, set it to null (\N).
     if [ -z "${SEASON}" ]; then
         SEASON=\\N
