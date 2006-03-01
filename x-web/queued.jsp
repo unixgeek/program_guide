@@ -41,6 +41,8 @@
  </c:forEach>
 </table>
 <br />
+<br />
+<c:if  test='${empty queuedEpisodesList}'><br /></c:if>
 </div>
 <%@ include file="footer.jsp" %>
 </body>

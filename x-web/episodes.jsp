@@ -66,6 +66,8 @@
  </c:forEach>
 </table>
 </form>
+<br />
+<c:if  test='${empty userEpisodesList}'><br /></c:if>
 </div>
 <%@ include file="footer.jsp" %>
 </body>
