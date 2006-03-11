@@ -12,7 +12,7 @@
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <h2>Oh No!</h2>
-<p class="error">${message}</p><br />
+<p class="error">${message}</p><br /><br />
 <%@ include file="footer.jsp" %>
 </body>
 </html>
