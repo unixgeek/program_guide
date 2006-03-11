@@ -24,12 +24,14 @@ body {
     float: left;
     position: relative; 
     text-align: center;
-    width: 140px; 
+    width: 120px; 
 }
 
 .menuitem {
     width: auto;
-    margin: 5px;
+    margin-left: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
     display: block;
 }
 
@@ -37,11 +39,11 @@ a.menuitem {
     font-size: 12px;
     background-color: #1A597C;
     color: #4CB2EA;
-    text-transform: uppercase;
+    font-family: georgia, serif;
+    /*text-transform: uppercase;*/
     font-weight: bold;
     text-align: left;
     text-decoration: none;
-    margin: 5px;
 }
 
 a.menuitem:hover {
@@ -50,7 +52,7 @@ a.menuitem:hover {
 }
 
 .content {
-    margin-left: 155px;
+    margin-left: 125px;
     width: auto;
 }
 
@@ -100,26 +102,47 @@ a.rowdatacenter, a.rowdata {
 }
 
 .none {
-    background: #1A597C;
+    background: #FFFFFF;
+    border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 11px;
     padding: 3px;
+    vertical-align: middle;
+    whitespace: nowrap;
 }
 
 .today {
     background: #FFFF00;
     border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 11px;
     padding: 3px;
+    vertical-align: middle;
+    whitespace: nowrap;
 }
 
 .tomorrow {
     background: #00FF00;
     border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 11px;
     padding: 3px;
+    vertical-align: middle;
+    whitespace: nowrap;
 }
 
 .yesterday {
     background: #FF0000;
     border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 11px;
     padding: 3px;
+    vertical-align: middle;
+    whitespace: nowrap;
 }
 
 #login {
@@ -162,4 +185,3 @@ h1, h2, h3, h4, h5, h6 {
     color: #4CB2EA;
     text-decoration: none;
 }
-
