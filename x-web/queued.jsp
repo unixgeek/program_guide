@@ -36,7 +36,16 @@
     </dt:format>
    </c:if>
   </td>
-  <td class="rowdata">${userEpisode.episode.title}</td>
+  <td class="rowdata">
+   <c:choose>
+    <c:when test='${not empty userEpisode.episode.summaryUrl}'>
+   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">${userEpisode.episode.title}</a>
+    </c:when>
+    <c:otherwise>
+    ${userEpisode.episode.title}
+    </c:otherwise>
+   </c:choose>
+  </td>
  </tr>
  </c:forEach>
 </table>
