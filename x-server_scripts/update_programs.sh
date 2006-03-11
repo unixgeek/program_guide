@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: update_programs.sh,v 1.10 2005-12-06 05:03:00 gunter Exp $
+# $Id: update_programs.sh,v 1.11 2006-03-11 18:53:06 gunter Exp $
 #
 . ${HOME}/.program_guide.conf
 
@@ -34,6 +34,13 @@ do
     echo "${NAME} => ${SCRAPE} ${ID} ${NAME} ${URL}" >> ${LOG} 2>&1
     ${SCRAPE} "${ID}" "${NAME}" "${URL}" >> ${LOG} 2>&1
 done
+
+DATE_SQL=\
+"UPDATE episode
+SET original_air_date = NULL
+WHERE original_air_date = '0000-00-00'"
+
+mysql -vv -u ${MYSQLUSER} -p${MYSQLPASSWORD} ${DATABASE} -e "${DATE_SQL}" >> ${LOG} 2>&1
 
 mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} --skip-column-names ${DATABASE} \
     -e "${EPISODE_SQL}" > ${AFTER}
