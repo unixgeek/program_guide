@@ -28,6 +28,7 @@ CREATE TABLE `episode` (
   `original_air_date` date default NULL,
   `title` tinytext,
   `serial_number` smallint(5) unsigned NOT NULL default '0',
+  `summary_url` tinytext,
   PRIMARY KEY  (`program_id`,`season`,`number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
