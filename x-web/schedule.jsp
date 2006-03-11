@@ -17,13 +17,11 @@
 <h2>Schedule</h2>
 <h3><dt:format patternId="dateDisplayFormat">${fromDate.time}</dt:format> to <dt:format patternId="dateDisplayFormat">${toDate.time}</dt:format></h3>
 <table class="data">
- <tr>
-  <th class="none">&nbsp;</th>
+ <tr class="test">
+  <th class="rowheader">Air Date</th>
   <th class="rowheader">Program</th>
   <th class="rowheader">Season</th>
-  <th class="rowheader">Episode</th>
-  <th class="rowheader">Production Code</th>
-  <th class="rowheader">Original Air Date</th>
+  <th class="rowheader">Episode</th
   <th class="rowheader">Title</th>
   <th class="rowheader">Status</th>
   <th class="rowheader">Torrent</th>
@@ -32,26 +30,33 @@
  <tr>
   <c:choose>
    <c:when test='${userEpisode.today == "true"}'>
-  <td class="today">&nbsp;</td>
+  <td class="today">
    </c:when>
    <c:when test='${userEpisode.tomorrow == "true"}'>
-  <td class="tomorrow">&nbsp;</td>
+  <td class="tomorrow">
    </c:when>
    <c:when test='${userEpisode.yesterday == "true"}'>
-  <td class="yesterday">&nbsp;</td>
+  <td class="yesterday">
    </c:when>
    <c:otherwise>
-  <td class="none">&nbsp;</td>
+  <td class="none">
    </c:otherwise>
   </c:choose>
+   <dt:format patternId="dateDisplayFormat">${userEpisode.episode.originalAirDate.time}</dt:format>
+  </td>
   <td class="rowdata"><a class="rowdatacenter" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#${userEpisode.episode.serialNumber}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
-  <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
-  <td class="rowdatacenter">
-   <dt:format patternId="dateDisplayFormat">${userEpisode.episode.originalAirDate.time}</dt:format>
+  <td class="rowdata">
+   <c:choose>
+    <c:when test='${not empty userEpisode.episode.summaryUrl}'>
+   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">${userEpisode.episode.title}</a>
+    </c:when>
+    <c:otherwise>
+    ${userEpisode.episode.title}
+    </c:otherwise>
+   </c:choose>
   </td>
-  <td class="rowdata">${userEpisode.episode.title}</td>
   <td class="rowdatacenter">${userEpisode.status}</td>
   <td class="rowdatacenter"><a class="rowdatacenter" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
  </tr>
