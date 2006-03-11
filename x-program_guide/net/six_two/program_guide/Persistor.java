@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.36 2006-02-24 21:50:09 gunter Exp $
+ * $Id: Persistor.java,v 1.37 2006-03-11 20:56:53 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -54,7 +54,8 @@ public class Persistor {
                     result.getString("e.production_code"),
                     result.getDate("e.original_air_date"),
                     result.getString("e.title"),
-                    result.getInt("e.serial_number"));
+                    result.getInt("e.serial_number"),
+                    result.getString("e.summary_url"));
             String status = result.getString("status");
             
             userEpisodes.add(new UserEpisode(program, episode, status));
@@ -116,7 +117,8 @@ public class Persistor {
                     result.getString("e.production_code"),
                     result.getDate("e.original_air_date"),
                     result.getString("e.title"),
-                    result.getInt("e.serial_number"));
+                    result.getInt("e.serial_number"),
+                    result.getString("e.summary_url"));
             String status = result.getString("status");
             userEpisodes.add(new UserEpisode(program, episode, status));
         }
@@ -220,7 +222,8 @@ public class Persistor {
                     result.getString("e.production_code"),
                     result.getDate("e.original_air_date"),
                     result.getString("e.title"),
-                    result.getInt("e.serial_number"));
+                    result.getInt("e.serial_number"),
+                    result.getString("e.summary_url"));
             String status = result.getString("status");
             userEpisodes.add(new UserEpisode(program, episode, status));
         }

@@ -1,5 +1,5 @@
 /*
- * $Id: Episode.java,v 1.3 2005-11-03 01:44:05 gunter Exp $
+ * $Id: Episode.java,v 1.4 2006-03-11 20:56:53 gunter Exp $
  */
 package net.six_two.program_guide.tables;
 
@@ -13,6 +13,7 @@ public class Episode {
     private Date originalAirDate;
     private String title;
     private int serialNumber;
+    private String summaryUrl;
     
     public Episode() {
         
@@ -20,7 +21,7 @@ public class Episode {
     
     public Episode(int programId, String season, int number,
             String productionCode, Date originalAirDate, String title,
-            int serialNumber) {
+            int serialNumber, String summaryUrl) {
         this.number = number;
         this.originalAirDate = originalAirDate;
         this.productionCode = productionCode;
@@ -28,6 +29,7 @@ public class Episode {
         this.season = season;
         this.title = title;
         this.serialNumber = serialNumber;
+        this.summaryUrl = summaryUrl;
     }
     
     public int getNumber() {
@@ -83,5 +85,13 @@ public class Episode {
 
     public void setSerialNumber(int serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public String getSummaryUrl() {
+        return summaryUrl;
+    }
+
+    public void setSummaryUrl(String url) {
+        this.summaryUrl = url;
     }
 }
