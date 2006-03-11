@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.22 2006-03-01 04:42:53 gunter Exp $
+# $Id: scrape.sh,v 1.23 2006-03-11 18:54:36 gunter Exp $
 #
 # requires: lynx gawk
 #
@@ -14,16 +14,18 @@ fi
 ID="${1}"
 PROGRAM="${2}"
 URL="${3}"
+DUMP=`mktemp /tmp/scrape.dump.XXXXXX`
 RAW=`mktemp /tmp/scrape.raw.XXXXXX`
 DATA=`mktemp /tmp/scrape.data.XXXXXX`
 FIELDS="5 8 13 11 255"
 SERIAL_NUMBER=0
 
+echo "${PROGRAM} => ${DUMP}"
 echo "${PROGRAM} => ${RAW}"
 echo "${PROGRAM} => ${DATA}"
 
-# Dump the page to stdout.
-lynx -nolist -dont_wrap_pre -dump "${URL}" | \
+lynx -dont_wrap_pre -dump "${URL}" > ${DUMP}
+cat ${DUMP} | \
     # Find lines containing episode data.  
     egrep -e '^([[:space:]]*\<[[:alnum:]]+\.[[:space:]]+|[[:space:]]+)\<[[:alnum:]]+-[([:digit:]|[:space:][:digit:])]' | \
     # Treat data as fixed length and ignore the first field. (Hack?)
@@ -37,7 +39,9 @@ do
     EPISODE=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 2 | tr -d '_'`
     PRODUCTION_CODE=`echo "${line}" | cut -d "|" -f 2 | tr -d '_'`
     DATE=`echo "${line}" | cut -d "|" -f 3 | tr -d '_' | awk '{printf "%07s", $1}'`
-    TITLE=`echo "${line}" | cut -d "|" -f 4 | tr '_' ' ' | sed 's/^[[:space:]]*//'`
+    TITLE=`echo "${line}" | cut -d "|" -f 4 | tr '_' ' ' | sed 's/^[[:space:]]*//' | sed 's/\[.*\]//'`
+    LINK_NUMBER=`echo "${line}" | cut -d "|" -f 4 | tr '_' ' ' | sed 's/^[[:space:]]*//' | sed 's/\].*//' | tr -d '['`
+    SUMMARY_LINK=`cat ${DUMP} | grep "^[[:space:]]*${LINK_NUMBER}\.[[:space:]]*http" | sed "s/.*${LINK_NUMBER}\. *//"`
     SERIAL_NUMBER=`expr ${SERIAL_NUMBER} + 1`
 
     # The year is two digits and MySQL adds 2000 for 00-69 
@@ -70,9 +74,12 @@ do
     if [ -z "${TITLE}" ]; then
        TITLE=\\N
     fi 
+    if [ -z "${SUMMARY_LINK}" ]; then
+       SUMMARY_LINK=\\N
+    fi 
 
-    echo "${PROGRAM} => [${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${ORIGINAL_AIR_DATE}|${TITLE}|${SERIAL_NUMBER}]"
-    echo "${ID}|${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${ORIGINAL_AIR_DATE}|${TITLE}|${SERIAL_NUMBER}" >> ${DATA}
+    echo "${PROGRAM} => [${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${ORIGINAL_AIR_DATE}|${TITLE}|${SERIAL_NUMBER}|${SUMMARY_LINK}]"
+    echo "${ID}|${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${ORIGINAL_AIR_DATE}|${TITLE}|${SERIAL_NUMBER}|${SUMMARY_LINK}" >> ${DATA}
 done
 
 EPISODE_COUNT=`wc -l ${DATA} | tr -s ' ' | cut -d " "  -f 2`
@@ -93,7 +100,7 @@ fi
 LOAD=\
 "LOAD DATA LOCAL INFILE '${DATA}' REPLACE
 INTO TABLE episode FIELDS TERMINATED BY '|'
-(program_id, season, number, production_code, original_air_date, title, serial_number)"
+(program_id, season, number, production_code, original_air_date, title, serial_number, summary_url)"
 mysql --local-infile=1 -u ${MYSQLUSER} -p${MYSQLPASSWORD} ${DATABASE} -e "${LOAD}"
 if [ "$?" -ne "0" ]; then
     exit 1
@@ -113,6 +120,6 @@ fi
 
 echo "${PROGRAM} => Updated timestamp to ${UPDATE_DATE}"
 
-rm -f ${RAW} ${DATA}
+rm -f ${DUMP} ${RAW} ${DATA}
 
 exit 0
