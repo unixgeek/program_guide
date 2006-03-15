@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserEpisodesScheduleServlet.java,v 1.8 2006-02-24 23:46:02 gunter Exp $
+ * $Id: GetUserEpisodesScheduleServlet.java,v 1.9 2006-03-15 04:49:42 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.six_two.misc.Time;
 import net.six_two.program_guide.Persistor;
+import net.six_two.program_guide.Timer;
 import net.six_two.program_guide.UserEpisodeForSchedule;
 import net.six_two.program_guide.tables.TorrentSite;
 import net.six_two.program_guide.tables.User;
@@ -32,6 +33,8 @@ public class GetUserEpisodesScheduleServlet extends GenericServlet {
             return;
         }
         
+        Timer timer = new Timer();
+        timer.start();
         Connection connection = getConnection();
         if (connection == null) {
             redirectError(request, response, 
@@ -46,7 +49,8 @@ public class GetUserEpisodesScheduleServlet extends GenericServlet {
             TorrentSite site = Persistor.selectTorrentSite(connection);
             
             connection.close();
-           
+            timer.stop();
+            
             UserEpisodeForSchedule[] episodesSchedule = 
                 new UserEpisodeForSchedule[episodes.length];
             
@@ -64,6 +68,7 @@ public class GetUserEpisodesScheduleServlet extends GenericServlet {
             calendar.add(Calendar.DATE, 12);
             Date toDate = calendar.getTime();
             
+            request.setAttribute("elapsedTime", timer.getElapsedTime());
             request.setAttribute("fromDate", fromDate);
             request.setAttribute("toDate", toDate);
             request.setAttribute("episodesList", episodesSchedule);

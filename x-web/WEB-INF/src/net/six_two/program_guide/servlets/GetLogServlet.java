@@ -1,5 +1,5 @@
 /*
- * $Id: GetLogServlet.java,v 1.2 2005-12-07 05:41:40 gunter Exp $
+ * $Id: GetLogServlet.java,v 1.3 2006-03-15 04:49:42 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.six_two.program_guide.Permissions;
 import net.six_two.program_guide.Persistor;
+import net.six_two.program_guide.Timer;
 import net.six_two.program_guide.UserManager;
 import net.six_two.program_guide.tables.Log;
 import net.six_two.program_guide.tables.User;
@@ -35,6 +36,9 @@ public class GetLogServlet extends GenericServlet {
             return;
         }
         
+        Timer timer = new Timer();
+        timer.start();
+        
         Connection connection = getConnection();
         if (connection == null) {
             redirectError(request, response, 
@@ -45,9 +49,12 @@ public class GetLogServlet extends GenericServlet {
         try {
             Log[] logEntries = Persistor.selectAllLogEntries(connection); 
             
-            connection.close();;
+            connection.close();
 
-            request.setAttribute("logEntries",logEntries);
+            timer.stop();
+            
+            request.setAttribute("elapsedTime", timer.getElapsedTime());
+            request.setAttribute("logEntries", logEntries);
         } catch (SQLException e) {
             redirectError(request, response, e.getMessage());
             return;

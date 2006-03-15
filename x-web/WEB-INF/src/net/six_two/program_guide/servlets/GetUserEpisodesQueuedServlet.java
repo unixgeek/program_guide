@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserEpisodesQueuedServlet.java,v 1.1 2005-11-17 04:58:26 gunter Exp $
+ * $Id: GetUserEpisodesQueuedServlet.java,v 1.2 2006-03-15 04:49:42 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.six_two.program_guide.Persistor;
+import net.six_two.program_guide.Timer;
 import net.six_two.program_guide.tables.User;
 import net.six_two.program_guide.tables.UserEpisode;
 
@@ -26,6 +27,8 @@ public class GetUserEpisodesQueuedServlet extends GenericServlet {
             redirectLogin(request, response);
             return;
         }
+        Timer timer = new Timer();
+        timer.start();
         
         Connection connection = getConnection();
         if (connection == null) {
@@ -40,10 +43,13 @@ public class GetUserEpisodesQueuedServlet extends GenericServlet {
             
             connection.close();
 
+            timer.stop();
+            
             for (int i = 0; i != queuedEpisodes.length; i++)
                 queuedEpisodes[i].getEpisode().setTitle(
                     filterContent(queuedEpisodes[i].getEpisode().getTitle()));
 
+            request.setAttribute("elapsedTime", timer.getElapsedTime());
             request.setAttribute("queuedEpisodesList", queuedEpisodes);
         } catch (SQLException e) {
             redirectError(request, response, e.getMessage());
