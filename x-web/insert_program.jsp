@@ -6,6 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <link rel="stylesheet" href="default.css" type="text/css" />
+<link rel="icon" type="image/png" href="program_guide.png" /> 
 <title>Program Guide</title>
 </head>
 <body>
@@ -26,14 +27,14 @@
   <td class="rowdatacenter"><input type="checkbox" name="do_update" value="1" /></td>
  </tr>
  <tr>
-  <td align="right" colspan="4">
+  <td class="rowdata" align="right" colspan="4">
    <input type="submit" value="Submit" />
   </td>
  </tr>
 </table>
 </form>
-</div>
 <br />
+</div>
 <%@ include file="footer.jsp" %>
 </body>
 </html>
