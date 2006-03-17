@@ -8,6 +8,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <link rel="stylesheet" href="default.css" type="text/css" />
+<link rel="icon" type="image/png" href="program_guide.png" /> 
 <title>Program Guide</title>
 </head>
 <body>
@@ -21,7 +22,7 @@
   <th class="rowheader">Air Date</th>
   <th class="rowheader">Program</th>
   <th class="rowheader">Season</th>
-  <th class="rowheader">Episode</th
+  <th class="rowheader">Episode</th>
   <th class="rowheader">Title</th>
   <th class="rowheader">Status</th>
   <th class="rowheader">Torrent</th>
