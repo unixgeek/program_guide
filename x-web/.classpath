@@ -6,6 +6,6 @@
 	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jsp-api.jar"/>
 	<classpathentry kind="src" path="WEB-INF/src"/>
 	<classpathentry output="work" kind="src" path="work"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/net.six_two.program_guide-20060224.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/net.six_two.program_guide-20060319.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>
