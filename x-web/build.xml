@@ -113,6 +113,7 @@ ant distclean   remove all build files and dist files</echo>
             <fileset dir="${basedir}">
                 <include name="*.jsp" />
                 <include name="*.css" />
+            	   <include name="program_guide.png" />
             </fileset>
         </war>
     </target>
