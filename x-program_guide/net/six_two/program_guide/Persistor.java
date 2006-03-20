@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.37 2006-03-11 20:56:53 gunter Exp $
+ * $Id: Persistor.java,v 1.38 2006-03-20 01:31:30 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -338,7 +338,7 @@ public class Persistor {
         if (user == null)
             throw new SQLException("Attempted operation with a null user.");
         
-        String sql = "SELECT * "
+        String sql = "SELECT p.* "
             + "FROM subscribed s "
             + "LEFT JOIN program p "
             + "ON s.program_id = p.id "
@@ -869,7 +869,7 @@ public class Persistor {
     /* log table *************************************************************/
     public static Log[] selectAllLogEntries(Connection connection)
             throws SQLException {
-        String sql = "SELECT * FROM log";
+        String sql = "SELECT id, source, create_date FROM log";
         
         Statement statement = connection.createStatement();
         
@@ -881,7 +881,7 @@ public class Persistor {
         while (result.next()) {
             log = new Log(result.getInt("id"), result.getString("source"), 
                     result.getTimestamp("create_date"), 
-                    result.getString("content"));
+                    null);
             logEntries.add(log);
         }
         
