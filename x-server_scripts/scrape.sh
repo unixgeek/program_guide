@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.24 2006-03-22 04:55:41 gunter Exp $
+# $Id: scrape.sh,v 1.25 2006-03-22 05:00:16 gunter Exp $
 #
 # requires: lynx gawk
 #
@@ -40,6 +40,7 @@ echo "${PROGRAM} => ${DATA}"
 EPISODE_SQL=\
 "SELECT *
 FROM episode
+WHERE program_id = ${ID}
 ORDER BY program_id, season, number"
 
 mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} --skip-column-names ${DATABASE} \
