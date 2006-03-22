@@ -1,22 +1,35 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.23 2006-03-11 18:54:36 gunter Exp $
+# $Id: scrape.sh,v 1.24 2006-03-22 04:55:41 gunter Exp $
 #
 # requires: lynx gawk
 #
 . ${HOME}/.program_guide.conf
 
-if [ "$#" -ne "3" ]; then
-    echo "usage: `basename $0` id program url"
+if [ "$#" -ne "1" ]; then
+    echo "usage: `basename $0` PROGRAM_ID"
     exit 1
 fi
 
-ID="${1}"
-PROGRAM="${2}"
-URL="${3}"
+ID=$1
+
+SQL=\
+"SELECT name, url
+FROM program
+WHERE id = ${ID}"
+
+DATA=`mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} -s --skip-column-names ${DATABASE} -e "${SQL}" | tr '\t' '|'`
+if [ "$?" -ne "0" ]; then
+    exit 1
+fi
+
+PROGRAM="`echo ${DATA} | cut -d "|" -f 1`"
+URL="`echo ${DATA} | cut -d "|" -f 2`"
 DUMP=`mktemp /tmp/scrape.dump.XXXXXX`
 RAW=`mktemp /tmp/scrape.raw.XXXXXX`
 DATA=`mktemp /tmp/scrape.data.XXXXXX`
+BEFORE=`mktemp /tmp/scapre.before.XXXXXX`
+AFTER=`mktemp /tmp/scrape.after.XXXXXX`
 FIELDS="5 8 13 11 255"
 SERIAL_NUMBER=0
 
@@ -24,6 +37,14 @@ echo "${PROGRAM} => ${DUMP}"
 echo "${PROGRAM} => ${RAW}"
 echo "${PROGRAM} => ${DATA}"
 
+EPISODE_SQL=\
+"SELECT *
+FROM episode
+ORDER BY program_id, season, number"
+
+mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} --skip-column-names ${DATABASE} \
+    -e "${EPISODE_SQL}" > ${BEFORE}
+    
 lynx -dont_wrap_pre -dump "${URL}" > ${DUMP}
 cat ${DUMP} | \
     # Find lines containing episode data.  
@@ -105,6 +126,7 @@ mysql --local-infile=1 -u ${MYSQLUSER} -p${MYSQLPASSWORD} ${DATABASE} -e "${LOAD
 if [ "$?" -ne "0" ]; then
     exit 1
 fi 
+
 echo "${PROGRAM} => Loaded ${DATA}"
 
 UPDATE_DATE=`date '+%y-%m-%d %H:%M:%S'`
@@ -120,6 +142,21 @@ fi
 
 echo "${PROGRAM} => Updated timestamp to ${UPDATE_DATE}"
 
-rm -f ${DUMP} ${RAW} ${DATA}
+DATE_SQL=\
+"UPDATE episode
+SET original_air_date = NULL
+WHERE original_air_date = '0000-00-00'
+AND program_id = ${ID}"
+mysql -vv -u ${MYSQLUSER} -p${MYSQLPASSWORD} ${DATABASE} -e "${DATE_SQL}"
+if [ "$?" -ne "0" ]; then
+    exit 1
+fi
+
+mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} --skip-column-names ${DATABASE} \
+    -e "${EPISODE_SQL}" > ${AFTER}
+
+diff -u ${BEFORE} ${AFTER}
+
+rm -f ${DUMP} ${RAW} ${DATA} ${BEFORE} ${AFTER}
 
 exit 0
