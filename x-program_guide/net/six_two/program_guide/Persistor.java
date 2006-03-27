@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.38 2006-03-20 01:31:30 gunter Exp $
+ * $Id: Persistor.java,v 1.39 2006-03-27 02:26:11 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -917,6 +917,19 @@ public class Persistor {
         statement.close();
         
         return log;
+    }
+    
+    public static void createLogEntry(Connection connection, Log entry) 
+            throws SQLException {
+        String sql = "INSERT INTO log VALUES (null, ?, ?, ?)";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        
+        statement.setString(1, entry.getSource());
+        statement.setTimestamp(2, entry.getCreateDate());
+        statement.setString(3, entry.getContent());
+        statement.execute();
+        statement.close();
     }
     
     public static int deleteLog(Connection connection)
