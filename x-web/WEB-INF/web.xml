@@ -19,6 +19,14 @@
       </listener-class>
   </listener>
   <servlet>
+      <servlet-name>FetchEpisodes</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.FetchEpisodesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>FetchEpisodes</servlet-name>
+      <url-pattern>/FetchEpisodes.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
       <servlet-name>GetLog</servlet-name>
       <servlet-class>net.six_two.program_guide.servlets.GetLogServlet</servlet-class>
   </servlet>

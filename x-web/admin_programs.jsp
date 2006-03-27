@@ -27,6 +27,7 @@
   <c:if test='${canDelete == "true"}'>
   <th class="rowheader">&nbsp;</th>
   </c:if>
+  <th class="rowheader">&nbsp;</th>
  </tr>
  <c:forEach var="program" items="${programsList}">
  <tr>
@@ -49,11 +50,12 @@
   <c:if test='${canDelete == "true"}'>
   <td class="rowdatacenter"><a class="rowdata" href="DeleteProgram.do?program_id=${program.id}">Delete</a></td>
   </c:if>
+  <td class="rowdatacenter"><a class="rowdata" href="FetchEpisodes.do?program_id=${program.id}">Fetch Episodes</a></td>
  </tr>
  </c:forEach>
  <c:if test='${canAdd == "true"}'>
  <tr>
-  <td class="rowdata" colspan="6" align="right"><a class="rowdata" href="InsertProgram.do">Add new program</a></td>
+  <td class="rowdata" colspan="7" align="right"><a class="rowdata" href="InsertProgram.do">Add new program</a></td>
  </tr>
  </c:if>
 </table>
