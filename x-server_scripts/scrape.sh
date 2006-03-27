@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.25 2006-03-22 05:00:16 gunter Exp $
+# $Id: scrape.sh,v 1.26 2006-03-27 01:41:46 gunter Exp $
 #
 # requires: lynx gawk
 #
@@ -28,7 +28,7 @@ URL="`echo ${DATA} | cut -d "|" -f 2`"
 DUMP=`mktemp /tmp/scrape.dump.XXXXXX`
 RAW=`mktemp /tmp/scrape.raw.XXXXXX`
 DATA=`mktemp /tmp/scrape.data.XXXXXX`
-BEFORE=`mktemp /tmp/scapre.before.XXXXXX`
+BEFORE=`mktemp /tmp/scrape.before.XXXXXX`
 AFTER=`mktemp /tmp/scrape.after.XXXXXX`
 FIELDS="5 8 13 11 255"
 SERIAL_NUMBER=0
