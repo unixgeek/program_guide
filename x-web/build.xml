@@ -27,6 +27,11 @@ ant distclean   remove all build files and dist files</echo>
         <delete dir="${basedir}/program_guide" verbose="${verbose}" />
     </target>
 
+    <target name="scripts">
+        <cvs cvsRoot="${server_scripts.cvsroot}"
+             command="-q export -r${server_scripts.tag} -d ${server_scripts.name} server_scripts" />
+    </target>
+        	
     <target name="taglibs">
         <get verbose="${verbose}" usetimestamp="true"
              src="${standard_taglib.url}/${standard_taglib.name}-${standard_taglib.version}.tar.gz"
@@ -84,6 +89,7 @@ ant distclean   remove all build files and dist files</echo>
  
     <target name="deps">
         <antcall target="program_guide" />
+    	    <antcall target="scripts" />
         <antcall target="taglibs" />
         <antcall target="tomcat" />
     </target>
@@ -114,6 +120,7 @@ ant distclean   remove all build files and dist files</echo>
                 <include name="*.jsp" />
                 <include name="*.css" />
             	   <include name="program_guide.png" />
+            	   <include name="scripts/*" />
             </fileset>
         </war>
     </target>
