@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.39 2006-03-27 02:26:11 gunter Exp $
+ * $Id: Persistor.java,v 1.40 2006-03-31 04:20:39 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import net.six_two.program_guide.tables.*;
 
 public class Persistor {
+    public static final int NATURAL_LANGUAGE_SEARCH = 0;
+    public static final int BOOLEAN_SEARCH = 1;
+    public static final int QUERY_EXPANSION_SEARCH = 2;
+    
     /* episode table *********************************************************/
     public static UserEpisode[] selectAllEpisodesForUser(Connection connection,
             User user, Program program) throws SQLException {
@@ -275,6 +279,66 @@ public class Persistor {
         statement.close();
         
         return count;
+    }
+    
+    public static EpisodeSearchResult[] searchEpisodes(Connection connection,
+            String query, int searchType) throws SQLException {
+        ArrayList searchResults = new ArrayList();
+        
+        if (query == null)
+            throw new SQLException("Attempted operation with a null query.");
+        if ((searchType != BOOLEAN_SEARCH) 
+                && (searchType != NATURAL_LANGUAGE_SEARCH)
+                && (searchType != QUERY_EXPANSION_SEARCH)) {
+            throw new SQLException("Invalid search type.");
+        }
+        
+        String type;
+        switch (searchType) {
+            case BOOLEAN_SEARCH:
+                type = " IN BOOLEAN MODE";
+                break;
+            case QUERY_EXPANSION_SEARCH:
+                type = " WITH QUERY EXPANSION";
+                break;
+            case NATURAL_LANGUAGE_SEARCH:
+            default:
+                type = "";
+                break;
+        }
+        
+        String sql = "SELECT p.name, e.title, "
+            + "MATCH(e.title) AGAINST(?" + type + ") AS score "
+            + "FROM episode e "
+            + "LEFT JOIN program p "
+            + "ON e.program_id = p.id "
+            + "WHERE MATCH(e.title) AGAINST(?" + type + ") "
+            + "ORDER BY score DESC ";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, query);
+        statement.setString(2, query);
+        statement.execute();
+        
+        ResultSet result = statement.getResultSet();
+        
+        while (result.next()) {
+            EpisodeSearchResult searchResult = new EpisodeSearchResult(
+                    result.getString("p.name"),
+                    result.getString("e.title"),
+                    result.getDouble("score"));
+            searchResults.add(searchResult);
+        }
+        result.close();
+        statement.close();
+        
+        EpisodeSearchResult[] searchResultsArray = 
+            new EpisodeSearchResult[searchResults.size()];
+        for (int i = 0; i != searchResults.size(); i++) {
+            searchResultsArray[i] = (EpisodeSearchResult) searchResults.get(i);
+        }
+        
+        return searchResultsArray;
     }
     /* episode table *********************************************************/
     
