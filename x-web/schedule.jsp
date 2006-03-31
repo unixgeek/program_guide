@@ -24,6 +24,7 @@
   <th class="rowheader">Season</th>
   <th class="rowheader">Episode</th>
   <th class="rowheader">Title</th>
+  <th class="rowheader">Summary</th>
   <th class="rowheader">Status</th>
   <th class="rowheader">Torrent</th>
  </tr>
@@ -45,16 +46,17 @@
   </c:choose>
    <dt:format patternId="dateDisplayFormat">${userEpisode.episode.originalAirDate.time}</dt:format>
   </td>
-  <td class="rowdata"><a class="rowdatacenter" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#${userEpisode.episode.serialNumber}">${userEpisode.program.name}</a></td>
+  <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
+  <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#${userEpisode.episode.serialNumber}">${userEpisode.episode.title}</a></td>
   <td class="rowdata">
    <c:choose>
     <c:when test='${not empty userEpisode.episode.summaryUrl}'>
-   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">${userEpisode.episode.title}</a>
+   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">Summary</a>
     </c:when>
     <c:otherwise>
-    ${userEpisode.episode.title}
+    &nbsp;
     </c:otherwise>
    </c:choose>
   </td>

@@ -25,6 +25,7 @@
   <th class="rowheader">Production Code</th>
   <th class="rowheader">Original Air Date</th>
   <th class="rowheader">Title</th>
+  <th class="rowheader">Summary</th>
   <th class="rowheader">Torrent</th>
   <th class="rowheader">Status</th>
  </tr>
@@ -38,13 +39,14 @@
     <dt:format patternId="dateDisplayFormat">${userEpisode.episode.originalAirDate.time}</dt:format>
    </c:if>
   </td>
+  <td class="rowdata">${userEpisode.episode.title}</td>
   <td class="rowdata">
    <c:choose>
     <c:when test='${not empty userEpisode.episode.summaryUrl}'>
-   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">${userEpisode.episode.title}</a>
+   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">Summary</a>
     </c:when>
     <c:otherwise>
-    ${userEpisode.episode.title}
+    &nbsp;
     </c:otherwise>
    </c:choose>
   </td>

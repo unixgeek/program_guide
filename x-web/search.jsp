@@ -31,20 +31,44 @@
  </tr>
 </table>
 </form>
-<c:if  test='${not empty searchResults}'>
-<h3>${count} Results (${elapsedTime} seconds)</h3>
+<c:if  test='${not empty userEpisodesList}'>
+<h3>${count} Result(s) (${elapsedTime} seconds)</h3>
 <table class="data">
  <tr>
   <th class="rowheader">Program</th>
+  <th class="rowheader">Season</th>
+  <th class="rowheader">Episode</th>
+  <th class="rowheader">Production Code</th>
+  <th class="rowheader">Original Air Date</th>
   <th class="rowheader">Title</th>
-  <th class="rowheader">Score</th>
+  <th class="rowheader">Summary</th>
+  <th class="rowheader">Torrent</th>
+  <th class="rowheader">Status</th>
  </tr>
- <c:forEach var="result" items="${searchResults}">
+ <c:forEach var="userEpisode" items="${userEpisodesList}">
  <tr>
-  <td class="rowdata">${result.programName}</td>
-  <td class="rowdata">${result.episodeTitle}</td>
-  <td class="rowdatacenter">${result.formattedScore}</td>
+  <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
+  <td class="rowdatacenter">${userEpisode.episode.season}</td>
+  <td class="rowdatacenter"><a name="${userEpisode.episode.serialNumber}" />${userEpisode.episode.number}</td>
+  <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
+  <td class="rowdatacenter">
+   <c:if test='${not empty userEpisode.episode.originalAirDate}'>
+    <dt:format patternId="dateDisplayFormat">${userEpisode.episode.originalAirDate.time}</dt:format>
+   </c:if>
   </td>
+  <td class="rowdata">${userEpisode.episode.title}</td>
+  <td class="rowdata">
+   <c:choose>
+    <c:when test='${not empty userEpisode.episode.summaryUrl}'>
+   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">Summary</a>
+    </c:when>
+    <c:otherwise>
+    &nbsp;
+    </c:otherwise>
+   </c:choose>
+  </td>
+  <td class="rowdatacenter"><a class="rowdatacenter" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
+  <td class="rowdatacenter">${userEpisode.status}</td>
  </tr>
  </c:forEach>
 </table>
