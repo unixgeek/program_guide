@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.40 2006-03-31 04:20:39 gunter Exp $
+ * $Id: Persistor.java,v 1.41 2006-03-31 16:36:09 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -281,12 +281,12 @@ public class Persistor {
         return count;
     }
     
-    public static EpisodeSearchResult[] searchEpisodes(Connection connection,
-            String query, int searchType) throws SQLException {
-        ArrayList searchResults = new ArrayList();
-        
+    public static UserEpisode[] searchEpisodes(Connection connection,
+            String query, int searchType, User user) throws SQLException {
         if (query == null)
             throw new SQLException("Attempted operation with a null query.");
+        if (user == null)
+            throw new SQLException("Attempted operation with a null user.");
         if ((searchType != BOOLEAN_SEARCH) 
                 && (searchType != NATURAL_LANGUAGE_SEARCH)
                 && (searchType != QUERY_EXPANSION_SEARCH)) {
@@ -307,38 +307,60 @@ public class Persistor {
                 break;
         }
         
-        String sql = "SELECT p.name, e.title, "
+        String sql = "SELECT p.*, e.*, "
+            + "IFNULL(t.status, 'none') AS status, "
             + "MATCH(e.title) AGAINST(?" + type + ") AS score "
-            + "FROM episode e "
+            + "FROM user u "
+            + "LEFT JOIN subscribed s "
+            + "ON u.id = s.user_id "
             + "LEFT JOIN program p "
-            + "ON e.program_id = p.id "
-            + "WHERE MATCH(e.title) AGAINST(?" + type + ") "
+            + "ON s.program_id = p.id "
+            + "LEFT JOIN episode e "
+            + "ON s.program_id = e.program_id "
+            + "LEFT JOIN status t "
+            + "ON (u.id = t.user_id "
+            + "    AND t.program_id = e.program_id "
+            + "    AND t.season = e.season "
+            + "    AND t.episode_number = e.number) "
+            + "WHERE u.id = ? "
+            + "AND MATCH(e.title) AGAINST(?" + type + ") "
             + "ORDER BY score DESC ";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, query);
-        statement.setString(2, query);
-        statement.execute();
+        statement.setInt(2, user.getId());
+        statement.setString(3, query);
         
+        statement.execute();
         ResultSet result = statement.getResultSet();
         
+        ArrayList userEpisodes = new ArrayList();
         while (result.next()) {
-            EpisodeSearchResult searchResult = new EpisodeSearchResult(
+            Program program = new Program(result.getInt("p.id"),
                     result.getString("p.name"),
+                    result.getString("p.url"),
+                    result.getTimestamp("p.last_update"),
+                    result.getShort("p.do_update"));
+            Episode episode = new Episode(result.getInt("e.program_id"),
+                    result.getString("e.season"),
+                    result.getInt("e.number"),
+                    result.getString("e.production_code"),
+                    result.getDate("e.original_air_date"),
                     result.getString("e.title"),
-                    result.getDouble("score"));
-            searchResults.add(searchResult);
+                    result.getInt("e.serial_number"),
+                    result.getString("e.summary_url"));
+            String status = result.getString("status");
+            userEpisodes.add(new UserEpisode(program, episode, status));
         }
         result.close();
         statement.close();
         
-        EpisodeSearchResult[] searchResultsArray = 
-            new EpisodeSearchResult[searchResults.size()];
-        for (int i = 0; i != searchResults.size(); i++) {
-            searchResultsArray[i] = (EpisodeSearchResult) searchResults.get(i);
+        UserEpisode[] userEpisodesArray = new UserEpisode[userEpisodes.size()];
+        for (int i = 0; i != userEpisodes.size(); i++) {
+            userEpisodesArray[i] = (UserEpisode) userEpisodes.get(i);
         }
         
-        return searchResultsArray;
+        return userEpisodesArray;
     }
     /* episode table *********************************************************/
     

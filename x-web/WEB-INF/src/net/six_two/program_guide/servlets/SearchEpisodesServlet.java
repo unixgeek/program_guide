@@ -14,8 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.Timer;
-import net.six_two.program_guide.tables.EpisodeSearchResult;
+import net.six_two.program_guide.tables.TorrentSite;
 import net.six_two.program_guide.tables.User;
+import net.six_two.program_guide.tables.UserEpisode;
 
 public class SearchEpisodesServlet extends GenericServlet {
     protected void doGet(HttpServletRequest request, 
@@ -69,16 +70,20 @@ public class SearchEpisodesServlet extends GenericServlet {
         }
         
         try {
-            EpisodeSearchResult[] searchResults = 
-                Persistor.searchEpisodes(connection, query, searchType);
+            TorrentSite site = Persistor.selectTorrentSite(connection);
+            
+            UserEpisode[] userEpisodesList = 
+                Persistor.searchEpisodes(connection, query, searchType, user);
             connection.close();
             timer.stop();
             
             request.setAttribute("query", query);
             request.setAttribute("type", type);
             request.setAttribute("elapsedTime", timer.getElapsedTime());
-            request.setAttribute("searchResults", searchResults);
-            request.setAttribute("count", new Integer(searchResults.length));
+            request.setAttribute("site", site);
+            request.setAttribute("userEpisodesList", userEpisodesList);
+            request.setAttribute("count", 
+                    new Integer(userEpisodesList.length));
         } catch (SQLException e) {
             e.printStackTrace();
         }
