@@ -194,4 +194,12 @@
       <servlet-name>UpdateUser</servlet-name>
       <url-pattern>/UpdateUser.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+      <servlet-name>SearchEpisodes</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.SearchEpisodesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>SearchEpisodes</servlet-name>
+      <url-pattern>/SearchEpisodes.do</url-pattern>
+  </servlet-mapping>
 </web-app>
