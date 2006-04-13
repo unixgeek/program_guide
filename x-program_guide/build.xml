@@ -19,7 +19,7 @@ ant distclean   remove all build files and dist files</echo>
     </target>
 
 	<target name="dev">
-        <cvs cvsroot=":ext:six-two.net:/var/cvs/misc" cvsrsh="ssh"
+        <cvs cvsroot="${misc.cvsroot}" cvsrsh="ssh"
              command="-q export" tag="${misc.tag}" package="misc" />
         <ant dir="misc" target="jar" inheritAll="false" />
         <copy file="misc/${misc.name}-${misc.version}.jar" todir="${basedir}" 
@@ -28,7 +28,7 @@ ant distclean   remove all build files and dist files</echo>
     </target>
 
     <target name="deps">
-        <cvs cvsroot=":ext:six-two.net:/var/cvs/misc" cvsrsh="ssh"
+        <cvs cvsroot="${misc.cvsroot}" cvsrsh="ssh"
              command="-q export" tag="${misc.tag}" package="misc" />
         <copy todir="${basedir}/net">
             <fileset dir="misc/net" />
