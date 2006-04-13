@@ -18,8 +18,8 @@ ant distclean   remove all build files and dist files</echo>
     </target>
 
     <target name="program_guide">
-        <cvs cvsRoot="${program_guide.cvsroot}"
-             command="-q export -r${program_guide.tag} program_guide" />
+        <cvs cvsroot="${program_guide.cvsroot}" cvsrsh="ssh"
+             command="-q export" tag="${program_guide.tag}" package="program_guide" />
         <ant dir="program_guide" target="deps" inheritAll="false" />
         <ant dir="program_guide" target="jar" inheritAll="false" />
         <copy file="program_guide/${program_guide.name}-${program_guide.version}.jar"
@@ -28,8 +28,8 @@ ant distclean   remove all build files and dist files</echo>
     </target>
 
     <target name="scripts">
-        <cvs cvsRoot="${server_scripts.cvsroot}"
-             command="-q export -r${server_scripts.tag} -d ${server_scripts.name} server_scripts" />
+        <cvs cvsroot="${server_scripts.cvsroot}" cvsrsh="ssh"
+             command="-q export" tag="${server_scripts.tag}" package="server_scripts" dest="${server_scripts.name}"  />
         <chmod perm="0550">
             <fileset dir="${server_scripts.name}">
                 <include name="*.sh" />
