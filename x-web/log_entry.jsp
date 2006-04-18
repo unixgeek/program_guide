@@ -20,7 +20,7 @@
   <dt:format patternId="timestampDisplayFormat">${log.createDate.time}</dt:format>
  </c:if>
 </h3>
-<textarea cols="80" rows="30" readonly="readonly">
+<textarea class="log" cols="140" rows="30" readonly="readonly">
 ${log.content}
 </textarea>
 </div>
