@@ -1,5 +1,5 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
-<div id="footer">
+<div>
  <ul id="footerlist">
   <c:if test='${not empty elapsedTime}'>
   <li>${elapsedTime}s</li>
@@ -8,4 +8,3 @@
   <li>${packageName}-${packageVersion}</li>
  </ul>
 </div> 
-
