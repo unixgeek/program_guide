@@ -34,7 +34,7 @@
 </table>
 </form>
 <br />
-<c:if  test='${empty logEntries}'><br /></c:if>
+<c:if  test='${empty logEntries}'><br /><br /></c:if>
 </div>
 <%@ include file="footer.jsp" %>
 </body>
