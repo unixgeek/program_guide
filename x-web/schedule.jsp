@@ -15,53 +15,29 @@
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <div class="content">
-<h2>Schedule</h2>
-<h3><dt:format patternId="dateDisplayFormat">${fromDate.time}</dt:format> to <dt:format patternId="dateDisplayFormat">${toDate.time}</dt:format></h3>
+<h2>Schedule for ${month}</h2>
 <table class="data">
  <tr class="test">
-  <th class="rowheader">Air Date</th>
-  <th class="rowheader">Program</th>
-  <th class="rowheader">Season</th>
-  <th class="rowheader">Episode</th>
-  <th class="rowheader">Title</th>
-  <th class="rowheader">Summary</th>
-  <th class="rowheader">Status</th>
-  <th class="rowheader">Torrent</th>
+  <th class="rowheader">Sunday</th>
+  <th class="rowheader">Monday</th>
+  <th class="rowheader">Tuesday</th>
+  <th class="rowheader">Wednesday</th>
+  <th class="rowheader">Thursday</th>
+  <th class="rowheader">Friday</th>
+  <th class="rowheader">Saturday</th>
  </tr>
- <c:forEach var="userEpisode" items="${episodesList}">
+ <c:forEach var="week" items="${schedule}">
  <tr>
-  <c:choose>
-   <c:when test='${userEpisode.today == "true"}'>
-  <td class="today">
-   </c:when>
-   <c:when test='${userEpisode.tomorrow == "true"}'>
-  <td class="tomorrow">
-   </c:when>
-   <c:when test='${userEpisode.yesterday == "true"}'>
-  <td class="yesterday">
-   </c:when>
-   <c:otherwise>
-  <td class="none">
-   </c:otherwise>
-  </c:choose>
-   <dt:format patternId="dateDisplayFormat">${userEpisode.episode.originalAirDate.time}</dt:format>
-  </td>
-  <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
-  <td class="rowdatacenter">${userEpisode.episode.season}</td>
-  <td class="rowdatacenter">${userEpisode.episode.number}</td>
-  <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#${userEpisode.episode.serialNumber}">${userEpisode.episode.title}</a></td>
-  <td class="rowdata">
-   <c:choose>
-    <c:when test='${not empty userEpisode.episode.summaryUrl}'>
-   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">Summary</a>
-    </c:when>
-    <c:otherwise>
-    &nbsp;
-    </c:otherwise>
-   </c:choose>
-  </td>
-  <td class="rowdatacenter">${userEpisode.status}</td>
-  <td class="rowdatacenter"><a class="rowdatacenter" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
+  <c:forEach var="day" items="${week}">
+   <td class="calendarentry">
+    <table width="100%">
+     <tr><td class="calendardate" colspan="2">${day.dayOfMonth}</td></tr>
+     <c:forEach var="userEpisodes" items="${day.userEpisodes}">
+     <tr><td class="calendarepisode">${userEpisodes.episode.title}</td></tr>
+     </c:forEach>
+    </table>
+   </td>
+  </c:forEach>
  </tr>
  </c:forEach>
 </table>
