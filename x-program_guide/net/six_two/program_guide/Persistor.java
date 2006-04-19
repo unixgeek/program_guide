@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.41 2006-03-31 16:36:09 gunter Exp $
+ * $Id: Persistor.java,v 1.42 2006-04-19 05:34:47 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.sql.Date;
 
 import net.six_two.program_guide.tables.*;
 
@@ -105,6 +106,67 @@ public class Persistor {
         statement.setInt(1, user.getId());
         statement.setInt(2, fromDay);
         statement.setInt(3, toDay);
+        statement.execute();
+        
+        ResultSet result = statement.getResultSet();
+        
+        while (result.next()) {
+            Program program = new Program(result.getInt("p.id"),
+                    result.getString("p.name"),
+                    result.getString("p.url"),
+                    result.getTimestamp("p.last_update"),
+                    result.getShort("p.do_update"));
+            Episode episode = new Episode(result.getInt("e.program_id"),
+                    result.getString("e.season"),
+                    result.getInt("e.number"),
+                    result.getString("e.production_code"),
+                    result.getDate("e.original_air_date"),
+                    result.getString("e.title"),
+                    result.getInt("e.serial_number"),
+                    result.getString("e.summary_url"));
+            String status = result.getString("status");
+            userEpisodes.add(new UserEpisode(program, episode, status));
+        }
+        result.close();
+        statement.close();
+        
+        UserEpisode[] userEpisodesArray = new UserEpisode[userEpisodes.size()];
+        for (int i = 0; i != userEpisodes.size(); i++) {
+            userEpisodesArray[i] = (UserEpisode) userEpisodes.get(i);
+        }
+        
+        return userEpisodesArray;
+    }
+    
+    public static UserEpisode[] selectAllEpisodesForUser(Connection connection,
+            User user, Date fromDate, Date toDate) throws SQLException {
+        ArrayList userEpisodes = new ArrayList();
+        
+        if (user == null)
+            throw new SQLException("Attempted operation with a null user.");
+        
+        String sql = "SELECT p.*, e.*, "
+            + "IFNULL(t.status, 'none') AS status "
+            + "FROM user u "
+            + "LEFT JOIN subscribed s "
+            + "ON u.id = s.user_id "
+            + "LEFT JOIN program p "
+            + "ON s.program_id = p.id "
+            + "LEFT JOIN episode e "
+            + "ON s.program_id = e.program_id "
+            + "LEFT JOIN status t "
+            + "ON (u.id = t.user_id "
+            + "    AND t.program_id = e.program_id "
+            + "    AND t.season = e.season "
+            + "    AND t.episode_number = e.number) "
+            + "WHERE u.id = ? "
+            + "AND original_air_date >= ? "
+            + "AND original_air_date <= ? ";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.setDate(2, fromDate);
+        statement.setDate(3, toDate);
         statement.execute();
         
         ResultSet result = statement.getResultSet();
