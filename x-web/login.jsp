@@ -12,8 +12,10 @@
 <body>
 <%@ include file="header.jsp" %>
 <p class="error">${message}</p>
+<!-- Because IE is total crap. -->
+<div class="center">
 <form action="Login.do" method="post">
-<table id="login" width="0%">
+<table class="centertable">
  <tr>
   <td>Username:</td>
   <td><input type="text" name="username" value="${username}" /></td>
@@ -30,6 +32,8 @@
  </tr>
 </table>
 </form>
+</div>
+<div><br /></div>
 <%@ include file="footer.jsp" %>
 </body>
 </html>

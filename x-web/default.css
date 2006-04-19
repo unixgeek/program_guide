@@ -124,31 +124,15 @@ a.rowdatacenter, a.rowdata {
     whitespace: nowrap;
 }
 
-.tomorrow {
-    background: #00FF00;
-    border: 1px solid #2E383E;
-    color: #000000;
-    font-family: georgia, serif;
-    font-size: 11px;
-    padding: 3px;
-    vertical-align: middle;
-    whitespace: nowrap;
+/* Used with centertable for craptastic IE. */
+.center {
+    text-align: center;
 }
 
-.yesterday {
-    background: #FF0000;
-    border: 1px solid #2E383E;
-    color: #000000;
-    font-family: georgia, serif;
-    font-size: 11px;
-    padding: 3px;
-    vertical-align: middle;
-    whitespace: nowrap;
-}
-
-#login {
+.centertable {
     margin-left: auto;
     margin-right: auto;
+    text-align: left;
 }
 
 .error {
@@ -172,6 +156,7 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #2E383E;
     list-style: none;
     padding: 4px;
+    margin: 0;
     text-align: right;
 }
 
@@ -212,3 +197,4 @@ h1, h2, h3, h4, h5, h6 {
     text-aling: left;
     padding: 0;
 }
+
