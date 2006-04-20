@@ -12,11 +12,13 @@ public class CalendarDate {
     private Date date;
     private ArrayList userEpisodes;
     private int dayOfMonth;
+    private boolean today;
     
-    public CalendarDate(Date date, int dayOfMonth) {
+    public CalendarDate(Date date, int dayOfMonth, boolean today) {
         this.date = date;
         this.userEpisodes = new ArrayList();
         this.dayOfMonth = dayOfMonth;
+        this.today = today;
     }
     
     public Date getDate() {
@@ -33,5 +35,9 @@ public class CalendarDate {
     
     public int getDayOfMonth() {
         return dayOfMonth;
+    }
+    
+    public boolean getToday() {
+        return today;
     }
 }
