@@ -113,17 +113,6 @@ a.rowdatacenter, a.rowdata {
     whitespace: nowrap;
 }
 
-.today {
-    background: #FFFF00;
-    border: 1px solid #2E383E;
-    color: #000000;
-    font-family: georgia, serif;
-    font-size: 11px;
-    padding: 3px;
-    vertical-align: middle;
-    whitespace: nowrap;
-}
-
 /* Used with centertable for craptastic IE. */
 .center {
     text-align: center;
@@ -177,15 +166,43 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 9px;
 }
 
+.today {
+    background: #FFFF00;
+    border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 10px;
+    padding: 3px;
+    vertical-align: top;
+    whitespace: nowrap;
+    width: 80px;
+    height: 80px;
+}
+
+.nullcalendarentry {
+    background: #1A597C;
+    border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 10px;
+    padding: 3px;
+    vertical-align: top;
+    whitespace: nowrap;
+    width: 85px;
+    height: 85px;
+}
+
 .calendarentry {
     background: #FFFFFF;
     border: 1px solid #2E383E;
     color: #000000;
     font-family: georgia, serif;
-    font-size: 11px;
-    padding: 3px;
+    font-size: 10px;
+    padding: 0;
     vertical-align: top;
     whitespace: nowrap;
+    width: 85px;
+    height: 85px;
 }
 
 .calendardate {
@@ -194,7 +211,35 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .calendarepisode {
-    text-aling: left;
+    text-align: left;
     padding: 0;
 }
 
+a.calendarentry {
+    border: none;
+    background: transparent;
+}
+
+.calendarlinkleft {
+    background: #FFFFFF;
+    border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 10px;
+    padding: 0;
+    vertical-align: middle;
+    whitespace: nowrap;
+    text-align: left;
+}
+
+.calendarlinkright {
+    background: #FFFFFF;
+    border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 10px;
+    padding: 0;
+    vertical-align: middle;
+    whitespace: nowrap;
+    text-align: right;
+}
