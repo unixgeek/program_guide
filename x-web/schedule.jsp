@@ -15,9 +15,19 @@
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <div class="content">
-<h2>Schedule for ${month}</h2>
+<h2>Schedule for ${month} ${year}</h2>
 <table class="data">
- <tr class="test">
+ <tr>
+  <td class="calendarlinkleft">
+   <a class="rowdata" href="GetUserEpisodesSchedule.do?date=${previousDate}&detail=month">&lt;&lt;Previous</a>
+  </td>
+  <td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td>
+  <td class="calendarlinkright">
+   <a class="rowdata" href="GetUserEpisodesSchedule.do?date=${nextDate}&detail=month">Next&gt;&gt;</a>
+ </td>
+</tr>
+</tr>
+ <tr>
   <th class="rowheader">Sunday</th>
   <th class="rowheader">Monday</th>
   <th class="rowheader">Tuesday</th>
@@ -29,11 +39,25 @@
  <c:forEach var="week" items="${schedule}">
  <tr>
   <c:forEach var="day" items="${week}">
+   <c:choose>
+    <c:when test='${not empty day}'>
+     <c:choose>
+      <c:when test='${day.today == "true"}'>
+   <td class="today">
+      </c:when>
+      <c:otherwise>
    <td class="calendarentry">
+      </c:otherwise>
+     </c:choose>
+    </c:when>
+    <c:otherwise>
+   <td class="nullcalendarentry">
+    </c:otherwise>
+   </c:choose>
     <table width="100%">
      <tr><td class="calendardate" colspan="2">${day.dayOfMonth}</td></tr>
-     <c:forEach var="userEpisodes" items="${day.userEpisodes}">
-     <tr><td class="calendarepisode">${userEpisodes.episode.title}</td></tr>
+     <c:forEach var="userEpisode" items="${day.userEpisodes}">
+     <tr><td class="calendarepisode"><a class="calendarentry" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#${userEpisode.episode.serialNumber}">${userEpisode.program.name}</a></td></tr>
      </c:forEach>
     </table>
    </td>
