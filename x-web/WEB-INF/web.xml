@@ -91,6 +91,22 @@
       <url-pattern>/DisplayFrontPage.do</url-pattern>
   </servlet-mapping>
   <servlet>
+      <servlet-name>GetScheduleByDay</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.GetScheduleByDayServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>GetScheduleByDay</servlet-name>
+      <url-pattern>/GetScheduleByDay.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+      <servlet-name>GetScheduleByMonth</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.GetScheduleByMonthServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>GetScheduleByMonth</servlet-name>
+      <url-pattern>/GetScheduleByMonth.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
       <servlet-name>GetUserPrograms</servlet-name>
       <servlet-class>net.six_two.program_guide.servlets.GetUserProgramsServlet</servlet-class>
   </servlet>
@@ -113,14 +129,6 @@
   <servlet-mapping>
       <servlet-name>GetUserEpisodesQueued</servlet-name>
       <url-pattern>/GetUserEpisodesQueued.do</url-pattern>
-  </servlet-mapping>
-  <servlet>
-      <servlet-name>GetUserEpisodesSchedule</servlet-name>
-      <servlet-class>net.six_two.program_guide.servlets.GetUserEpisodesScheduleServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-      <servlet-name>GetUserEpisodesSchedule</servlet-name>
-      <url-pattern>/GetUserEpisodesSchedule.do</url-pattern>
   </servlet-mapping>
   <servlet>
       <servlet-name>InsertProgram</servlet-name>
