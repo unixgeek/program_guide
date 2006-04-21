@@ -28,7 +28,6 @@
    <a class="rowdata" href="GetScheduleByMonth.do?date=${nextDate}">Next&gt;&gt;</a>
   </td>
  </tr>
- </tr>
  <tr>
   <th class="rowheader">Sunday</th>
   <th class="rowheader">Monday</th>
