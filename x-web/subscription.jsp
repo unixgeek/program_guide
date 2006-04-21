@@ -8,10 +8,11 @@
 <head>
 <link rel="stylesheet" href="default.css" type="text/css" />
 <link rel="icon" type="image/png" href="program_guide.png" /> 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
     function toggle(checked) {
-        for (var i = 0; i != document.subscription.subscribed.length; i++) {
-            document.subscription.subscribed[i].checked = checked;
+        form = document.getElementById("subscription");
+        for (var i = 0; i != form.subscribed.length; i++) {
+            form.subscribed[i].checked = checked;
         }
     }
 </script>
@@ -21,9 +22,9 @@
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <div class="content">
-<form name="subscription" action="SetUserPrograms.do" method="post">
+<form action="SetUserPrograms.do" id="subscription" method="post">
 <h2>Edit Subscriptions&nbsp;<input type="submit" value="Update" /></h2>
-<a class="rowdata" href="javascript:toggle(true)">Check All</a><a class="rowdata" href="javascript:toggle(false)">Uncheck All</a>
+<div><a class="rowdata" href="javascript:toggle(true)">Check All</a><a class="rowdata" href="javascript:toggle(false)">Uncheck All</a></div>
 <table class="data">
  <tr>
   <th class="rowheader">Subscribed</th>
