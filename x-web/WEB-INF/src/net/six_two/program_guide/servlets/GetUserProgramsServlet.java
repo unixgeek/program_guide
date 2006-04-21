@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserProgramsServlet.java,v 1.7 2006-03-15 04:49:42 gunter Exp $
+ * $Id: GetUserProgramsServlet.java,v 1.8 2006-04-21 15:56:05 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -53,7 +53,9 @@ public class GetUserProgramsServlet extends GenericServlet {
             request.setAttribute("programsList", programs);
             request.setAttribute("site", site);
         } catch (SQLException e) {
+            timer.stop();
             redirectError(request, response, e.getMessage());
+            return;
         }
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("programs.jsp");

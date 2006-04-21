@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.six_two.misc.CalendarDay;
-import net.six_two.program_guide.CalendarDate;
+import net.six_two.program_guide.CalendarEntry;
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.Timer;
 import net.six_two.program_guide.tables.TorrentSite;
@@ -52,7 +52,7 @@ public class GetScheduleByDayServlet extends GenericServlet {
             targetDate = new Date(System.currentTimeMillis());
         }
 
-        CalendarDay calendar = new CalendarDay(targetDate);
+        CalendarDay calendarDay = new CalendarDay(targetDate);
         
         Timer timer = new Timer();
         timer.start();
@@ -67,8 +67,8 @@ public class GetScheduleByDayServlet extends GenericServlet {
         TorrentSite site;
         try {
             episodes = Persistor.selectAllEpisodesForUser(connection, user, 
-                    new java.sql.Date(calendar.getDate().getTime()),
-                    new java.sql.Date(calendar.getDate().getTime()));
+                    new java.sql.Date(calendarDay.getDate().getTime()),
+                    new java.sql.Date(calendarDay.getDate().getTime()));
             
             site = Persistor.selectTorrentSite(connection);
             
@@ -80,25 +80,25 @@ public class GetScheduleByDayServlet extends GenericServlet {
             return;
         }
                 
-        CalendarDate calendarDate = new CalendarDate(true);
+        CalendarEntry calendarEntry = new CalendarEntry(true);
                 
         // Add any episodes for this date.
         for (int i = 0; i != episodes.length; i++) {
-            calendarDate.addUserEpisode(episodes[i]);
+            calendarEntry.addUserEpisode(episodes[i]);
         }
         
-        calendar.add(calendarDate);
+        calendarDay.add(calendarEntry);
         
         // Calculate next date and previous date string.
-        String nextDateString = dateFormat.format(calendar.getNextDay());
+        String nextDateString = dateFormat.format(calendarDay.getNextDay());
         String previousDateString = 
-            dateFormat.format(calendar.getPreviousDay());
+            dateFormat.format(calendarDay.getPreviousDay());
         
         request.setAttribute("elapsedTime", timer.getElapsedTime());
-        request.setAttribute("date", calendar.getDate());
+        request.setAttribute("date", calendarDay.getDate());
         request.setAttribute("nextDate", nextDateString);
         request.setAttribute("previousDate", previousDateString);
-        request.setAttribute("schedule", calendar);
+        request.setAttribute("schedule", calendarDay);
         request.setAttribute("site", site);
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("schedule_day.jsp");

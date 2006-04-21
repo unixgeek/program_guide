@@ -1,5 +1,5 @@
 /*
- * $Id: GetLogServlet.java,v 1.3 2006-03-15 04:49:42 gunter Exp $
+ * $Id: GetLogServlet.java,v 1.4 2006-04-21 15:56:05 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -56,6 +56,7 @@ public class GetLogServlet extends GenericServlet {
             request.setAttribute("elapsedTime", timer.getElapsedTime());
             request.setAttribute("logEntries", logEntries);
         } catch (SQLException e) {
+            timer.stop();
             redirectError(request, response, e.getMessage());
             return;
         }

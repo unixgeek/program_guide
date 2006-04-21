@@ -15,7 +15,7 @@
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <div class="content">
-<h2>Schedule for <dt:format patternId="dateDisplayFormat">${schedule.date.time}</dt:format></h2>
+<h2><dt:format pattern="EEEE MMMM dd yyyy">${schedule.date.time}</dt:format></h2>
 <table class="data">
  <tr>
   <td class="calendarlinkleft">

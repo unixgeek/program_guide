@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 import net.six_two.program_guide.tables.UserEpisode;
 
-public class CalendarDate {
+public class CalendarEntry {
     private ArrayList userEpisodes;
     private boolean today;
     
-    public CalendarDate(boolean today) {
+    public CalendarEntry(boolean today) {
         this.userEpisodes = new ArrayList();
         this.today = today;
     }

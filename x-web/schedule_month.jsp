@@ -15,18 +15,20 @@
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <div class="content">
-<h2>Schedule for ${month} ${year}</h2>
+<h2>${month} ${year}</h2>
 <table class="data">
  <tr>
   <td class="calendarlinkleft">
    <a class="rowdata" href="GetScheduleByMonth.do?date=${previousDate}">&lt;&lt;Previous</a>
   </td>
-  <td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td>
+  <td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td>
+  <td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td>
+  <td class="rowdata">&nbsp;</td>
   <td class="calendarlinkright">
    <a class="rowdata" href="GetScheduleByMonth.do?date=${nextDate}">Next&gt;&gt;</a>
- </td>
-</tr>
-</tr>
+  </td>
+ </tr>
+ </tr>
  <tr>
   <th class="rowheader">Sunday</th>
   <th class="rowheader">Monday</th>
@@ -63,7 +65,11 @@
        </td>
      </tr>
      <c:forEach var="userEpisode" items="${day.element.userEpisodes}">
-     <tr><td class="calendarepisode"><a class="calendarentry" href="GetScheduleByMonth.do?program_id=${userEpisode.program.id}#${userEpisode.episode.serialNumber}">${userEpisode.program.name}</a></td></tr>
+     <tr><td class="calendarepisode">
+      <a class="calendarentry" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#${userEpisode.episode.serialNumber}">
+       ${userEpisode.program.name}
+      </a>
+     </td></tr>
      </c:forEach>
     </table>
    </td>

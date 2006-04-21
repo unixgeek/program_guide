@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.six_two.misc.CalendarDay;
 import net.six_two.misc.MonthlyCalendar;
 import net.six_two.misc.Time;
-import net.six_two.program_guide.CalendarDate;
+import net.six_two.program_guide.CalendarEntry;
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.Timer;
 import net.six_two.program_guide.tables.TorrentSite;
@@ -95,7 +95,7 @@ public class GetScheduleByMonthServlet extends GenericServlet {
                 boolean today = 
                     Time.isEqual(todaysDate, schedule[week][day].getDate());
                 
-                CalendarDate calendarDate = new CalendarDate(today);
+                CalendarEntry calendarDate = new CalendarEntry(today);
                 
                 // Add any episodes for this date.
                 for (int i = 0; i != episodes.length; i++) {

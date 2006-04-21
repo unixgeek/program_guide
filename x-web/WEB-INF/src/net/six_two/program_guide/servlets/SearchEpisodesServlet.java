@@ -85,7 +85,9 @@ public class SearchEpisodesServlet extends GenericServlet {
             request.setAttribute("count", 
                     new Integer(userEpisodesList.length));
         } catch (SQLException e) {
-            e.printStackTrace();
+            timer.stop();
+            redirectError(request, response, e.getMessage());
+            return;
         }
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("search.jsp");
