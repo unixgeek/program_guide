@@ -1,7 +1,7 @@
 <div id="menu">
  <a class="menuitem" href="GetUserPrograms.do">Programs (${programCount})</a>
  <a class="menuitem" href="GetUserEpisodesQueued.do">Queue (${queueCount})</a>
- <a class="menuitem" href="GetUserEpisodesSchedule.do">Schedule (${todayCount})</a>
+ <a class="menuitem" href="GetScheduleByMonth.do">Schedule (${todayCount})</a>
  <a class="menuitem" href="SearchEpisodes.do">Search Episodes</a>
  <a class="menuitem" href="SetUserSettings.do">Account Settings</a>
  <c:if test='${showAdminLog == "true"}'>

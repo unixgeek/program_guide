@@ -1,5 +1,5 @@
 /*
- * $Id: DisplayFrontPageServlet.java,v 1.6 2005-11-04 04:23:34 gunter Exp $
+ * $Id: DisplayFrontPageServlet.java,v 1.7 2006-04-21 06:44:40 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -28,7 +28,7 @@ public class DisplayFrontPageServlet extends GenericServlet {
             return;
         }
         
-        RequestDispatcher dispatcher = request.getRequestDispatcher("GetUserEpisodesSchedule.do");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("GetScheduleByMonth.do");
         dispatcher.forward(request, response);
     }
     
