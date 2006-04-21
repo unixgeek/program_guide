@@ -42,7 +42,7 @@
    <c:choose>
     <c:when test='${not empty day}'>
      <c:choose>
-      <c:when test='${day.today == "true"}'>
+      <c:when test='${day.element.today == "true"}'>
    <td class="today">
       </c:when>
       <c:otherwise>
@@ -56,7 +56,7 @@
    </c:choose>
     <table width="100%">
      <tr><td class="calendardate" colspan="2">${day.dayOfMonth}</td></tr>
-     <c:forEach var="userEpisode" items="${day.userEpisodes}">
+     <c:forEach var="userEpisode" items="${day.element.userEpisodes}">
      <tr><td class="calendarepisode"><a class="calendarentry" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#${userEpisode.episode.serialNumber}">${userEpisode.program.name}</a></td></tr>
      </c:forEach>
     </table>
