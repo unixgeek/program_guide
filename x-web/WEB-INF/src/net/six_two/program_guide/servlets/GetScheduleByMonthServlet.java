@@ -89,23 +89,22 @@ public class GetScheduleByMonthServlet extends GenericServlet {
         // Loop through the days and build the schedule array.
         for (int week = 0; week != calendar.getNumberOfWeeks(); week++) {
             for (int day = 0; day != 7; day++) {
-                if (schedule[week][day] == null)
-                    break;
-                
-                boolean today = 
-                    Time.isEqual(todaysDate, schedule[week][day].getDate());
-                
-                CalendarEntry calendarDate = new CalendarEntry(today);
-                
-                // Add any episodes for this date.
-                for (int i = 0; i != episodes.length; i++) {
-                    if (Time.isEqual(schedule[week][day].getDate(), 
-                            episodes[i].getEpisode().getOriginalAirDate())) {
-                        calendarDate.addUserEpisode(episodes[i]);
-                    }
+                if (schedule[week][day] != null) {
+                    boolean today = 
+                        Time.isEqual(todaysDate, schedule[week][day].getDate());
                     
+                    CalendarEntry calendarDate = new CalendarEntry(today);
+                    
+                    // Add any episodes for this date.
+                    for (int i = 0; i != episodes.length; i++) {
+                        if (Time.isEqual(schedule[week][day].getDate(), 
+                                episodes[i].getEpisode().getOriginalAirDate())) {
+                            calendarDate.addUserEpisode(episodes[i]);
+                        }
+                        
+                    }
+                    schedule[week][day].add(calendarDate);
                 }
-                schedule[week][day].add(calendarDate);
             }
         }
         
