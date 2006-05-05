@@ -59,7 +59,7 @@
   <th class="rowheader">Name</th>
  </tr>
  <tr>
-   <c:choose>
+  <c:choose>
    <c:when test='${canUse == "true"}'>
   <td class="rowdatacenter"><input type="checkbox" name="granted" value="USAGE|1" checked="checked" /></td>
    </c:when>
@@ -70,7 +70,7 @@
   <td class="rowdata">USAGE</td>
  </tr>
  <tr>
-   <c:choose>
+  <c:choose>
    <c:when test='${canAddProgram == "true"}'>
   <td class="rowdatacenter"><input type="checkbox" name="granted" value="ADD_PROGRAM|1" checked="checked" /></td>
    </c:when>
@@ -81,7 +81,7 @@
   <td class="rowdata">ADD_PROGRAM</td>
  </tr>
  <tr>
-   <c:choose>
+  <c:choose>
    <c:when test='${canDeleteProgram == "true"}'>
   <td class="rowdatacenter"><input type="checkbox" name="granted" value="DELETE_PROGRAM|1" checked="checked" /></td>
    </c:when>
@@ -92,7 +92,7 @@
   <td class="rowdata">DELETE_PROGRAM</td>
  </tr>
  <tr>
-   <c:choose>
+  <c:choose>
    <c:when test='${canEditProgram == "true"}'>
   <td class="rowdatacenter"><input type="checkbox" name="granted" value="EDIT_PROGRAM|1" checked="checked" /></td>
    </c:when>
@@ -103,7 +103,7 @@
   <td class="rowdata">EDIT_PROGRAM</td>
  </tr>
  <tr>
-   <c:choose>
+  <c:choose>
    <c:when test='${canAddUser == "true"}'>
   <td class="rowdatacenter"><input type="checkbox" name="granted" value="ADD_USER|1" checked="checked" /></td>
    </c:when>
@@ -114,7 +114,7 @@
   <td class="rowdata">ADD_USER</td>
  </tr>
  <tr>
-   <c:choose>
+  <c:choose>
    <c:when test='${canDeleteUser == "true"}'>
   <td class="rowdatacenter"><input type="checkbox" name="granted" value="DELETE_USER|1" checked="checked" /></td>
    </c:when>
@@ -125,7 +125,7 @@
   <td class="rowdata">DELETE_USER</td>
  </tr>
  <tr>
-   <c:choose>
+  <c:choose>
    <c:when test='${canEditUser == "true"}'>
   <td class="rowdatacenter"><input type="checkbox" name="granted" value="EDIT_USER|1" checked="checked" /></td>
    </c:when>
@@ -136,7 +136,7 @@
   <td class="rowdata">EDIT_USER</td>
  </tr>
  <tr>
-   <c:choose>
+  <c:choose>
    <c:when test='${canAdminLog == "true"}'>
   <td class="rowdatacenter"><input type="checkbox" name="granted" value="ADMIN_LOG|1" checked="checked" /></td>
    </c:when>
