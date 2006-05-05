@@ -59,7 +59,6 @@
  </c:if>
 </table>
 <br />
-<c:if  test='${empty usersList}'><br /></c:if>
 </div>
 <%@ include file="footer.jsp" %>
 </body>

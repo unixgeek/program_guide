@@ -54,7 +54,6 @@
 </table>
 </form>
 <br />
-<c:if  test='${empty programsList}'><br /></c:if>
 </div>
 <%@ include file="footer.jsp" %>
 </body>
