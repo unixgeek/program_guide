@@ -32,7 +32,7 @@
  <c:forEach var="userEpisode" items="${userEpisodesList}">
  <tr>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
-  <td class="rowdatacenter"><a name="${userEpisode.episode.serialNumber}" />${userEpisode.episode.number}</td>
+  <td class="rowdatacenter"><a id="id${userEpisode.episode.serialNumber}" />${userEpisode.episode.number}</td>
   <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
   <td class="rowdatacenter">
    <c:if test='${not empty userEpisode.episode.originalAirDate}'>
@@ -79,7 +79,6 @@
 </table>
 </form>
 <br />
-<c:if  test='${empty userEpisodesList}'><br /></c:if>
 </div>
 <%@ include file="footer.jsp" %>
 </body>
