@@ -40,7 +40,7 @@
   <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
-  <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#${userEpisode.episode.serialNumber}">${userEpisode.episode.title}</a></td>
+  <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#id${userEpisode.episode.serialNumber}">${userEpisode.episode.title}</a></td>
   <td class="rowdata">
    <c:choose>
     <c:when test='${not empty userEpisode.episode.summaryUrl}'>
@@ -57,7 +57,6 @@
  </c:forEach>
 </table>
 <br />
-<c:if  test='${empty schedule.element.userEpisodes}'><br /></c:if>
 </div>
 <%@ include file="footer.jsp" %>
 </body>

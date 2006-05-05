@@ -38,7 +38,7 @@
     </dt:format>
    </c:if>
   </td>
-  <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#${userEpisode.episode.serialNumber}">${userEpisode.episode.title}</a></td>
+  <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#id${userEpisode.episode.serialNumber}">${userEpisode.episode.title}</a></td>
   <td class="rowdata">
    <c:choose>
     <c:when test='${not empty userEpisode.episode.summaryUrl}'>
@@ -54,7 +54,6 @@
 </table>
 <br />
 <br />
-<c:if  test='${empty queuedEpisodesList}'><br /></c:if>
 </div>
 <%@ include file="footer.jsp" %>
 </body>
