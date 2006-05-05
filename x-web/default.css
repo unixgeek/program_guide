@@ -55,6 +55,7 @@ a.menuitem:hover {
 .content {
     margin-left: 130px;
     width: auto;
+    min-height: 140px;
 }
 
 .data {
