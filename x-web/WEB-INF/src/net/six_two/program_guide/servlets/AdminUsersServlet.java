@@ -1,5 +1,5 @@
 /*
- * $Id: AdminUsersServlet.java,v 1.4 2005-12-07 05:43:09 gunter Exp $
+ * $Id: AdminUsersServlet.java,v 1.4.6.1 2006-05-05 03:44:39 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -55,6 +55,11 @@ public class AdminUsersServlet extends GenericServlet {
             
             request.setAttribute("usersList", users);
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, e.getMessage());
         }
         

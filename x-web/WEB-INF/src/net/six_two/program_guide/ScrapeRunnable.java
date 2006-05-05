@@ -72,6 +72,11 @@ public class ScrapeRunnable implements Runnable {
             Persistor.createLogEntry(connection, logEntry);
             connection.close();
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
     }

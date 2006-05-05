@@ -1,5 +1,5 @@
 /*
- * $Id: GenericServlet.java,v 1.7 2005-12-06 05:34:13 gunter Exp $
+ * $Id: GenericServlet.java,v 1.7.6.1 2006-05-05 03:44:39 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -34,10 +34,11 @@ public class GenericServlet extends HttpServlet {
             return null;
         }
         
+        Connection connection = getConnection();
+        
         User user = (User) session.getAttribute("user");
         if (user != null) {
             try {
-                Connection connection = getConnection();
                 int programCount = 
                     Persistor.selectProgramCountForUser(connection, user);
                 int queueCount = 
@@ -84,6 +85,11 @@ public class GenericServlet extends HttpServlet {
                 session.setAttribute("todayCount", new Integer(todayCount));
                 connection.close();
             } catch (SQLException e) {
+                try {
+                    connection.close();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
             }
         }
         return (User) session.getAttribute("user");

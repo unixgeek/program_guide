@@ -1,5 +1,5 @@
 /*
- * $Id: UpdateUserServlet.java,v 1.5 2005-12-06 05:34:13 gunter Exp $
+ * $Id: UpdateUserServlet.java,v 1.5.6.1 2006-05-05 03:44:39 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -37,6 +37,11 @@ public class UpdateUserServlet extends GenericServlet {
         }
         
         if (!UserManager.authorizeUser(user, Permissions.EDIT_USER)) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, 
                     "You have insufficient rights to this resource.  Loser.");
             return;
@@ -80,6 +85,11 @@ public class UpdateUserServlet extends GenericServlet {
             request.setAttribute("canAdminLog", new Boolean(canAdminLog));
             request.setAttribute("candidateUser", candidateUser);
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, e.getMessage());
         }
         
@@ -105,6 +115,11 @@ public class UpdateUserServlet extends GenericServlet {
         }
         
         if (!UserManager.authorizeUser(user, Permissions.EDIT_USER)) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, 
                     "You have insufficient rights to this resource.  Loser.");
             return;
@@ -126,17 +141,20 @@ public class UpdateUserServlet extends GenericServlet {
             User candidateUser = Persistor.selectUser(connection, user_id);
             
             if (username.equals("") && action.equals("username")) {
+                connection.close();
                 error(request, response, "Invalid username.");
                 return;
             }
             
             if (password1.equals("") && action.equals("password")) {
+                connection.close();
                 request.setAttribute("candidateUser", candidateUser);
                 error(request, response, "Invalid password.");
                 return;
             }
             
             if (!password1.equals(password2) && action.equals("password")) {
+                connection.close();
                 request.setAttribute("candidateUser", candidateUser);
                 error(request, response, "Passwords don't match.");
                 return;
@@ -146,6 +164,7 @@ public class UpdateUserServlet extends GenericServlet {
                 User testUser = Persistor.selectUser(connection, username);
                 
                 if (testUser != null) {
+                    connection.close();
                     request.setAttribute("candidateUser", candidateUser);
                     error(request, response, "User exists.");
                     return;
@@ -176,6 +195,11 @@ public class UpdateUserServlet extends GenericServlet {
             
             connection.close();
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
         

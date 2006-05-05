@@ -85,6 +85,11 @@ public class SearchEpisodesServlet extends GenericServlet {
             request.setAttribute("count", 
                     new Integer(userEpisodesList.length));
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             timer.stop();
             redirectError(request, response, e.getMessage());
             return;

@@ -1,5 +1,5 @@
 /*
- * $Id: AdminProgramsServlet.java,v 1.4 2005-11-27 20:13:19 gunter Exp $
+ * $Id: AdminProgramsServlet.java,v 1.4.6.1 2006-05-05 03:44:39 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -44,6 +44,11 @@ public class AdminProgramsServlet extends GenericServlet {
                 Permissions.EDIT_PROGRAM);
         
         if (!canAddProgram && !canDeleteProgram && !canEditProgram) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, 
                     "You have insufficient rights to this resource.  Loser.");
             return;
@@ -56,6 +61,11 @@ public class AdminProgramsServlet extends GenericServlet {
             
             request.setAttribute("programsList", programs);
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, e.getMessage());
         }
         

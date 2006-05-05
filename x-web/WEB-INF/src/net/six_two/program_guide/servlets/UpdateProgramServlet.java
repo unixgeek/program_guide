@@ -1,5 +1,5 @@
 /*
- * $Id: UpdateProgramServlet.java,v 1.4 2005-11-27 20:13:19 gunter Exp $
+ * $Id: UpdateProgramServlet.java,v 1.4.6.1 2006-05-05 03:44:39 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -37,6 +37,11 @@ public class UpdateProgramServlet extends GenericServlet {
         }
         
         if (!UserManager.authorizeUser(user, Permissions.EDIT_PROGRAM)) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, 
                     "You have insufficient rights to this resource.  Loser.");
             return;
@@ -47,9 +52,15 @@ public class UpdateProgramServlet extends GenericServlet {
         
         try {
             Program program = Persistor.selectProgram(connection, program_id);
+            connection.close();
             
             request.setAttribute("program", program);
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, e.getMessage());
         }
         
@@ -69,12 +80,22 @@ public class UpdateProgramServlet extends GenericServlet {
         
         Connection connection = getConnection();
         if (connection == null) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, 
                     "Couldn't connect to the database.");
             return;
         }
         
         if (!UserManager.authorizeUser(user, Permissions.EDIT_PROGRAM)) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, 
                     "You have insufficient rights to this resource.  Loser.");
             return;
@@ -96,6 +117,11 @@ public class UpdateProgramServlet extends GenericServlet {
             
             connection.close();
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, e.getMessage());
         }
         

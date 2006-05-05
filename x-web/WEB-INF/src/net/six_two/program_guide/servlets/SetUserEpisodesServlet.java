@@ -1,5 +1,5 @@
 /*
- * $Id: SetUserEpisodesServlet.java,v 1.6 2005-11-18 03:14:44 gunter Exp $
+ * $Id: SetUserEpisodesServlet.java,v 1.6.6.1 2006-05-05 03:44:39 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -60,6 +60,11 @@ public class SetUserEpisodesServlet extends GenericServlet {
             
             connection.close();
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, e.getMessage());
             return;
         }

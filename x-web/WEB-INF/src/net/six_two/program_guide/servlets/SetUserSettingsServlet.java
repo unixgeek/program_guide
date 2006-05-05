@@ -1,5 +1,5 @@
 /*
- * $Id: SetUserSettingsServlet.java,v 1.5 2005-11-04 04:23:34 gunter Exp $
+ * $Id: SetUserSettingsServlet.java,v 1.5.6.1 2006-05-05 03:44:39 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -52,17 +52,32 @@ public class SetUserSettingsServlet extends GenericServlet {
         password2 = (password2 != null) ? password2 : "";
         
         if (username.equals("") && action.equals("username")) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             error(request, response, "Invalid username.");
             return;
         }
         
         if (password1.equals("") && action.equals("password")) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             request.setAttribute("username", username);
             error(request, response, "Invalid password.");
             return;
         }
         
         if (!password1.equals(password2) && action.equals("password")) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             request.setAttribute("username", username);
             error(request, response, "Passwords don't match.");
             return;
@@ -77,7 +92,13 @@ public class SetUserSettingsServlet extends GenericServlet {
             Persistor.updateUser(connection, user);
             connection.close();
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
+            error(request, response, e.getMessage());
         }
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayFrontPage.do");

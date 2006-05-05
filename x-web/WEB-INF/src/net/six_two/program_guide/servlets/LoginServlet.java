@@ -1,5 +1,5 @@
 /*
- * $Id: LoginServlet.java,v 1.8 2005-11-27 20:13:19 gunter Exp $
+ * $Id: LoginServlet.java,v 1.8.6.1 2006-05-05 03:44:39 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -51,17 +51,20 @@ public class LoginServlet extends GenericServlet {
             User user = Persistor.selectUser(connection, username);
             
             if (user == null) {
+                connection.close();
                 error(request, response, "User doesn't exist.");
                 return;
             }
             
             if (!UserManager.authenticateUser(user, password)) {
+                connection.close();
                 request.setAttribute("username", username);
                 error(request, response, "Incorrect password.");
                 return;
             }
             
             if (!UserManager.authorizeUser(user, Permissions.USAGE)) {
+                connection.close();
                 request.setAttribute("username", username);
                 error(request, response, 
                         "You're account is disabled.  Loser.");
@@ -77,6 +80,11 @@ public class LoginServlet extends GenericServlet {
             session.setMaxInactiveInterval(-1);
             session.setAttribute("user", user);
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, e.getMessage());
             return;
         }

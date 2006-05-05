@@ -1,5 +1,5 @@
 /*
- * $Id: RegisterServlet.java,v 1.7 2005-11-05 03:35:00 gunter Exp $
+ * $Id: RegisterServlet.java,v 1.7.6.1 2006-05-05 03:44:39 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -67,6 +67,7 @@ public class RegisterServlet extends GenericServlet {
             User user = Persistor.selectUser(connection, username);
             
             if (user != null) {
+                connection.close();
                 error(request, response, "User exists.");
                 return;
             }
@@ -78,6 +79,11 @@ public class RegisterServlet extends GenericServlet {
             if (!action.equals("nologin"))
                 request.getSession().setAttribute("user", user);
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
         if (!action.equals("nologin")) {

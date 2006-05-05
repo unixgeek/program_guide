@@ -1,5 +1,5 @@
 /*
- * $Id: DeleteLogServlet.java,v 1.1 2005-12-07 05:41:54 gunter Exp $
+ * $Id: DeleteLogServlet.java,v 1.1.6.1 2006-05-05 03:44:39 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -46,6 +46,11 @@ public class DeleteLogServlet extends GenericServlet {
             
             connection.close();;
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, e.getMessage());
             return;
         }

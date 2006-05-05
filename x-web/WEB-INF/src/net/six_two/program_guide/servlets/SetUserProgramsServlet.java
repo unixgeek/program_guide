@@ -1,5 +1,5 @@
 /*
- * $Id: SetUserProgramsServlet.java,v 1.2 2005-10-29 00:59:41 gunter Exp $
+ * $Id: SetUserProgramsServlet.java,v 1.2.6.1 2006-05-05 03:44:39 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -43,6 +43,11 @@ public class SetUserProgramsServlet extends GenericServlet {
             
             request.setAttribute("programsList", programs);
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
              redirectError(request, response, e.getMessage());
         }
         
@@ -85,6 +90,11 @@ public class SetUserProgramsServlet extends GenericServlet {
             
             connection.close();
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
         

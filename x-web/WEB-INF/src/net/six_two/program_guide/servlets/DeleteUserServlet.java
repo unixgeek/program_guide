@@ -1,5 +1,5 @@
 /*
- * $Id: DeleteUserServlet.java,v 1.3 2005-11-27 20:13:19 gunter Exp $
+ * $Id: DeleteUserServlet.java,v 1.3.6.1 2006-05-05 03:44:39 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -36,6 +36,11 @@ public class DeleteUserServlet extends GenericServlet {
         }
         
         if (!UserManager.authorizeUser(user, Permissions.DELETE_USER)) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, 
                     "You have insufficient rights to this resource.  Loser.");
             return;
@@ -51,6 +56,11 @@ public class DeleteUserServlet extends GenericServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("delete_user.jsp");
             dispatcher.forward(request, response);
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, e.getMessage());
         }
     }
@@ -73,6 +83,11 @@ public class DeleteUserServlet extends GenericServlet {
         }
         
         if (!UserManager.authorizeUser(user, Permissions.DELETE_USER)) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, 
                     "You have insufficient rights to this resource.  Loser.");
             return;
@@ -86,6 +101,11 @@ public class DeleteUserServlet extends GenericServlet {
             
             connection.close();
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             redirectError(request, response, e.getMessage());
         }
         

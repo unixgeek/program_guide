@@ -77,6 +77,11 @@ public class GetScheduleByMonthServlet extends GenericServlet {
             connection.close();
             timer.stop();
         } catch (SQLException e) {
+            try {
+                connection.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             timer.stop();
             redirectError(request, response, e.getMessage());
             return;
