@@ -1,0 +1,246 @@
+body {
+    margin: 0;
+}
+
+#header {
+    font-size: 200%;
+    background-color: #000000;
+    color: #83ADC4;
+    font-family: georgia, serif;
+    padding: 13px 13px 13px 13px;
+    text-align: left;
+}
+
+#subheader {
+    font-size: 90%;
+    background-color: #2E383E;
+    color: #4CB2EA;
+    font-style: italic;
+    padding: 5px;
+}
+
+#menu {
+    background-color: #1A597C;
+    float: left;
+    position: relative; 
+    text-align: center;
+    width: 125px; 
+}
+
+.menuitem {
+    width: auto;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    display: block;
+}
+
+a.menuitem {
+    font-size: 12px;
+    background-color: #1A597C;
+    color: #4CB2EA;
+    font-family: georgia, serif;
+    /*text-transform: uppercase;*/
+    font-weight: bold;
+    text-align: left;
+    text-decoration: none;
+}
+
+a.menuitem:hover {
+    background-color: #4CB2EA;
+    color: #1A597C;
+}
+
+.content {
+    margin-left: 130px;
+    width: auto;
+    min-height: 140px;
+}
+
+.data {
+    background-color: #1A597C;
+    border-collapse: separate;
+    border: 3px solid #000000;
+}
+
+.rowheader {
+    background: #000000;
+    border: 1px solid #1A597C;
+    color: #83ADC4;
+    font-family: georgia, serif;
+    font-size: 12px;
+    padding: 3px;
+    vertical-align: middle;
+    whitespace: nowrap;
+}
+
+.rowdata {
+    background: #FFFFFF;
+    border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 11px;
+    padding: 3px;
+    vertical-align: middle;
+    whitespace: nowrap;
+}
+
+.rowdatacenter {
+    background: #FFFFFF;
+    border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 11px;
+    padding: 3px;
+    text-align: center;
+    vertical-align: middle;
+    whitespace: nowrap;
+ }
+
+a.rowdatacenter, a.rowdata {
+    border: none;
+    background: transparent;
+}
+
+.none {
+    background: #FFFFFF;
+    border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 11px;
+    padding: 3px;
+    vertical-align: middle;
+    whitespace: nowrap;
+}
+
+/* Used with centertable for craptastic IE. */
+.center {
+    text-align: center;
+}
+
+.centertable {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+.error {
+    text-align: center;
+    font-weight: bold;
+    background-color: transparent;
+    color: red;
+}
+
+a.generic {
+    background-color: transparent;
+    color: #000000;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: georgia, serif;
+}
+
+#footerlist {
+    font-size: 11px;
+    background-color: #2E383E;
+    list-style: none;
+    padding: 4px;
+    margin: 0;
+    text-align: right;
+}
+
+#footerlist li {
+    color: #4CB2EA;
+    padding: 0 1em 0 1em;
+    display: inline;
+    border-left: 1px solid #4CB2EA;
+}
+
+#footerlist li a {
+    color: #4CB2EA;
+    text-decoration: none;
+}
+
+.log {
+    font-family: monospace;
+    font-size: 9px;
+}
+
+.today {
+    background: #FFFF00;
+    border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 10px;
+    padding: 3px;
+    vertical-align: top;
+    whitespace: nowrap;
+    width: 80px;
+    height: 80px;
+}
+
+.nullcalendarentry {
+    background: #1A597C;
+    border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 10px;
+    padding: 3px;
+    vertical-align: top;
+    whitespace: nowrap;
+    width: 85px;
+    height: 85px;
+}
+
+.calendarentry {
+    background: #FFFFFF;
+    border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 10px;
+    padding: 0;
+    vertical-align: top;
+    whitespace: nowrap;
+    width: 85px;
+    height: 85px;
+}
+
+.calendardate {
+    text-align: right;
+    padding: 0;
+}
+
+.calendarepisode {
+    text-align: left;
+    padding: 0;
+}
+
+a.calendarentry {
+    border: none;
+    background: transparent;
+}
+
+.calendarlinkleft {
+    background: #FFFFFF;
+    border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 10px;
+    padding: 0;
+    vertical-align: middle;
+    whitespace: nowrap;
+    text-align: left;
+}
+
+.calendarlinkright {
+    background: #FFFFFF;
+    border: 1px solid #2E383E;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 10px;
+    padding: 0;
+    vertical-align: middle;
+    whitespace: nowrap;
+    text-align: right;
+}

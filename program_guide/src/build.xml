@@ -1,0 +1,94 @@
+<project name="program_guide" default="help" basedir=".">
+    <property name="propertyfile"
+              value="WEB-INF/src/net/six_two/program_guide/program_guide.properties" />
+    <property file="${propertyfile}" />
+    <property name="verbose" value="false" />
+    <property name="builddir" value="${basedir}/WEB-INF/classes/" />
+    <property name="distdir"
+              value="${basedir}/${package.name}-${package.version}" />
+    <property name="warfile" value="${package.name}.war" />
+
+    <target name="help">
+        <echo>ant build       compile ${package.name}
+ant war         create ${warfile}
+ant dist        create ${package.name}-${package.version}.{tar.gz,zip}
+ant clean       remove all build files
+ant distclean   remove all build files and dist files</echo>
+    </target>
+
+    <target name="scripts">
+        <copy todir="${basedir}/scripts">
+            <fileset dir="../scripts" />
+        </copy>
+    </target>
+ 
+    <target name="tomcat">
+        <get verbose="${verbose}" usetimestamp="true"
+             src="${tomcat.url}/${tomcat.name}-${tomcat.version}.tar.gz"
+             dest="${basedir}/${tomcat.name}-${tomcat.version}.tar.gz" />
+        <untar src="${basedir}/${tomcat.name}-${tomcat.version}.tar.gz"
+               compression="gzip" overwrite="yes"
+               dest="${basedir}" />
+        <copy file="${basedir}/${tomcat.name}-${tomcat.version}/common/lib/servlet-api.jar"
+              todir="${basedir}" />
+        <delete file="${basedir}/${tomcat.name}-${tomcat.version}.tar.gz" verbose="${verbose}" />
+    </target>
+
+    <target name="build" depends="tomcat,scripts">
+        <mkdir dir="${builddir}" />
+        <javac srcdir="${basedir}/WEB-INF/src"
+               destdir="${builddir}"
+               classpath="${package.buildClasspath}:${tomcat.name}-${tomcat.version}/common/lib/servlet-api.jar"
+               listfiles="${verbose}"
+               optimize="true" />
+        <copy file="${propertyfile}" todir="${builddir}/net/six_two/program_guide/servlets" />
+    </target>
+
+    <target name="war" depends="build">
+        <manifest file="${basedir}/MANIFEST.MF">
+            <attribute name="Built-By" value="${user.name}" />
+        </manifest>
+        <war destfile="${warfile}" update="false"
+             webxml="${basedir}/WEB-INF/web.xml"
+             manifest="MANIFEST.MF">
+            <webinf dir="${basedir}/WEB-INF">
+                <exclude name="web.xml" />
+                <exclude name="src/" />
+            </webinf>
+            <metainf dir="${basedir}/META-INF" />
+            <fileset dir="${basedir}">
+                <include name="*.jsp" />
+                <include name="*.css" />
+            	   <include name="program_guide.png" />
+            	   <include name="scripts/*" />
+            </fileset>
+        </war>
+    </target>
+    
+    <target name="dist" depends="war">
+        <mkdir dir="${distdir}" />
+        <copy file="${warfile}" todir="${distdir}" verbose="${verbose}" />
+        <tar destfile="${package.name}-${package.version}.tar.gz"
+             compression="gzip">
+            <tarfileset dir="${distdir}"
+                        prefix="${package.name}-${package.version}" />
+        </tar>
+        <zip destfile="${package.name}-${package.version}.zip">
+            <zipfileset dir="${distdir}"
+                        prefix="${package.name}-${package.version}" />
+        </zip>
+    </target>
+
+    <target name="clean">
+        <delete dir="${builddir}" verbose="${verbose}" />
+        <delete file="MANIFEST.MF" verbose="${verbose}" />
+        <delete file="${warfile}" verbose="${verbose}" />
+    </target>
+
+    <target name="distclean" depends="clean">
+        <delete dir="${distdir}" verbose="${verbose}" /> 
+        <delete file="${package.name}-${package.version}.tar.gz"
+                verbose="${verbose}" />
+        <delete file="${package.name}-${package.version}.zip" verbose="${verbose}" />
+    </target>
+</project>
