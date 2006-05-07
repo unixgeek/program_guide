@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: update_programs.sh,v 1.1 2006-05-05 22:38:23 gunter Exp $
+# $Id: update_programs.sh,v 1.2 2006-05-07 03:46:29 gunter Exp $
 #
 . program_guide.conf
 
@@ -12,6 +12,11 @@ WHERE (do_update = 1
 AND url is NOT NULL"
 
 RESULTS=`mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} -s --skip-column-names ${DATABASE} -e "${PROGRAM_SQL}" | tr '\t' '|' | tr ' ' '_'`
+
+if [ -z "${RESULTS}" ]; then
+    echo "Nothing to do :(."
+    exit 0
+fi
 
 for result in ${RESULTS}
 do
