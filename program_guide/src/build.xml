@@ -13,13 +13,39 @@
 ant war         create ${warfile}
 ant dist        create ${package.name}-${package.version}.{tar.gz,zip}
 ant clean       remove all build files
-ant distclean   remove all build files and dist files</echo>
+ant distclean   remove all build files and dist files
+ant rebuilddb   restore database to a fresh install
+ant truncatedb  truncate all tables in the database</echo>
     </target>
 
+    <target name="rebuilddb">
+        <exec executable="mysql" input="../database/drop_tables.sql">
+            <arg line="-upguser -ppgus3r program_guide"/>
+        </exec>
+        <exec executable="mysql" input="../database/program_guide.sql">
+            <arg line="-upguser -ppgus3r program_guide"/>
+        </exec>
+        <exec executable="mysql" input="../database/torrent_site.sql">
+            <arg line="-upguser -ppgus3r program_guide"/>
+        </exec>
+        <exec executable="mysql" input="../database/admin.sql">
+            <arg line="-upguser -ppgus3r program_guide"/>
+        </exec>
+    </target>
+
+    <target name="truncatedb">
+        <exec executable="mysql" input="../database/truncate_tables.sql">
+            <arg line="-upguser -ppgus3r program_guide"/>
+        </exec>
+    </target>
+    
     <target name="scripts">
         <copy todir="${basedir}/scripts">
             <fileset dir="../scripts" />
         </copy>
+        <chmod perm="0755">
+            <fileset dir="${basedir}/scripts" />
+        </chmod>   
     </target>
  
     <target name="tomcat">
