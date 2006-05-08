@@ -1,5 +1,5 @@
 /*
- * $Id: FetchEpisodesServlet.java,v 1.1 2006-05-05 22:38:23 gunter Exp $
+ * $Id: FetchEpisodesServlet.java,v 1.2 2006-05-08 23:23:16 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -45,7 +45,7 @@ public class FetchEpisodesServlet extends GenericServlet {
         scrapeThread.start();
         
         RequestDispatcher dispatcher = 
-            request.getRequestDispatcher("/AdminPrograms.do");
+            request.getRequestDispatcher("/submitted.jsp");
         dispatcher.forward(request, response);
     }
     
