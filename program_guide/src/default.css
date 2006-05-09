@@ -128,6 +128,7 @@ a.rowdatacenter, a.rowdata {
 .error {
     text-align: center;
     font-weight: bold;
+    font-family: georgia, serif;
     background-color: transparent;
     color: red;
 }
@@ -243,4 +244,8 @@ a.calendarentry {
     vertical-align: middle;
     whitespace: nowrap;
     text-align: right;
+}
+
+.status {
+    font-family: georgia, serif;
 }
