@@ -15,6 +15,20 @@
 <%@ include file="menu.jsp" %>
 <div class="content">
 <h2>Queue</h2>
+<h3> 
+  <c:forEach var="page" items="${pageTitles}">
+    <c:choose>
+      <c:when test='${page != currentPage}'>
+        <a href="GetUserEpisodesQueued.do?page=${page}">
+          ${page}
+        </a>
+      </c:when>
+      <c:otherwise>
+        ${page}
+      </c:otherwise>
+    </c:choose>
+  </c:forEach>
+</h3>
 <table class="data">
  <tr>
   <th class="rowheader">Program</th>
@@ -52,7 +66,6 @@
  </tr>
  </c:forEach>
 </table>
-<br />
 <br />
 </div>
 <%@ include file="footer.jsp" %>

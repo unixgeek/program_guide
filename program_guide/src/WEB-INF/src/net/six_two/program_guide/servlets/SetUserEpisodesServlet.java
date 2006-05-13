@@ -1,5 +1,5 @@
 /*
- * $Id: SetUserEpisodesServlet.java,v 1.1 2006-05-05 22:38:23 gunter Exp $
+ * $Id: SetUserEpisodesServlet.java,v 1.2 2006-05-13 20:03:44 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.tables.Episode;
-import net.six_two.program_guide.tables.Program;
 import net.six_two.program_guide.tables.User;
 
 public class SetUserEpisodesServlet extends GenericServlet {
@@ -35,13 +34,15 @@ public class SetUserEpisodesServlet extends GenericServlet {
             return;
         }
         
+        String season = request.getParameter("season");
+        
         int program_id = 
             Integer.parseInt(request.getParameter("program_id"));
         
         try {
-            Program program = Persistor.selectProgram(connection, program_id);
+            //Program program = Persistor.selectProgram(connection, program_id);
             
-            Persistor.deleteStatusForUser(connection, user, program);
+            //Persistor.deleteStatusForUser(connection, user, program);
             
             String[] episodeStatus = request.getParameterValues("status");
             if (episodeStatus != null) {
@@ -51,7 +52,9 @@ public class SetUserEpisodesServlet extends GenericServlet {
                     episode.setProgramId(program_id);
                     episode.setSeason(tokens[0]);
                     episode.setNumber(Integer.parseInt(tokens[1]));
-                    
+                    //if (tokens[2].equals("none")) {
+                        Persistor.deleteStatusForEpisode(connection, episode);
+                    //}
                     if (tokens[2].equals("queued") || tokens[2].equals("viewed"))
                         Persistor.insertStatusForUser(connection, user, 
                                 episode, tokens[2]);
@@ -69,7 +72,8 @@ public class SetUserEpisodesServlet extends GenericServlet {
             return;
         }
         
-        RequestDispatcher dispatcher = request.getRequestDispatcher("GetUserEpisodes.do");
+        RequestDispatcher dispatcher = 
+            request.getRequestDispatcher("GetUserEpisodes.do?season=" + season);
         dispatcher.forward(request, response);
     }
 }

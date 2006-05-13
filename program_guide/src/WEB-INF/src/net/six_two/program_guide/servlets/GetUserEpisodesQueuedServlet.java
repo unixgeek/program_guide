@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserEpisodesQueuedServlet.java,v 1.1 2006-05-05 22:38:22 gunter Exp $
+ * $Id: GetUserEpisodesQueuedServlet.java,v 1.2 2006-05-13 20:03:44 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -36,10 +36,33 @@ public class GetUserEpisodesQueuedServlet extends GenericServlet {
                     "Couldn't connect to the database.");
             return;
         }
-                
+        
+        int currentPage;
         try {
+            currentPage =
+                Integer.parseInt(request.getParameter("page"));
+        } catch (NumberFormatException e2) {
+            currentPage = 0;
+        }
+        
+        try {
+            int count = Persistor.selectQueuedEpisodeCountForUser(connection,
+                    user);
+            int pages = count / 10;
+            if ((count % 10) > 0)
+                pages++;
+            
+            String[] pageTitles = new String[pages];
+            for (int i = 0; i != pages; i++) {
+                pageTitles[i] = Integer.toString(i + 1);
+            }
+            
+            if ((currentPage == 0) && (pageTitles.length > 0))
+                currentPage = Integer.parseInt(pageTitles[0]);
+            
             UserEpisode[] queuedEpisodes = 
-                Persistor.selectAllQueuedEpisodesForUser(connection, user); 
+                Persistor.selectAllQueuedEpisodesForUser(connection, user, 
+                        (currentPage - 1) * 10, 10); 
             
             connection.close();
 
@@ -51,6 +74,8 @@ public class GetUserEpisodesQueuedServlet extends GenericServlet {
 
             request.setAttribute("elapsedTime", timer.getElapsedTime());
             request.setAttribute("queuedEpisodesList", queuedEpisodes);
+            request.setAttribute("pageTitles", pageTitles);
+            request.setAttribute("currentPage", new Integer(currentPage));
         } catch (SQLException e) {
             try {
                 connection.close();

@@ -16,8 +16,23 @@
 <%@ include file="menu.jsp" %>
 <div class="content">
 <form action="SetUserEpisodes.do" method="post">
-<p><input type="hidden" name="program_id" value="${program.id}" /></p>
+<div><input type="hidden" name="program_id" value="${program.id}" /></div>
+<div><input type="hidden" name="season" value="${currentSeason}" /></div>
 <h2>${program.name}&nbsp;<input type="submit" value="Update" /></h2>
+<h3>Season 
+  <c:forEach var="season" items="${seasons}">
+    <c:choose>
+      <c:when test='${season != currentSeason}'>
+        <a href="GetUserEpisodes.do?program_id=${program.id}&season=${season}">
+          ${season}
+        </a>
+      </c:when>
+      <c:otherwise>
+        ${season}
+      </c:otherwise>
+    </c:choose>
+  </c:forEach>
+</h3>
 <table class="data">
  <tr>
   <th class="rowheader">Season</th>

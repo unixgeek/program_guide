@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserEpisodesServlet.java,v 1.1 2006-05-05 22:38:23 gunter Exp $
+ * $Id: GetUserEpisodesServlet.java,v 1.2 2006-05-13 20:03:44 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -30,6 +30,8 @@ public class GetUserEpisodesServlet extends GenericServlet {
             return;
         }
         
+        String season = request.getParameter("season");
+        
         Timer timer = new Timer();
         timer.start();
         
@@ -45,8 +47,12 @@ public class GetUserEpisodesServlet extends GenericServlet {
         
         try {
             Program program = Persistor.selectProgram(connection, program_id);
+            String[] seasons = 
+                Persistor.selectSeasonsForProgram(connection, program);
+            if ((season == null) || (season.trim().length() < 1))
+                season = seasons[0];
             UserEpisode[] userEpisodes = Persistor.
-                selectAllEpisodesForUser(connection, user, program);
+                selectEpisodesBySeasonForUser(connection, user, program, season);
             
             TorrentSite site = Persistor.selectTorrentSite(connection);
             
@@ -61,6 +67,8 @@ public class GetUserEpisodesServlet extends GenericServlet {
 
             request.setAttribute("elapsedTime", timer.getElapsedTime());
             request.setAttribute("userEpisodesList", userEpisodes);
+            request.setAttribute("currentSeason", season);
+            request.setAttribute("seasons", seasons);
             request.setAttribute("program", program);
             request.setAttribute("site", site);
         } catch (SQLException e) {
