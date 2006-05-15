@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserProgramsServlet.java,v 1.1 2006-05-05 22:38:23 gunter Exp $
+ * $Id: GetUserProgramsServlet.java,v 1.2 2006-05-15 04:07:52 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -29,6 +29,8 @@ public class GetUserProgramsServlet extends GenericServlet {
             return;
         }
         
+        String prefix = request.getParameter("prefix");
+        
         Timer timer = new Timer();
         timer.start();
         
@@ -39,9 +41,18 @@ public class GetUserProgramsServlet extends GenericServlet {
             return;
         }
             
-        try {           
-            Program[] programs = Persistor.
-            selectAllProgramsForUser(connection, user);
+        try {
+            Program[] programs = null;
+            
+            String[] prefixes = 
+                Persistor.selectProgramPrefixesForUser(connection, user);
+            
+            if (prefixes.length > 0) {
+                if ((prefix == null) || (prefix.trim().length() < 1))
+                    prefix = prefixes[0];
+                programs = Persistor.selectAllProgramsForUser(connection, 
+                        user, prefix);
+            }
             
             TorrentSite site = Persistor.selectTorrentSite(connection);
             
@@ -49,6 +60,8 @@ public class GetUserProgramsServlet extends GenericServlet {
             
             timer.stop();
             
+            request.setAttribute("prefixes", prefixes);
+            request.setAttribute("currentPrefix", prefix);
             request.setAttribute("elapsedTime", timer.getElapsedTime());
             request.setAttribute("programsList", programs);
             request.setAttribute("site", site);

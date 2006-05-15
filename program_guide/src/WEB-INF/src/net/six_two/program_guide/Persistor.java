@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.3 2006-05-15 01:26:36 gunter Exp $
+ * $Id: Persistor.java,v 1.4 2006-05-15 04:07:52 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -585,6 +585,78 @@ public class Persistor {
         }
         
         return programsArray;
+    }
+
+    public static Program[] selectAllProgramsForUser(Connection connection,
+            User user, String prefix) throws SQLException {
+        if (user == null)
+            throw new SQLException("Attempted operation with a null user.");
+        
+        String sql = "SELECT p.* "
+            + "FROM subscribed s "
+            + "LEFT JOIN program p "
+            + "ON s.program_id = p.id "
+            + "WHERE s.user_id = ? "
+            + "AND SUBSTRING(name, 1, 1) = ? "
+            + "ORDER BY p.name ";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.setString(2, prefix);
+        statement.execute();
+        ResultSet result = statement.getResultSet();
+        
+        ArrayList programs = new ArrayList();
+        while (result.next()) {
+            Program program = new Program();
+            program.setId(result.getInt("id"));
+            program.setName(result.getString("name"));
+            program.setUrl(result.getString("url"));
+            program.setLastUpdate(result.getTimestamp("last_update"));
+            program.setDoUpdate(result.getShort("do_update"));
+            programs.add(program);
+        }
+        result.close();
+        statement.close();
+        
+        Program[] programsArray = new Program[programs.size()];
+        for (int i = 0; i != programs.size(); i++) {
+            programsArray[i] = (Program) programs.get(i);
+        }
+        
+        return programsArray;
+    }
+    
+    public static String[] selectProgramPrefixesForUser(Connection connection,
+            User user) throws SQLException {
+        if (user == null)
+            throw new SQLException("Attempted operation with a null user.");
+        
+        String sql = "SELECT DISTINCT SUBSTRING(p.name, 1, 1) AS prefix "
+            + "FROM subscribed s "
+            + "LEFT JOIN program p "
+            + "ON s.program_id = p.id "
+            + "WHERE s.user_id = ? "
+            + "ORDER BY prefix ";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, user.getId());
+        statement.execute();
+        ResultSet result = statement.getResultSet();
+        
+        ArrayList prefixes = new ArrayList();
+        while (result.next()) {
+            prefixes.add(result.getString("prefix"));
+        }
+        result.close();
+        statement.close();
+        
+        String[] prefixesArray = new String[prefixes.size()];
+        for (int i = 0; i != prefixes.size(); i++) {
+            prefixesArray[i] = (String) prefixes.get(i);
+        }
+        
+        return prefixesArray;
     }
     
     public static int selectProgramCountForUser(Connection connection,
