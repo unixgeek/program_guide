@@ -67,7 +67,7 @@ ant truncatedb  truncate all tables in the database</echo>
                classpath="${package.buildClasspath}:${tomcat.name}-${tomcat.version}/common/lib/servlet-api.jar"
                listfiles="${verbose}"
                optimize="true" />
-        <copy file="${propertyfile}" todir="${builddir}/net/six_two/program_guide/servlets" />
+        <copy file="${propertyfile}" todir="${builddir}/net/six_two/program_guide" />
     </target>
 
     <target name="war" depends="build">
