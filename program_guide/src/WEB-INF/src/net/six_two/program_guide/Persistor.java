@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.2 2006-05-13 20:03:44 gunter Exp $
+ * $Id: Persistor.java,v 1.3 2006-05-15 01:26:36 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -31,9 +31,7 @@ public class Persistor {
         
         String sql = "SELECT e.*, "
             + "IFNULL(t.status, 'none') AS status "
-            + "FROM user u "
-            + "LEFT JOIN subscribed s "
-            + "ON u.id = s.user_id "
+            + "FROM subscribed s "
             + "LEFT JOIN episode e "
             + "ON s.program_id = e.program_id "
             + "LEFT JOIN status t "
@@ -41,7 +39,7 @@ public class Persistor {
             + "    AND t.program_id = e.program_id "
             + "    AND t.season = e.season "
             + "    AND t.episode_number = e.number) "
-            + "WHERE u.id = ? "
+            + "WHERE s.user_id = ? "
             + "AND e.program_id = ? "
             + "ORDER BY program_id, serial_number DESC ";
         
@@ -87,17 +85,15 @@ public class Persistor {
         
         String sql = "SELECT e.*, "
             + "IFNULL(t.status, 'none') AS status "
-            + "FROM user u "
-            + "LEFT JOIN subscribed s "
-            + "ON u.id = s.user_id "
+            + "FROM subscribed s "
             + "LEFT JOIN episode e "
             + "ON s.program_id = e.program_id "
             + "LEFT JOIN status t "
-            + "ON (u.id = t.user_id "
+            + "ON (s.user_id = t.user_id "
             + "    AND t.program_id = e.program_id "
             + "    AND t.season = e.season "
             + "    AND t.episode_number = e.number) "
-            + "WHERE u.id = ? "
+            + "WHERE s.user_id = ? "
             + "AND e.program_id = ? "
             + "AND e.season = ? "
             + "ORDER BY program_id, serial_number DESC ";
@@ -143,19 +139,18 @@ public class Persistor {
         
         String sql = "SELECT p.*, e.*, "
             + "IFNULL(t.status, 'none') AS status "
-            + "FROM user u "
-            + "LEFT JOIN subscribed s "
+            + "FROM subscribed s "
             + "ON u.id = s.user_id "
             + "LEFT JOIN program p "
             + "ON s.program_id = p.id "
             + "LEFT JOIN episode e "
             + "ON s.program_id = e.program_id "
             + "LEFT JOIN status t "
-            + "ON (u.id = t.user_id "
+            + "ON (s.user_id = t.user_id "
             + "    AND t.program_id = e.program_id "
             + "    AND t.season = e.season "
             + "    AND t.episode_number = e.number) "
-            + "WHERE u.id = ? "
+            + "WHERE s.user_id = ? "
             + "AND original_air_date >= (CURRENT_DATE() + INTERVAL ? DAY) "
             + "AND original_air_date <= (CURRENT_DATE() + INTERVAL ? DAY) "
             + "ORDER BY e.original_air_date DESC";
@@ -205,19 +200,17 @@ public class Persistor {
         
         String sql = "SELECT p.*, e.*, "
             + "IFNULL(t.status, 'none') AS status "
-            + "FROM user u "
-            + "LEFT JOIN subscribed s "
-            + "ON u.id = s.user_id "
+            + "FROM subscribed s "
             + "LEFT JOIN program p "
             + "ON s.program_id = p.id "
             + "LEFT JOIN episode e "
             + "ON s.program_id = e.program_id "
             + "LEFT JOIN status t "
-            + "ON (u.id = t.user_id "
+            + "ON (s.user_id = t.user_id "
             + "    AND t.program_id = e.program_id "
             + "    AND t.season = e.season "
             + "    AND t.episode_number = e.number) "
-            + "WHERE u.id = ? "
+            + "WHERE s.user_id = ? "
             + "AND original_air_date >= ? "
             + "AND original_air_date <= ? ";
         
@@ -264,19 +257,10 @@ public class Persistor {
             throw new SQLException("Attempted operation with a null user.");
         
         String sql = "SELECT COUNT(*) "
-            + "FROM user u "
-            + "LEFT JOIN subscribed s "
-            + "ON u.id = s.user_id "
-            + "LEFT JOIN program p "
-            + "ON s.program_id = p.id "
+            + "FROM subscribed s "
             + "LEFT JOIN episode e "
             + "ON s.program_id = e.program_id "
-            + "LEFT JOIN status t "
-            + "ON (u.id = t.user_id "
-            + "    AND t.program_id = e.program_id "
-            + "    AND t.season = e.season "
-            + "    AND t.episode_number = e.number) "
-            + "WHERE u.id = ? ";
+            + "WHERE s.user_id = ? ";
         if (fromDay >= 0)
             sql += "AND original_air_date >= (CURRENT_DATE() + INTERVAL ? DAY) "
                  + "AND original_air_date <= (CURRENT_DATE() + INTERVAL ? DAY) ";
@@ -311,19 +295,17 @@ public class Persistor {
         
         String sql = "SELECT p.*, e.*, "
             + "IFNULL(t.status, 'none') AS status "
-            + "FROM user u "
-            + "LEFT JOIN subscribed s "
-            + "ON u.id = s.user_id "
+            + "FROM subscribed s "
             + "LEFT JOIN program p "
             + "ON s.program_id = p.id "
             + "LEFT JOIN episode e "
             + "ON s.program_id = e.program_id "
             + "LEFT JOIN status t "
-            + "ON (u.id = t.user_id "
+            + "ON (s.user_id = t.user_id "
             + "    AND t.program_id = e.program_id "
             + "    AND t.season = e.season "
             + "    AND t.episode_number = e.number) "
-            + "WHERE u.id = ? "
+            + "WHERE s.user_id = ? "
             + "AND status = 'queued' "
             + "ORDER BY e.original_air_date ASC, p.name ASC "
             + "LIMIT ?,? ";
@@ -372,20 +354,12 @@ public class Persistor {
             throw new SQLException("Attempted operation with a null user.");
         
         String sql = "SELECT COUNT(*) "
-            + "FROM user u "
-            + "LEFT JOIN subscribed s "
-            + "ON u.id = s.user_id "
-            + "LEFT JOIN program p "
-            + "ON s.program_id = p.id "
-            + "LEFT JOIN episode e "
-            + "ON s.program_id = e.program_id "
-            + "LEFT JOIN status t "
-            + "ON (u.id = t.user_id "
-            + "    AND t.program_id = e.program_id "
-            + "    AND t.season = e.season "
-            + "    AND t.episode_number = e.number) "
-            + "WHERE u.id = ? "
-            + "AND IFNULL(t.status, 'none') = 'queued'";
+             + "FROM subscribed s "
+             + "LEFT JOIN status t "
+             + "ON (s.user_id = t.user_id "
+             + "   AND s.program_id = t.program_id) " 
+             + "WHERE s.user_id = ? "
+             + "AND t.status  = 'queued' ";
             
         
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -433,19 +407,17 @@ public class Persistor {
         String sql = "SELECT p.*, e.*, "
             + "IFNULL(t.status, 'none') AS status, "
             + "MATCH(e.title) AGAINST(?" + type + ") AS score "
-            + "FROM user u "
-            + "LEFT JOIN subscribed s "
-            + "ON u.id = s.user_id "
+            + "FROM subscribed s "
             + "LEFT JOIN program p "
             + "ON s.program_id = p.id "
             + "LEFT JOIN episode e "
             + "ON s.program_id = e.program_id "
             + "LEFT JOIN status t "
-            + "ON (u.id = t.user_id "
+            + "ON (s.user_id = t.user_id "
             + "    AND t.program_id = e.program_id "
             + "    AND t.season = e.season "
             + "    AND t.episode_number = e.number) "
-            + "WHERE u.id = ? "
+            + "WHERE s.user_id = ? "
             + "AND MATCH(e.title) AGAINST(?" + type + ") "
             + "ORDER BY score DESC ";
         
@@ -624,8 +596,7 @@ public class Persistor {
             + "FROM subscribed s "
             + "LEFT JOIN program p "
             + "ON s.program_id = p.id "
-            + "WHERE user_id = ? "
-            + "ORDER BY p.name";
+            + "WHERE user_id = ? ";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
