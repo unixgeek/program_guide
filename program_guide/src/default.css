@@ -41,7 +41,6 @@ a.menuitem {
     background-color: #1A597C;
     color: #4CB2EA;
     font-family: georgia, serif;
-    /*text-transform: uppercase;*/
     font-weight: bold;
     text-align: left;
     text-decoration: none;
@@ -138,8 +137,12 @@ a.generic {
     color: #000000;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h2 {
     font-family: georgia, serif;
+}
+
+h3 {
+	font-family: monospace;
 }
 
 #footerlist {
@@ -248,4 +251,12 @@ a.calendarentry {
 
 .status {
     font-family: georgia, serif;
+}
+
+.pagedLink {
+    color: #000000;
+    text-decoration: underline;
+}
+
+.currentPage {
 }
