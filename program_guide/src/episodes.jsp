@@ -23,12 +23,10 @@
   <c:forEach var="season" items="${seasons}">
     <c:choose>
       <c:when test='${season != currentSeason}'>
-        <a href="GetUserEpisodes.do?program_id=${program.id}&season=${season}">
-          ${season}
-        </a>
+        <a class="pagedLink" href="GetUserEpisodes.do?program_id=${program.id}&season=${season}">${season}</a>
       </c:when>
       <c:otherwise>
-        ${season}
+        <span class="currentPage">${season}</span>
       </c:otherwise>
     </c:choose>
   </c:forEach>
