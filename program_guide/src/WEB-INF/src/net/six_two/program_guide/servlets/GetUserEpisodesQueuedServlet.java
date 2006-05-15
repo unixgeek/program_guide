@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserEpisodesQueuedServlet.java,v 1.2 2006-05-13 20:03:44 gunter Exp $
+ * $Id: GetUserEpisodesQueuedServlet.java,v 1.3 2006-05-15 04:09:37 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -60,17 +60,20 @@ public class GetUserEpisodesQueuedServlet extends GenericServlet {
             if ((currentPage == 0) && (pageTitles.length > 0))
                 currentPage = Integer.parseInt(pageTitles[0]);
             
-            UserEpisode[] queuedEpisodes = 
-                Persistor.selectAllQueuedEpisodesForUser(connection, user, 
-                        (currentPage - 1) * 10, 10); 
+            UserEpisode[] queuedEpisodes = null;
+            if (currentPage != 0)
+                queuedEpisodes = Persistor.selectAllQueuedEpisodesForUser(
+                        connection, user, (currentPage - 1) * 10, 10); 
             
             connection.close();
 
             timer.stop();
             
-            for (int i = 0; i != queuedEpisodes.length; i++)
-                queuedEpisodes[i].getEpisode().setTitle(
-                    filterContent(queuedEpisodes[i].getEpisode().getTitle()));
+            if (queuedEpisodes != null)
+                for (int i = 0; i != queuedEpisodes.length; i++)
+                    queuedEpisodes[i].getEpisode().setTitle(
+                            filterContent(
+                                    queuedEpisodes[i].getEpisode().getTitle()));
 
             request.setAttribute("elapsedTime", timer.getElapsedTime());
             request.setAttribute("queuedEpisodesList", queuedEpisodes);

@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserEpisodesServlet.java,v 1.2 2006-05-13 20:03:44 gunter Exp $
+ * $Id: GetUserEpisodesServlet.java,v 1.3 2006-05-15 04:09:37 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -49,19 +49,24 @@ public class GetUserEpisodesServlet extends GenericServlet {
             Program program = Persistor.selectProgram(connection, program_id);
             String[] seasons = 
                 Persistor.selectSeasonsForProgram(connection, program);
-            if ((season == null) || (season.trim().length() < 1))
-                season = seasons[0];
-            UserEpisode[] userEpisodes = Persistor.
-                selectEpisodesBySeasonForUser(connection, user, program, season);
             
+            UserEpisode[] userEpisodes = null;
+            if (seasons.length > 0) {
+                if ((season == null) || (season.trim().length() < 1))
+                    season = seasons[0];
+                    userEpisodes = Persistor.selectEpisodesBySeasonForUser(
+                        connection, user, program, season);
+            }
+        
             TorrentSite site = Persistor.selectTorrentSite(connection);
             
             connection.close();
             
             timer.stop();
             
-            for (int i = 0; i != userEpisodes.length; i++)
-                userEpisodes[i].getEpisode().setTitle(
+            if (userEpisodes != null)
+                for (int i = 0; i != userEpisodes.length; i++)
+                    userEpisodes[i].getEpisode().setTitle(
                         filterContent(
                                 userEpisodes[i].getEpisode().getTitle()));
 
