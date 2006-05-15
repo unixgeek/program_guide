@@ -65,7 +65,7 @@
      </tr>
      <c:forEach var="userEpisode" items="${day.element.userEpisodes}">
      <tr><td class="calendarepisode">
-      <a class="calendarentry" title="${userEpisode.episode.title}" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}&season=${userEpisode.episode.season}#id${userEpisode.episode.serialNumber}">${userEpisode.program.name}</a>
+      <a class="calendarentry" title="${userEpisode.episode.title}" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}&amp;season=${userEpisode.episode.season}#id${userEpisode.episode.serialNumber}">${userEpisode.program.name}</a>
      </td></tr>
      </c:forEach>
     </table>

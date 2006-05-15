@@ -40,7 +40,7 @@
   <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
-  <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}&season=${userEpisode.episode.season}#id${userEpisode.episode.serialNumber}">${userEpisode.episode.title}</a></td>
+  <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}&amp;season=${userEpisode.episode.season}#id${userEpisode.episode.serialNumber}">${userEpisode.episode.title}</a></td>
   <td class="rowdata">
    <c:choose>
     <c:when test='${not empty userEpisode.episode.summaryUrl}'>
