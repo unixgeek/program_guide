@@ -15,16 +15,14 @@
 <%@ include file="menu.jsp" %>
 <div class="content">
 <h2>Queue</h2>
-<h3> 
+<h3>Page 
   <c:forEach var="page" items="${pageTitles}">
     <c:choose>
       <c:when test='${page != currentPage}'>
-        <a href="GetUserEpisodesQueued.do?page=${page}">
-          ${page}
-        </a>
+        <a class="pagedLink" href="GetUserEpisodesQueued.do?page=${page}">${page}</a>
       </c:when>
       <c:otherwise>
-        ${page}
+        <span class="currentPage">${page}</span>
       </c:otherwise>
     </c:choose>
   </c:forEach>
@@ -52,7 +50,7 @@
     </dt:format>
    </c:if>
   </td>
-  <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}#id${userEpisode.episode.serialNumber}">${userEpisode.episode.title}</a></td>
+  <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}&season=${userEpisode.episode.season}#id${userEpisode.episode.serialNumber}">${userEpisode.episode.title}</a></td>
   <td class="rowdata">
    <c:choose>
     <c:when test='${not empty userEpisode.episode.summaryUrl}'>
