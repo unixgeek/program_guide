@@ -71,7 +71,7 @@ a.menuitem:hover {
     font-size: 12px;
     padding: 3px;
     vertical-align: middle;
-    whitespace: nowrap;
+    white-space: nowrap;
 }
 
 .rowdata {
@@ -82,7 +82,7 @@ a.menuitem:hover {
     font-size: 11px;
     padding: 3px;
     vertical-align: middle;
-    whitespace: nowrap;
+    white-space: nowrap;
 }
 
 .rowdatacenter {
@@ -94,7 +94,7 @@ a.menuitem:hover {
     padding: 3px;
     text-align: center;
     vertical-align: middle;
-    whitespace: nowrap;
+    white-space: nowrap;
  }
 
 a.rowdatacenter, a.rowdata {
@@ -110,7 +110,7 @@ a.rowdatacenter, a.rowdata {
     font-size: 11px;
     padding: 3px;
     vertical-align: middle;
-    whitespace: nowrap;
+    white-space: nowrap;
 }
 
 /* Used with centertable for craptastic IE. */
@@ -179,7 +179,7 @@ h3 {
     font-size: 10px;
     padding: 3px;
     vertical-align: top;
-    whitespace: nowrap;
+    white-space: nowrap;
     width: 80px;
     height: 80px;
 }
@@ -192,7 +192,7 @@ h3 {
     font-size: 10px;
     padding: 3px;
     vertical-align: top;
-    whitespace: nowrap;
+    white-space: nowrap;
     width: 85px;
     height: 85px;
 }
@@ -205,9 +205,17 @@ h3 {
     font-size: 10px;
     padding: 0;
     vertical-align: top;
-    whitespace: nowrap;
+    white-space: nowrap;
     width: 85px;
     height: 85px;
+}
+
+.calendarentrylink {
+    background: transparent;
+    color: #000000;
+    font-family: georgia, serif;
+    font-size: 10px;
+    white-space: nowrap;
 }
 
 .calendardate {
@@ -233,7 +241,7 @@ a.calendarentry {
     font-size: 10px;
     padding: 0;
     vertical-align: middle;
-    whitespace: nowrap;
+    white-space: nowrap;
     text-align: left;
 }
 
@@ -245,7 +253,7 @@ a.calendarentry {
     font-size: 10px;
     padding: 0;
     vertical-align: middle;
-    whitespace: nowrap;
+    white-space: nowrap;
     text-align: right;
 }
 
