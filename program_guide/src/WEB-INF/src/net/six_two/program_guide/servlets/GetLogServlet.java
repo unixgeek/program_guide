@@ -1,5 +1,5 @@
 /*
- * $Id: GetLogServlet.java,v 1.1 2006-05-05 22:38:23 gunter Exp $
+ * $Id: GetLogServlet.java,v 1.2 2006-05-28 20:45:19 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -46,15 +46,42 @@ public class GetLogServlet extends GenericServlet {
             return;
         }
         
+        int currentPage;
         try {
-            Log[] logEntries = Persistor.selectAllLogEntries(connection); 
+            currentPage =
+                Integer.parseInt(request.getParameter("page"));
+        } catch (NumberFormatException e2) {
+            currentPage = 0;
+        }
+        
+        try {
+            int count = Persistor.getLogCount(connection);
+            int pages = count / 10;
+            if ((count % 10) > 0)
+                pages++;
+            
+            String[] pageTitles = new String[pages];
+            for (int i = 0; i != pages; i++) {
+                pageTitles[i] = Integer.toString(i + 1);
+            }
+            
+            if ((currentPage == 0) && (pageTitles.length > 0))
+                currentPage = Integer.parseInt(pageTitles[0]);
+            
+            Log[] logEntries = null;
+            if (currentPage != 0)
+                logEntries = Persistor.getLogEntries(connection, 
+                        (currentPage - 1) * 10, 10); 
             
             connection.close();
 
             timer.stop();
             
+            request.setAttribute("pages", new Integer(pages));
             request.setAttribute("elapsedTime", timer.getElapsedTime());
             request.setAttribute("logEntries", logEntries);
+            request.setAttribute("pageTitles", pageTitles);
+            request.setAttribute("currentPage", new Integer(currentPage));
         } catch (SQLException e) {
             try {
                 connection.close();
