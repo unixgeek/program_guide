@@ -5,6 +5,6 @@
   <li>${elapsedTime}s</li>
   </c:if>
   <li><a href="http://validator.w3.org/check?uri=referer">valid xhtml</a></li>
-  <li>${packageName}-${packageVersion}</li>
+  <li>${packageVersion}</li>
  </ul>
 </div> 
