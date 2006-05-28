@@ -53,10 +53,10 @@
    </c:if>
   </td>
   <td class="rowdata">${userEpisode.episode.title}</td>
-  <td class="rowdata">
+  <td class="rowdatacenter">
    <c:choose>
     <c:when test='${not empty userEpisode.episode.summaryUrl}'>
-   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">Summary</a>
+   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">summary</a>
     </c:when>
     <c:otherwise>
     &nbsp;

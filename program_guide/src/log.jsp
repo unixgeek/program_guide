@@ -16,6 +16,20 @@
 <div class="content">
 <form action="DeleteLog.do" method="post">
 <h2 class="title">Log&nbsp;<input type="submit" value="Clear Log" /></h2>
+<c:if test="${pages > 1}">
+<h3>Page 
+  <c:forEach var="page" items="${pageTitles}">
+    <c:choose>
+      <c:when test='${page != currentPage}'>
+        <a class="pagedLink" href="GetLog.do?page=${page}">${page}</a>
+      </c:when>
+      <c:otherwise>
+        <span class="currentPage">${page}</span>
+      </c:otherwise>
+    </c:choose>
+  </c:forEach>
+</h3>
+</c:if>
 <table class="data">
  <tr>
   <th class="rowheader">Source</th>

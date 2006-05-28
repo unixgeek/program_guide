@@ -1,5 +1,5 @@
 /*
- * $Id: GetUserEpisodesQueuedServlet.java,v 1.3 2006-05-15 04:09:37 gunter Exp $
+ * $Id: GetUserEpisodesQueuedServlet.java,v 1.3.2.1 2006-05-28 20:59:23 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -75,6 +75,7 @@ public class GetUserEpisodesQueuedServlet extends GenericServlet {
                             filterContent(
                                     queuedEpisodes[i].getEpisode().getTitle()));
 
+            request.setAttribute("pages", new Integer(pages));
             request.setAttribute("elapsedTime", timer.getElapsedTime());
             request.setAttribute("queuedEpisodesList", queuedEpisodes);
             request.setAttribute("pageTitles", pageTitles);

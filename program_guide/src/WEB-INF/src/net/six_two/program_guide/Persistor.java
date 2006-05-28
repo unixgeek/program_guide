@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.4 2006-05-15 04:07:52 gunter Exp $
+ * $Id: Persistor.java,v 1.4.2.1 2006-05-28 20:59:23 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -1175,13 +1175,15 @@ public class Persistor {
     /* user table ************************************************************/
     
     /* log table *************************************************************/
-    public static Log[] selectAllLogEntries(Connection connection)
-            throws SQLException {
-        String sql = "SELECT id, source, create_date FROM log";
+    public static Log[] getLogEntries(Connection connection, int startIndex,
+            int length) throws SQLException {
+        String sql = "SELECT id, source, create_date FROM log LIMIT ?,?";
         
-        Statement statement = connection.createStatement();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, startIndex);
+        statement.setInt(2, length);
         
-        statement.execute(sql);
+        statement.execute();
         ResultSet result = statement.getResultSet();
         
         ArrayList logEntries = new ArrayList();
@@ -1202,6 +1204,25 @@ public class Persistor {
         }
         
         return logEntriesArray;
+    }
+    
+    public static int getLogCount(Connection connection) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM log";
+        
+        Statement statement = connection.createStatement();
+        
+        statement.execute(sql);
+        ResultSet result = statement.getResultSet();
+        
+        int count = 0;
+        if (result.next()) {
+            count = result.getInt(1);
+        }
+        
+        result.close();
+        statement.close();
+        
+        return count;
     }
     
     public static Log selectLogEntry(Connection connection, int id)
