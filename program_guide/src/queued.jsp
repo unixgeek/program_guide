@@ -15,6 +15,7 @@
 <%@ include file="menu.jsp" %>
 <div class="content">
 <h2>Queue</h2>
+<c:if test="${pages > 1}">
 <h3>Page 
   <c:forEach var="page" items="${pageTitles}">
     <c:choose>
@@ -27,6 +28,7 @@
     </c:choose>
   </c:forEach>
 </h3>
+</c:if>
 <table class="data">
  <tr>
   <th class="rowheader">Program</th>
