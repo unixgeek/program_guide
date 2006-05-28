@@ -51,10 +51,10 @@
    </c:if>
   </td>
   <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}&amp;season=${userEpisode.episode.season}#id${userEpisode.episode.serialNumber}">${userEpisode.episode.title}</a></td>
-  <td class="rowdata">
+  <td class="rowdatacenter">
    <c:choose>
     <c:when test='${not empty userEpisode.episode.summaryUrl}'>
-   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">Summary</a>
+   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">summary</a>
     </c:when>
     <c:otherwise>
     &nbsp;
