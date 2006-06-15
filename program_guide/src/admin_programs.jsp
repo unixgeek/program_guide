@@ -15,6 +15,18 @@
 <%@ include file="menu.jsp" %>
 <div class="content">
 <h2 class="title">Admin Programs</h2>
+<h3> 
+  <c:forEach var="prefix" items="${prefixes}">
+    <c:choose>
+      <c:when test='${prefix != currentPrefix}'>
+        <a class="pagedLink" href="AdminPrograms.do?prefix=${prefix}">${prefix}</a>
+      </c:when>
+      <c:otherwise>
+        <span class="currentPage">${prefix}</span>
+      </c:otherwise>
+    </c:choose>
+  </c:forEach>
+</h3>
 <table class="data">
  <tr>
   <th class="rowheader">Name</th>

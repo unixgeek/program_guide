@@ -1,5 +1,5 @@
 /*
- * $Id: AdminProgramsServlet.java,v 1.1 2006-05-05 22:38:23 gunter Exp $
+ * $Id: AdminProgramsServlet.java,v 1.2 2006-06-15 00:48:42 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -29,6 +29,8 @@ public class AdminProgramsServlet extends GenericServlet {
             return;
         }
         
+        String prefix = request.getParameter("prefix");
+        
         Connection connection = getConnection();
         if (connection == null) {
             redirectError(request, response, 
@@ -55,10 +57,20 @@ public class AdminProgramsServlet extends GenericServlet {
         }
         
         try {
-            Program[] programs = Persistor.selectAllPrograms(connection);
+            String[] prefixes = 
+                Persistor.selectProgramPrefixes(connection);
+            
+            Program[] programs = null;
+            if (prefixes.length > 0) {
+                if ((prefix == null) || (prefix.trim().length() < 1))
+                    prefix = prefixes[0];
+                programs = Persistor.selectAllPrograms(connection, prefix);
+            }
             
             connection.close();
             
+            request.setAttribute("prefixes", prefixes);
+            request.setAttribute("currentPrefix", prefix);
             request.setAttribute("programsList", programs);
         } catch (SQLException e) {
             try {
