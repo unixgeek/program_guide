@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.4.2.1 2006-05-28 20:59:23 gunter Exp $
+ * $Id: Persistor.java,v 1.4.2.2 2006-06-15 01:15:11 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -517,6 +517,32 @@ public class Persistor {
         return program;
     }
     
+    public static String[] selectProgramPrefixes(Connection connection) 
+            throws SQLException {
+        
+        String sql = "SELECT DISTINCT SUBSTRING(name, 1, 1) AS prefix "
+            + "FROM program "
+            + "ORDER BY prefix ";
+        
+        Statement statement = connection.createStatement();
+        statement.execute(sql);
+        ResultSet result = statement.getResultSet();
+        
+        ArrayList prefixes = new ArrayList();
+        while (result.next()) {
+            prefixes.add(result.getString("prefix"));
+        }
+        result.close();
+        statement.close();
+        
+        String[] prefixesArray = new String[prefixes.size()];
+        for (int i = 0; i != prefixes.size(); i++) {
+            prefixesArray[i] = (String) prefixes.get(i);
+        }
+        
+        return prefixesArray;
+    }
+    
     public static Program[] selectAllPrograms(Connection connection) 
             throws SQLException {
         ArrayList programs = new ArrayList();
@@ -529,6 +555,40 @@ public class Persistor {
         statement.execute(sql);
         ResultSet result = statement.getResultSet();
         
+        while (result.next()) {
+            Program program = new Program();
+            program.setId(result.getInt("id"));
+            program.setName(result.getString("name"));
+            program.setUrl(result.getString("url"));
+            program.setLastUpdate(result.getTimestamp("last_update"));
+            program.setDoUpdate(result.getShort("do_update"));
+            programs.add(program);
+        }
+        result.close();
+        statement.close();
+        
+        Program[] programsArray = new Program[programs.size()];
+        for (int i = 0; i != programs.size(); i++) {
+            programsArray[i] = (Program) programs.get(i);
+        }
+        
+        return programsArray;
+    }
+ 
+    public static Program[] selectAllPrograms(Connection connection,
+            String prefix) throws SQLException {
+        
+        String sql = "SELECT * "
+            + "FROM program p "
+            + "WHERE SUBSTRING(name, 1, 1) = ? "
+            + "ORDER BY name ";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, prefix);
+        statement.execute();
+        ResultSet result = statement.getResultSet();
+        
+        ArrayList programs = new ArrayList();
         while (result.next()) {
             Program program = new Program();
             program.setId(result.getInt("id"));
