@@ -1,5 +1,5 @@
 /*
- * $Id: InsertProgramServlet.java,v 1.1 2006-05-05 22:38:23 gunter Exp $
+ * $Id: InsertProgramServlet.java,v 1.2 2006-06-15 00:58:04 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -90,7 +90,9 @@ public class InsertProgramServlet extends GenericServlet {
             redirectError(request, response, e.getMessage());
         }
         
-        RequestDispatcher dispatcher = request.getRequestDispatcher("AdminPrograms.do");
+        String prefix = program.getName().substring(0, 1);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(
+                "AdminPrograms.do?prefix=" + prefix);
         dispatcher.forward(request, response);
     }
 }
