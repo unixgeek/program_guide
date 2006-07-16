@@ -1,5 +1,5 @@
 /*
- * $Id: GetScheduleByMonthServlet.java,v 1.1 2006-05-05 22:38:22 gunter Exp $
+ * $Id: GetScheduleByMonthServlet.java,v 1.2 2006-07-16 18:07:29 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -15,9 +15,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.six_two.commons.misc.CalendarDay;
-import net.six_two.commons.misc.MonthlyCalendar;
-import net.six_two.commons.misc.Time;
+import net.six_two.commons.calendar.CalendarDay;
+import net.six_two.commons.calendar.MonthlyCalendar;
+import net.six_two.commons.datetime.DateTimeUtilities;
 import net.six_two.program_guide.CalendarEntry;
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.Timer;
@@ -87,7 +87,8 @@ public class GetScheduleByMonthServlet extends GenericServlet {
             return;
         }
         
-        Date todaysDate = Time.datePart(new Date(System.currentTimeMillis()));
+        Date todaysDate = DateTimeUtilities.datePart(
+                new Date(System.currentTimeMillis()));
         
         CalendarDay[][] schedule = calendar.getCalendarDays();
         
@@ -96,19 +97,21 @@ public class GetScheduleByMonthServlet extends GenericServlet {
             for (int day = 0; day != 7; day++) {
                 if (schedule[week][day] != null) {
                     boolean today = 
-                        Time.isEqual(todaysDate, schedule[week][day].getDate());
+                        DateTimeUtilities.isEqual(todaysDate, 
+                                schedule[week][day].getDate());
                     
                     CalendarEntry calendarDate = new CalendarEntry(today);
                     
                     // Add any episodes for this date.
                     for (int i = 0; i != episodes.length; i++) {
-                        if (Time.isEqual(schedule[week][day].getDate(), 
+                        if (DateTimeUtilities.isEqual(
+                                schedule[week][day].getDate(), 
                                 episodes[i].getEpisode().getOriginalAirDate())) {
                             calendarDate.addUserEpisode(episodes[i]);
                         }
                         
                     }
-                    schedule[week][day].add(calendarDate);
+                    schedule[week][day].setUserObject(calendarDate);
                 }
             }
         }

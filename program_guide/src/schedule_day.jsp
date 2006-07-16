@@ -35,7 +35,7 @@
   <th class="rowheader">Status</th>
   <th class="rowheader">Torrent</th>
  </tr>
- <c:forEach var="userEpisode" items="${schedule.element.userEpisodes}">
+ <c:forEach var="userEpisode" items="${schedule.userObject.userEpisodes}">
  <tr>
   <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>

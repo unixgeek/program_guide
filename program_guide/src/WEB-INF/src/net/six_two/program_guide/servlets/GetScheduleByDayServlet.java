@@ -1,5 +1,5 @@
 /*
- * $Id: GetScheduleByDayServlet.java,v 1.1 2006-05-05 22:38:23 gunter Exp $
+ * $Id: GetScheduleByDayServlet.java,v 1.2 2006-07-16 18:07:29 gunter Exp $
  */
 package net.six_two.program_guide.servlets;
 
@@ -15,7 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.six_two.commons.misc.CalendarDay;
+import net.six_two.commons.calendar.CalendarDay;
 import net.six_two.program_guide.CalendarEntry;
 import net.six_two.program_guide.Persistor;
 import net.six_two.program_guide.Timer;
@@ -92,7 +92,7 @@ public class GetScheduleByDayServlet extends GenericServlet {
             calendarEntry.addUserEpisode(episodes[i]);
         }
         
-        calendarDay.add(calendarEntry);
+        calendarDay.setUserObject(calendarEntry);
         
         // Calculate next date and previous date string.
         String nextDateString = dateFormat.format(calendarDay.getNextDay());
