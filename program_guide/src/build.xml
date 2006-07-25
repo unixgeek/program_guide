@@ -43,6 +43,9 @@ ant truncatedb  truncate all tables in the database</echo>
         <copy todir="${basedir}/scripts">
             <fileset dir="../scripts" />
         </copy>
+        <copy todir="${basedir}/database">
+            <fileset dir="../database" />
+        </copy>
         <chmod perm="0755">
             <fileset dir="${basedir}/scripts" />
         </chmod>   
@@ -87,6 +90,7 @@ ant truncatedb  truncate all tables in the database</echo>
                 <include name="*.css" />
             	   <include name="program_guide.png" />
             	   <include name="scripts/*" />
+                <include name="database/*" />
             </fileset>
         </war>
     </target>
