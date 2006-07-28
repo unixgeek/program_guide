@@ -1,5 +1,5 @@
 /*
- * $Id: ScrapeRunnable.java,v 1.1 2006-05-05 22:38:22 gunter Exp $
+ * $Id: ScrapeRunnable.java,v 1.1.4.1 2006-07-28 00:57:56 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import net.six_two.commons.misc.ExternalProcess;
+import net.six_two.commons.proc.ExternalProcess;
 import net.six_two.program_guide.tables.Log;
 
 public class ScrapeRunnable implements Runnable {

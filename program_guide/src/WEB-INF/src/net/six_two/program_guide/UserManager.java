@@ -1,11 +1,11 @@
 /*
- * $Id: UserManager.java,v 1.1 2006-05-05 22:38:22 gunter Exp $
+ * $Id: UserManager.java,v 1.1.4.1 2006-07-28 00:57:56 gunter Exp $
  */
 package net.six_two.program_guide;
 
 import java.sql.Timestamp;
 
-import net.six_two.commons.misc.MD5MessageDigest;
+import net.six_two.commons.crypt.MD5MessageDigest;
 import net.six_two.program_guide.tables.User;
 
 public class UserManager {

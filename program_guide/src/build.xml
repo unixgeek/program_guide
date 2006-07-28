@@ -43,28 +43,19 @@ ant truncatedb  truncate all tables in the database</echo>
         <copy todir="${basedir}/scripts">
             <fileset dir="../scripts" />
         </copy>
+        <copy todir="${basedir}/database">
+            <fileset dir="../database" />
+        </copy>
         <chmod perm="0755">
             <fileset dir="${basedir}/scripts" />
         </chmod>   
     </target>
  
-    <target name="tomcat">
-        <get verbose="${verbose}" usetimestamp="true"
-             src="${tomcat.url}/${tomcat.name}-${tomcat.version}.tar.gz"
-             dest="${basedir}/${tomcat.name}-${tomcat.version}.tar.gz" />
-        <untar src="${basedir}/${tomcat.name}-${tomcat.version}.tar.gz"
-               compression="gzip" overwrite="yes"
-               dest="${basedir}" />
-        <copy file="${basedir}/${tomcat.name}-${tomcat.version}/common/lib/servlet-api.jar"
-              todir="${basedir}" />
-        <delete file="${basedir}/${tomcat.name}-${tomcat.version}.tar.gz" verbose="${verbose}" />
-    </target>
-
-    <target name="build" depends="tomcat,scripts">
+    <target name="build" depends="scripts">
         <mkdir dir="${builddir}" />
         <javac srcdir="${basedir}/WEB-INF/src"
                destdir="${builddir}"
-               classpath="${package.buildClasspath}:${tomcat.name}-${tomcat.version}/common/lib/servlet-api.jar"
+               classpath="${package.buildClasspath}"
                listfiles="${verbose}"
                optimize="true" />
         <copy file="${propertyfile}" todir="${builddir}/net/six_two/program_guide" />
@@ -87,6 +78,7 @@ ant truncatedb  truncate all tables in the database</echo>
                 <include name="*.css" />
             	   <include name="program_guide.png" />
             	   <include name="scripts/*" />
+                <include name="database/*" />
             </fileset>
         </war>
     </target>

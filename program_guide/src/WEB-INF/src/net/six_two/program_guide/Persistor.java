@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.4.2.2 2006-06-15 01:15:11 gunter Exp $
+ * $Id: Persistor.java,v 1.4.2.3 2006-07-28 00:57:57 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -354,12 +354,16 @@ public class Persistor {
             throw new SQLException("Attempted operation with a null user.");
         
         String sql = "SELECT COUNT(*) "
-             + "FROM subscribed s "
-             + "LEFT JOIN status t "
-             + "ON (s.user_id = t.user_id "
-             + "   AND s.program_id = t.program_id) " 
-             + "WHERE s.user_id = ? "
-             + "AND t.status  = 'queued' ";
+            + "FROM subscribed s "
+            + "LEFT JOIN episode e " 
+            + "ON s.program_id = e.program_id " 
+            + "LEFT JOIN status t "
+            + "ON (s.user_id = t.user_id " 
+            + "    AND t.program_id = e.program_id " 
+            + "    AND t.season = e.season "
+            + "    AND t.episode_number = e.number) " 
+            + "WHERE s.user_id = ? "
+            + "AND t.status  = 'queued' ";
             
         
         PreparedStatement statement = connection.prepareStatement(sql);

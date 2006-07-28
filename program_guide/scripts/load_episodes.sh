@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: load_episodes.sh,v 1.1 2006-07-16 18:07:52 gunter Exp $
+# $Id: load_episodes.sh,v 1.1.2.1 2006-07-28 00:57:56 gunter Exp $
 #
 #
 . program_guide.conf
