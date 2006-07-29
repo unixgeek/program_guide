@@ -20,41 +20,30 @@ body {
 }
 
 #menu {
-    background-color: #1A597C;
-    float: left;
-    position: relative; 
-    text-align: center;
-    width: 125px; 
-}
-
-.menuitem {
-    width: auto;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    display: block;
-}
-
-a.menuitem {
-    font-size: 12px;
-    background-color: #1A597C;
-    color: #4CB2EA;
-    font-family: georgia, serif;
-    font-weight: bold;
+    font-size: 11px;
+    background-color: #2E383E;
+    list-style: none;
+    padding: 4px;
+    margin: 0;
     text-align: left;
+}
+
+#menu li {
+    color: #4CB2EA;
+    padding: 0 1em 0 1em;
+    display: inline;
+    border-right: 1px solid #4CB2EA;
+}
+
+#menu li a {
+    color: #4CB2EA;
     text-decoration: none;
 }
 
-a.menuitem:hover {
-    background-color: #4CB2EA;
-    color: #1A597C;
-}
-
 .content {
-    margin-left: 130px;
     width: auto;
-    min-height: 140px;
+    align: center;
+    margin: 10px 0 10px 10px;
 }
 
 .data {
