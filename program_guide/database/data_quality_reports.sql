@@ -26,3 +26,17 @@ or url = "";
 select name as no_update
 from program
 where last_update is null;
+
+-- Episodes without programs.
+select distinct e.program_id as orphaned_episodes
+from episode e
+left join program p 
+on e.program_id = p.id 
+where p.id is null;
+
+-- Programs without episodes.
+select p.id as no_episodes
+from program p
+left join episode e
+on p.id = e.program_id 
+where e.program_id is null;
