@@ -71,6 +71,7 @@ ant truncatedb  truncate all tables in the database</echo>
             <webinf dir="${basedir}/WEB-INF">
                 <exclude name="web.xml" />
                 <exclude name="src/" />
+                <exclude name="lib/servlet-api.jar"/>
             </webinf>
             <metainf dir="${basedir}/META-INF" />
             <fileset dir="${basedir}">
