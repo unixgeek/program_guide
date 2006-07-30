@@ -1,5 +1,5 @@
 /*
- * $Id: Persistor.java,v 1.7 2006-07-24 04:38:33 gunter Exp $
+ * $Id: Persistor.java,v 1.8 2006-07-30 04:22:38 gunter Exp $
  */
 package net.six_two.program_guide;
 
@@ -496,6 +496,21 @@ public class Persistor {
         
         return seasonsArray;
     }
+    
+    public static int deleteEpisodesForProgram(Connection connection, 
+            Program program) throws SQLException {
+        String sql = "DELETE FROM episode where program_id = ?";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, program.getId());
+        
+        statement.executeUpdate();
+        int count = statement.getUpdateCount();
+        
+        statement.close();
+        
+        return count;
+    }
     /* episode table *********************************************************/
     
     /* program table *********************************************************/
@@ -789,6 +804,7 @@ public class Persistor {
         
         count += deleteStatusForProgram(connection, program);
         count += deleteSubscribedForProgram(connection, program);
+        count += deleteEpisodesForProgram(connection, program);
         
         return count;
     }
