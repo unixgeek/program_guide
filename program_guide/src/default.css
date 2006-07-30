@@ -21,18 +21,20 @@ body {
 
 #menu {
     font-size: 11px;
-    background-color: #2E383E;
+    background-color: #FFFFFF;
     list-style: none;
-    padding: 4px;
+    padding-left: 13px;
     margin: 0;
     text-align: left;
 }
 
 #menu li {
+	background-color: #2E383E;
     color: #4CB2EA;
-    padding: 0 1em 0 1em;
+    padding: 0px;
+    margin: 0;
     display: inline;
-    border-right: 1px solid #4CB2EA;
+    border: 3px solid #000000;
 }
 
 #menu li a {
