@@ -1,8 +1,8 @@
 #menu {
-	border-bottom : 1px solid #ccc;
-	margin : 0;
-	padding-bottom : 19px;
-	padding-left : 10px;
+    border-bottom: 1px solid #000000;
+    margin: 10px 0 0 0;
+    padding-bottom: 19px;
+    padding-left: 13px;
 }
 
 #menu ul, #menu li	{
@@ -109,18 +109,10 @@ body {
     text-align: left;
 }
 
-#subheader {
-    font-size: 90%;
-    background-color: #2E383E;
-    color: #4CB2EA;
-    font-style: italic;
-    padding: 5px;
-}
-
 .content {
     width: auto;
     align: center;
-    margin: 10px 0 10px 10px;
+    margin: 10px 0 10px 13px;
 }
 
 .data {
