@@ -10,7 +10,7 @@
 <link rel="icon" type="image/png" href="program_guide.png" /> 
 <title>Program Guide</title>
 </head>
-<body>
+<body class="section-6">
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <div class="content">

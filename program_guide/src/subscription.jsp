@@ -18,7 +18,7 @@
 </script>
 <title>Program Guide</title>
 </head>
-<body>
+<body class="section-1">
 <%@ include file="header.jsp" %>
 <%@ include file="menu.jsp" %>
 <div class="content">
