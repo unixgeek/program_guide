@@ -171,6 +171,14 @@
       <url-pattern>/SetUserSettings.do</url-pattern>
   </servlet-mapping>
   <servlet>
+      <servlet-name>ShowAdmin</servlet-name>
+      <servlet-class>net.six_two.program_guide.servlets.ShowAdminServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>ShowAdmin</servlet-name>
+      <url-pattern>/ShowAdmin.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
       <servlet-name>Login</servlet-name>
       <servlet-class>net.six_two.program_guide.servlets.LoginServlet</servlet-class>
   </servlet>
