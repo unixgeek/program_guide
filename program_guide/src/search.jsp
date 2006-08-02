@@ -35,15 +35,15 @@
 <h3>${count} Result(s) (${elapsedTime} seconds)</h3>
 <table class="data">
  <tr>
-  <th class="rowheader">Program</th>
-  <th class="rowheader">Season</th>
-  <th class="rowheader">Episode</th>
-  <th class="rowheader">Production Code</th>
-  <th class="rowheader">Original Air Date</th>
-  <th class="rowheader">Title</th>
-  <th class="rowheader">Summary</th>
-  <th class="rowheader">Torrent</th>
-  <th class="rowheader">Status</th>
+  <th class="rowheader" title="Program">Program</th>
+  <th class="rowheader" title="Season">S</th>
+  <th class="rowheader" title="Episode">E</th>
+  <th class="rowheader" title="Production Code">Code</th>
+  <th class="rowheader" title="Original Air Date">Air Date</th>
+  <th class="rowheader" title="Title">Title</th>
+  <th class="rowheader" title="Summary">Summary</th>
+  <th class="rowheader" title="Torrent">Torrent</th>
+  <th class="rowheader" title="Status">Status</th>
  </tr>
  <c:forEach var="userEpisode" items="${userEpisodesList}">
  <tr>
