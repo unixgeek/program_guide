@@ -33,8 +33,8 @@
 </h3>
 <table class="data">
  <tr>
-  <th class="rowheader" title="Season">S</th>
-  <th class="rowheader" title="Episode">E</th>
+  <th class="rowheader" title="Season">Season</th>
+  <th class="rowheader" title="Episode">Episode</th>
   <th class="rowheader" title="Production Code">Code</th>
   <th class="rowheader" title="Original Air Date">Air Date</th>
   <th class="rowheader" title="Title">Title</th>

@@ -28,8 +28,8 @@
  </tr>
  <tr>
   <th class="rowheader" title="Program">Program</th>
-  <th class="rowheader" title="Season">S</th>
-  <th class="rowheader" title="Episode">E</th>
+  <th class="rowheader" title="Season">Season</th>
+  <th class="rowheader" title="Episode">Episode</th>
   <th class="rowheader" title="Title">Title</th>
   <th class="rowheader" title="Summary">Summary</th>
   <th class="rowheader" title="Torrent">Torrent</th>
