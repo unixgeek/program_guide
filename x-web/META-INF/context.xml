@@ -1,7 +1,0 @@
-<Context>
-  <Resource name="jdbc/program_guide" auth="Container"
-            type="javax.sql.DataSource" username="pguser" password="pgus3r"
-            driverClassName="com.mysql.jdbc.Driver" 
-            url="jdbc:mysql://localhost:3306/program_guide?autoReconnect=true"
-            maxActive="20" maxIdle="10"/>
-</Context>
