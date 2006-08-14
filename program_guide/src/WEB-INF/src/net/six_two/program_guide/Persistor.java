@@ -1,8 +1,11 @@
 /*
- * $Id: Persistor.java,v 1.8 2006-07-30 04:22:38 gunter Exp $
+ * $Id: Persistor.java,v 1.9 2006-08-14 21:15:05 gunter Exp $
  */
 package net.six_two.program_guide;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 import java.sql.Date;
 
 import net.six_two.program_guide.tables.*;
@@ -1316,10 +1321,38 @@ public class Persistor {
         ResultSet result = statement.getResultSet();
         
         Log log = null;
+        byte[] buffer = new byte[1024];
         if (result.next()) {
+            // Decompress the log content.
+            String content = "";
+            InputStream inputStream = null;
+            GZIPInputStream gzipStream = null;
+            try {
+                inputStream = result.getBinaryStream("content");
+                gzipStream = new GZIPInputStream(inputStream);
+                int read = 0;
+                while ((read = gzipStream.read(buffer, 0, 1024)) != -1) {
+                    byte[] data = new byte[read];
+                    System.arraycopy(buffer, 0, data, 0, read);
+                    content += new String(data);
+                }
+                gzipStream.close();
+                inputStream.close();
+            } catch (IOException e) {
+                try {
+                    if (inputStream != null)
+                        inputStream.close();
+                    if (gzipStream != null)
+                        gzipStream.close();
+                } catch (IOException e1) {
+                }
+                result.close();
+                statement.close();
+                throw new SQLException(e.getMessage());
+            }
             log = new Log(result.getInt("id"), result.getString("source"), 
                     result.getTimestamp("create_date"), 
-                    result.getString("content"));
+                    content);
         }
         
         result.close();
@@ -1332,11 +1365,28 @@ public class Persistor {
             throws SQLException {
         String sql = "INSERT INTO log VALUES (null, ?, ?, ?)";
         
+        // Compress the log content.
+        ByteArrayOutputStream outputStream = null;
+        GZIPOutputStream gzipStream = null;
+        try {
+            outputStream = new ByteArrayOutputStream();
+            gzipStream = new GZIPOutputStream(outputStream);
+            gzipStream.write(entry.getContent().getBytes());
+            gzipStream.close();
+        } catch (IOException e) {
+            try {
+                if (gzipStream != null)
+                    gzipStream.close();
+            } catch (IOException e1) {
+            }
+            throw new SQLException(e.getMessage());
+        }
+            
         PreparedStatement statement = connection.prepareStatement(sql);
         
         statement.setString(1, entry.getSource());
         statement.setTimestamp(2, entry.getCreateDate());
-        statement.setString(3, entry.getContent());
+        statement.setBytes(3, outputStream.toByteArray());
         statement.execute();
         statement.close();
     }
