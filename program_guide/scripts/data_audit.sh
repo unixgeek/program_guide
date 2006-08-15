@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: data_audit.sh,v 1.1 2006-07-24 04:39:22 gunter Exp $
+# $Id: data_audit.sh,v 1.2 2006-08-15 18:14:34 gunter Exp $
 #
 . program_guide.conf
 
@@ -15,3 +15,5 @@ if [ "${COUNT}" -eq "0" ]; then
 fi
 
 cat ${OUTPUT}
+
+rm -f ${OUTPUT}
