@@ -1,28 +1,42 @@
 #!/bin/sh
 #
-# $Id: database_wrapper.sh,v 1.1 2006-05-05 22:38:23 gunter Exp $
+# $Id: database_wrapper.sh,v 1.1.6.1 2006-08-16 00:18:59 gunter Exp $
 #
+# Set max_allowed_packet to at least the size of the content
+# column.  The content column is a mediumblob so the size is
+# 16777215.
+# Requires FILE privilege.
 . program_guide.conf
 
-LOG=`mktemp /tmp/database_wrapper.log.XXXXXX`
-LOG_INSERT=`mktemp /tmp/database_wrapper.insert.XXXXXX` 
 if [ "$#" -lt "1" ]; then
     echo "`basename $0` SCRIPT [ARGS] [...]"
     exit 1
 fi
 
+LOG=`mktemp /tmp/database_wrapper.log.XXXXXX`
+# Set permission so the mysqld process can read it.
+chmod 655 ${LOG}
+
 SCRIPT=$1
 shift
-${SCRIPT} "$*" > ${LOG} 2>&1
+${SCRIPT} "$*" 2>&1 | gzip -c -9 > ${LOG}
 
 # Add log entry.
-echo -n "INSERT INTO log VALUES (null, '`basename ${SCRIPT}`', CURRENT_TIMESTAMP(), '" > ${LOG_INSERT}
-cat ${LOG} | sed "s/'/''/g" >> ${LOG_INSERT}
-echo "');" >> ${LOG_INSERT}
+SQL=\
+"INSERT INTO log VALUES (
+    null, 
+    '`basename ${SCRIPT}`',
+    CURRENT_TIMESTAMP(),
+    'PENDING UPDATE');
 
-mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} ${DATABASE} < ${LOG_INSERT}
+UPDATE log
+SET content = LOAD_FILE('${LOG}')
+WHERE id = LAST_INSERT_ID();"
 
-rm -f ${LOG} ${LOG_INSERT}
+mysql --max_allowed_packet=16777216 -u ${MYSQLUSER} -p${MYSQLPASSWORD} \
+    ${DATABASE} -e "${SQL}"
+
+rm -f ${LOG}
 
 exit 0
 

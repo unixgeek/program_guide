@@ -42,7 +42,7 @@ CREATE TABLE `log` (
   `id` int(11) NOT NULL auto_increment,
   `source` tinytext NOT NULL,
   `create_date` datetime NOT NULL default '0000-00-00 00:00:00',
-  `content` mediumtext NOT NULL,
+  `content` mediumblob NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
