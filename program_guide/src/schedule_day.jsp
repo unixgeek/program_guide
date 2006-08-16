@@ -51,8 +51,8 @@
     </c:otherwise>
    </c:choose>
   </td>
-  <td class="rowdatacenter">${userEpisode.status}</td>
   <td class="rowdatacenter"><a class="rowdatacenter" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
+  <td class="rowdatacenter">${userEpisode.status}</td>
  </tr>
  </c:forEach>
 </table>
