@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: database_wrapper.sh,v 1.2 2006-08-15 18:14:57 gunter Exp $
+# $Id: database_wrapper.sh,v 1.3 2006-08-17 20:55:11 gunter Exp $
 #
 # Set max_allowed_packet to at least the size of the content
 # column.  The content column is a mediumblob so the size is
@@ -20,6 +20,12 @@ chmod 655 ${LOG}
 SCRIPT=$1
 shift
 ${SCRIPT} "$*" 2>&1 | gzip -c -9 > ${LOG}
+
+COUNT=`gzcat ${LOG} | wc -c | tr -d ' '`
+if [ "${COUNT}" -eq "0" ]; then
+    rm -f ${LOG}
+    exit 0
+fi
 
 # Add log entry.
 SQL=\
