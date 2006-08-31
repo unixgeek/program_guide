@@ -59,9 +59,13 @@
         </td>
        </tr>
        <c:forEach var="userEpisode" items="${day.userObject.userEpisodes}">
+        <str:substring var="status" start="0" end="1">${userEpisode.status}</str:substring>
+        <str:upperCase var="status">${status}</str:upperCase>
         <tr><td class="calendarepisode">
          <a class="calendarentrylink" title="${userEpisode.program.name}: ${userEpisode.episode.title}" 
-          href="GetUserEpisodes.do?program_id=${userEpisode.program.id}&amp;season=${userEpisode.episode.season}#id${userEpisode.episode.serialNumber}"><str:truncateNicely upper="12">${userEpisode.program.name}</str:truncateNicely></a>
+          href="GetUserEpisodes.do?program_id=${userEpisode.program.id}&amp;season=${userEpisode.episode.season}#id${userEpisode.episode.serialNumber}">
+          <str:truncateNicely upper="12">${status}|${userEpisode.program.name}</str:truncateNicely>
+         </a>
         </td></tr>
        </c:forEach>
       </table>
