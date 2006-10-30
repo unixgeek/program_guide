@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.1 2006-05-05 22:38:23 gunter Exp $
+# $Id: scrape.sh,v 1.2 2006-10-30 00:36:20 gunter Exp $
 #
 # requires: lynx gawk
 #
@@ -155,6 +155,15 @@ fi
 
 mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} --skip-column-names ${DATABASE} \
     -e "${EPISODE_SQL}" > ${AFTER}
+
+# Compare the line count of DATA to AFTER to determine if data was lost
+# when it was inserted.  This could happen if the data wasn't parsed correctly
+# or if there was an error in the data (i.e., two episodes with the same primary
+# key).
+EPISODE_COUNT2=`wc -l ${AFTER} | tr -s ' ' | cut -d " "  -f 2`
+if [ "${EPISODE_COUNT}" -ne "${EPISODE_COUNT2}" ]; then
+    echo "${PROGRAM} => Not all records were inserted: expected ${EPISODE_COUNT}, but got ${EPISODE_COUNT2}"
+fi
 
 diff -u ${BEFORE} ${AFTER}
 
