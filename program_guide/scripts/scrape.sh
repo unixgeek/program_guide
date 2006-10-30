@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.2 2006-10-30 00:36:20 gunter Exp $
+# $Id: scrape.sh,v 1.3 2006-10-30 03:36:36 gunter Exp $
 #
 # requires: lynx gawk
 #
@@ -32,6 +32,8 @@ BEFORE=`mktemp /tmp/scrape.before.XXXXXX`
 AFTER=`mktemp /tmp/scrape.after.XXXXXX`
 FIELDS="5 8 13 11 255"
 SERIAL_NUMBER=0
+
+. hacks
 
 echo "${PROGRAM} => ${DUMP}"
 echo "${PROGRAM} => ${RAW}"
