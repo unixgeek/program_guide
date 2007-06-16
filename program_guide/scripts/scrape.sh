@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: scrape.sh,v 1.3 2006-10-30 03:36:36 gunter Exp $
+# $Id: scrape.sh,v 1.4 2007-06-16 14:30:45 gunter Exp $
 #
 # requires: lynx gawk
 #
@@ -30,7 +30,7 @@ RAW=`mktemp /tmp/scrape.raw.XXXXXX`
 DATA=`mktemp /tmp/scrape.data.XXXXXX`
 BEFORE=`mktemp /tmp/scrape.before.XXXXXX`
 AFTER=`mktemp /tmp/scrape.after.XXXXXX`
-FIELDS="5 8 13 11 255"
+FIELDS="5 8 13 11 255 1024"
 SERIAL_NUMBER=0
 
 . hacks
