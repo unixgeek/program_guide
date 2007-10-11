@@ -1,25 +1,25 @@
 /*
- * $Id: User.java,v 1.1 2007-10-10 02:09:04 gunter Exp $
+ * $Id: User.java,v 1.1 2007-10-11 01:10:22 gunter Exp $
  */
-package net.six_two.program_guide.tables;
+package net.six_two.program_guide.model;
 
 import java.sql.Timestamp;
 
 public class User {
-    private int id;
+    private Integer id;
     private String username;
     private String password;
     private Timestamp lastLoginDate;
     private Timestamp registrationDate;
-    private int permissions;
+    private Integer permissions;
     
     public User() {
         
     }
     
-    public User(int id, String username, String password, 
+    public User(Integer id, String username, String password, 
             Timestamp lastLoginDate, Timestamp registrationDate, 
-            int permissions) {
+            Integer permissions) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -28,11 +28,11 @@ public class User {
         this.permissions = permissions;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -68,11 +68,11 @@ public class User {
         this.username = username;
     }
 
-    public int getPermissions() {
+    public Integer getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(int permissions) {
+    public void setPermissions(Integer permissions) {
         this.permissions = permissions;
     }
 }

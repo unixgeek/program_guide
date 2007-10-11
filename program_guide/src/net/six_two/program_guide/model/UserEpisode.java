@@ -1,7 +1,7 @@
 /*
- * $Id: UserEpisode.java,v 1.1 2007-10-10 02:09:04 gunter Exp $
+ * $Id: UserEpisode.java,v 1.1 2007-10-11 01:10:22 gunter Exp $
  */
-package net.six_two.program_guide.tables;
+package net.six_two.program_guide.model;
 
 public class UserEpisode {
     private Episode episode;

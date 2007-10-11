@@ -1,14 +1,14 @@
 /*
- * $Id: Status.java,v 1.1 2007-10-10 02:09:04 gunter Exp $
+ * $Id: Status.java,v 1.1 2007-10-11 01:10:22 gunter Exp $
  */
-package net.six_two.program_guide.tables;
+package net.six_two.program_guide.model;
 
 public class Status {
-    private int episodeNumber;
-    private int programId;
+    private Integer episodeNumber;
+    private Integer programId;
     private String season;
     private String status;
-    private int userId;
+    private Integer userId;
     
     public Status() {
         
@@ -22,8 +22,8 @@ public class Status {
         this.userId = user.getId();
     }
     
-    public Status(int userId, int programId, String status,
-            String season, int episodeNumber) {
+    public Status(Integer userId, Integer programId, String status,
+            String season, Integer episodeNumber) {
         this.episodeNumber = episodeNumber;
         this.programId = programId;
         this.season = season;
@@ -31,19 +31,19 @@ public class Status {
         this.userId = userId;
     }
 
-    public int getEpisodeNumber() {
+    public Integer getEpisodeNumber() {
         return episodeNumber;
     }
 
-    public void setEpisodeNumber(int episodeNumber) {
+    public void setEpisodeNumber(Integer episodeNumber) {
         this.episodeNumber = episodeNumber;
     }
 
-    public int getProgramId() {
+    public Integer getProgramId() {
         return programId;
     }
 
-    public void setProgramId(int programId) {
+    public void setProgramId(Integer programId) {
         this.programId = programId;
     }
 
@@ -63,11 +63,11 @@ public class Status {
         this.status = status;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 }

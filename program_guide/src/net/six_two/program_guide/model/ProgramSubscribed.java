@@ -1,17 +1,17 @@
 /*
- * $Id: ProgramSubscribed.java,v 1.1 2007-10-10 02:09:04 gunter Exp $
+ * $Id: ProgramSubscribed.java,v 1.1 2007-10-11 01:10:22 gunter Exp $
  */
-package net.six_two.program_guide.tables;
+package net.six_two.program_guide.model;
 
 public class ProgramSubscribed {
     private Program program;
-    private short subscribed;
+    private Boolean subscribed;
     
     public ProgramSubscribed() {
         
     }
     
-    public ProgramSubscribed(Program program, short subscribed) {
+    public ProgramSubscribed(Program program, Boolean subscribed) {
         this.program = program;
         this.subscribed = subscribed;
     }
@@ -24,11 +24,11 @@ public class ProgramSubscribed {
         this.program = program;
     }
 
-    public short getSubscribed() {
+    public Boolean getSubscribed() {
         return subscribed;
     }
 
-    public void setSubscribed(short subscribed) {
+    public void setSubscribed(Boolean subscribed) {
         this.subscribed = subscribed;
     }
 }
