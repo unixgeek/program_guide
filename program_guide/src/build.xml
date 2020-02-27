@@ -3,6 +3,7 @@
               value="WEB-INF/src/net/six_two/program_guide/program_guide.properties" />
     <property file="${propertyfile}" />
     <property name="verbose" value="false" />
+	<property name="debugcompile" value="false" />
     <property name="builddir" value="${basedir}/WEB-INF/classes/" />
     <property name="distdir"
               value="${basedir}/${package.name}-${package.version}" />
@@ -57,7 +58,7 @@ ant truncatedb  truncate all tables in the database</echo>
                destdir="${builddir}"
                classpath="${package.buildClasspath}"
                listfiles="${verbose}"
-               optimize="true" />
+               debug="${debugcompile}" />
         <copy file="${propertyfile}" todir="${builddir}/net/six_two/program_guide" />
     </target>
 
