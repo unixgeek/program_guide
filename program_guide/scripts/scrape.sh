@@ -33,8 +33,6 @@ AFTER=`mktemp /tmp/scrape.after.XXXXXX`
 FIELDS="5 8 13 11 255 1024"
 SERIAL_NUMBER=0
 
-. hacks
-
 echo "${PROGRAM} => ${DUMP}"
 echo "${PROGRAM} => ${RAW}"
 echo "${PROGRAM} => ${DATA}"
@@ -106,7 +104,7 @@ do
     echo "${ID}|${SEASON}|${EPISODE}|${PRODUCTION_CODE}|${ORIGINAL_AIR_DATE}|${TITLE}|${SERIAL_NUMBER}|${SUMMARY_LINK}" >> ${DATA}
 done
 
-EPISODE_COUNT=`wc -l ${DATA} | tr -s ' ' | cut -d " "  -f 2`
+EPISODE_COUNT=`wc -l ${DATA} | sed 's/^ *//' | cut -d ' ' -f 1`
 echo "${PROGRAM} => ${EPISODE_COUNT} episodes"
 if [ "${EPISODE_COUNT}" -eq "0" ]; then
     echo "${PROGRAM} => Nothing to load"
@@ -162,7 +160,7 @@ mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} --skip-column-names ${DATABASE} \
 # when it was inserted.  This could happen if the data wasn't parsed correctly
 # or if there was an error in the data (i.e., two episodes with the same primary
 # key).
-EPISODE_COUNT2=`wc -l ${AFTER} | tr -s ' ' | cut -d " "  -f 2`
+EPISODE_COUNT2=`wc -l ${AFTER} | sed 's/^ *//' | cut -d ' ' -f 1`
 if [ "${EPISODE_COUNT}" -ne "${EPISODE_COUNT2}" ]; then
     echo "${PROGRAM} => Not all records were inserted: expected ${EPISODE_COUNT}, but got ${EPISODE_COUNT2}"
 fi
