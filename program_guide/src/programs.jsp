@@ -33,7 +33,6 @@
   <th class="rowheader">Name</th>
   <th class="rowheader">Last Update</th>
   <th class="rowheader">Update URL</th>
-  <th class="rowheader">Torrent</th>
  </tr>
  <c:forEach var="program" items="${programsList}">
  <tr>
@@ -43,8 +42,7 @@
     <dt:format patternId="timestampDisplayFormat">${program.lastUpdate.time}</dt:format>
    </c:if>
   </td>
-  <td class="rowdata"><a class="rowdata" href="${program.url}">${program.url}</a></td>
-  <td class="rowdatacenter"><a class="rowdata" href="${site.searchString}<str:encodeUrl>${program.name}</str:encodeUrl>">${site.name}</a></td>
+  <td class="rowdata"><a class="rowdata" target="_blank" href="${program.url}">${program.url}</a></td>
  </tr>
  </c:forEach>
  <tr>

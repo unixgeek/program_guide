@@ -34,7 +34,6 @@
   <th class="rowheader" title="Program">Program</th>
   <th class="rowheader" title="Season">Season</th>
   <th class="rowheader" title="Episode">Episode</th>
-  <th class="rowheader" title="Production Code">Code</th>
   <th class="rowheader" title="Original Air Date">Air Date</th>
   <th class="rowheader" title="Title">Title</th>
   <th class="rowheader" title="Summary">Summary</th>
@@ -44,7 +43,6 @@
   <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter">${userEpisode.episode.number}</td>
-  <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
   <td class="rowdatacenter">
    <c:if test='${not empty userEpisode.episode.originalAirDate}'>
     <dt:format patternId="dateDisplayFormat">
@@ -56,7 +54,7 @@
   <td class="rowdatacenter">
    <c:choose>
     <c:when test='${not empty userEpisode.episode.summaryUrl}'>
-   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">summary</a>
+   <a class="rowdata" target="_blank" href="${userEpisode.episode.summaryUrl}">summary</a>
     </c:when>
     <c:otherwise>
     &nbsp;

@@ -101,7 +101,7 @@ public class Persistor {
             + "WHERE s.user_id = ? "
             + "AND e.program_id = ? "
             + "AND e.season = ? "
-            + "ORDER BY program_id, serial_number DESC ";
+            + "ORDER BY e.season, e.number, e.original_air_date ";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
