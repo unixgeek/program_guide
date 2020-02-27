@@ -101,7 +101,7 @@ public class Persistor {
             + "WHERE s.user_id = ? "
             + "AND e.program_id = ? "
             + "AND e.season = ? "
-            + "ORDER BY program_id, serial_number DESC ";
+            + "ORDER BY e.season, e.number, e.original_air_date ";
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, user.getId());
@@ -173,7 +173,9 @@ public class Persistor {
                     result.getString("p.name"),
                     result.getString("p.url"),
                     result.getTimestamp("p.last_update"),
-                    result.getShort("p.do_update"));
+                    result.getShort("p.do_update"),
+                    result.getInt("p.tvmaze_id"),
+                    result.getString("p.network"));
             Episode episode = new Episode(result.getInt("e.program_id"),
                     result.getString("e.season"),
                     result.getInt("e.number"),
@@ -232,7 +234,9 @@ public class Persistor {
                     result.getString("p.name"),
                     result.getString("p.url"),
                     result.getTimestamp("p.last_update"),
-                    result.getShort("p.do_update"));
+                    result.getShort("p.do_update"),
+                    result.getInt("p.tvmaze_id"),
+                    result.getString("p.network"));
             Episode episode = new Episode(result.getInt("e.program_id"),
                     result.getString("e.season"),
                     result.getInt("e.number"),
@@ -299,19 +303,23 @@ public class Persistor {
             throw new SQLException("Attempted operation with a null user.");
         
         String sql = "SELECT p.*, e.*, "
-            + "IFNULL(t.status, 'none') AS status "
-            + "FROM subscribed s "
-            + "LEFT JOIN program p "
-            + "ON s.program_id = p.id "
-            + "LEFT JOIN episode e "
-            + "ON s.program_id = e.program_id "
-            + "LEFT JOIN status t "
-            + "ON (s.user_id = t.user_id "
-            + "    AND t.program_id = e.program_id "
-            + "    AND t.season = e.season "
-            + "    AND t.episode_number = e.number) "
-            + "WHERE s.user_id = ? "
-            + "AND status = 'queued' "
+            + "IFNULL(st.status, 'none') AS status "    
+            + "    FROM `user` u " 
+            + "    LEFT JOIN subscribed s "  
+            + "        ON u.id = s.user_id "  
+            + "    LEFT JOIN program p " 
+            + "        ON p.id = s.program_id "  
+            + "    LEFT JOIN episode e " 
+            + "        ON e.program_id = s.program_id "  
+            + "    LEFT JOIN status st " 
+            + "        ON st.user_id = u.id " 
+            + "        AND st.program_id = e.program_id "  
+            + "        AND st.season = e.season "  
+            + "        AND st.episode_number = e.`number` " 
+            + "WHERE u.id = ? " 
+            + "AND (((st.status IS NULL OR st.status != 'viewed') " 
+            + "       AND CURDATE() >= e.original_air_date) " 
+            + "     OR st.status = 'queued') " 
             + "ORDER BY e.original_air_date ASC, p.name ASC "
             + "LIMIT ?,? ";
             
@@ -329,7 +337,9 @@ public class Persistor {
                     result.getString("p.name"),
                     result.getString("p.url"),
                     result.getTimestamp("p.last_update"),
-                    result.getShort("p.do_update"));
+                    result.getShort("p.do_update"),
+                    result.getInt("p.tvmaze_id"),
+                    result.getString("p.network"));
             Episode episode = new Episode(result.getInt("e.program_id"),
                     result.getString("e.season"),
                     result.getInt("e.number"),
@@ -358,17 +368,23 @@ public class Persistor {
         if (user == null)
             throw new SQLException("Attempted operation with a null user.");
         
-        String sql = "SELECT COUNT(*) "
-            + "FROM subscribed s "
-            + "LEFT JOIN episode e " 
-            + "ON s.program_id = e.program_id " 
-            + "LEFT JOIN status t "
-            + "ON (s.user_id = t.user_id " 
-            + "    AND t.program_id = e.program_id " 
-            + "    AND t.season = e.season "
-            + "    AND t.episode_number = e.number) " 
-            + "WHERE s.user_id = ? "
-            + "AND t.status  = 'queued' ";
+        String sql = "SELECT COUNT(*) " 
+                + "    FROM `user` u " 
+                + "    LEFT JOIN subscribed s "  
+                + "        ON u.id = s.user_id "  
+                + "    LEFT JOIN program p " 
+                + "        ON p.id = s.program_id "  
+                + "    LEFT JOIN episode e " 
+                + "        ON e.program_id = s.program_id "  
+                + "    LEFT JOIN status st " 
+                + "        ON st.user_id = u.id " 
+                + "        AND st.program_id = e.program_id "  
+                + "        AND st.season = e.season "  
+                + "        AND st.episode_number = e.`number` " 
+                + "WHERE u.id = ? " 
+                + "AND (((st.status IS NULL OR st.status != 'viewed') " 
+                + "       AND CURDATE() >= e.original_air_date) " 
+                + "     OR st.status = 'queued') " ;
             
         
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -444,7 +460,9 @@ public class Persistor {
                     result.getString("p.name"),
                     result.getString("p.url"),
                     result.getTimestamp("p.last_update"),
-                    result.getShort("p.do_update"));
+                    result.getShort("p.do_update"),
+                    result.getInt("p.tvmaze_id"),
+                    result.getString("p.network"));
             Episode episode = new Episode(result.getInt("e.program_id"),
                     result.getString("e.season"),
                     result.getInt("e.number"),
@@ -534,6 +552,8 @@ public class Persistor {
             program.setUrl(result.getString("url"));
             program.setLastUpdate(result.getTimestamp("last_update"));
             program.setDoUpdate(result.getShort("do_update"));
+            program.setTvMazeId(result.getInt("tvmaze_id"));
+            program.setNetwork(result.getString("network"));
         }
         result.close();
         statement.close();
@@ -620,6 +640,7 @@ public class Persistor {
             program.setUrl(result.getString("url"));
             program.setLastUpdate(result.getTimestamp("last_update"));
             program.setDoUpdate(result.getShort("do_update"));
+            program.setTvMazeId(result.getInt("tvmaze_id"));
             programs.add(program);
         }
         result.close();
@@ -816,14 +837,14 @@ public class Persistor {
     
     public static int insertProgram(Connection connection, Program program)
             throws SQLException {
-        String sql = "INSERT INTO program VALUES (null, ?, ?, null, ?)";
+        String sql = "INSERT INTO program (name, tvmaze_id, do_update, url)  VALUES (?, ?, ?, 'TBD')";
         
         if (program == null)
             throw new SQLException("Attempted operation with a null program.");
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, program.getName());
-        statement.setString(2, program.getUrl());
+        statement.setInt(2, program.getTvMazeId());
         statement.setShort(3, program.getDoUpdate());
         
         statement.execute();
@@ -982,17 +1003,19 @@ public class Persistor {
     }
     
     public static int deleteStatusForEpisode(Connection connection, 
-            Episode episode) 
+            User user, Episode episode) 
             throws SQLException {
         String sql = "DELETE FROM status "
-            + "WHERE program_id = ? "
+            + "WHERE user_id = ? "
+            + "AND program_id = ? "
             + "AND season = ? "
             + "AND episode_number = ?";
                 
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, episode.getProgramId());
-        statement.setString(2, episode.getSeason());
-        statement.setInt(3, episode.getNumber());
+        statement.setInt(1, user.getId());
+        statement.setInt(2, episode.getProgramId());
+        statement.setString(3, episode.getSeason());
+        statement.setInt(4, episode.getNumber());
         
         statement.execute();
         int count = statement.getUpdateCount();

@@ -11,18 +11,21 @@ public class Program {
     private Timestamp lastUpdate;
     private String name;
     private String url;
+    private int tvMazeId;
+    private String network;
     
     public Program() {
         
     }
     
     public Program(int id, String name, String url, Timestamp lastUpdate,
-            short doUpdate) {
+            short doUpdate, int tvMazeId, String network) {
         this.id = id;
         this.name = name;
         this.url = url;
         this.lastUpdate = lastUpdate;
         this.doUpdate = doUpdate;
+        this.network = network;
     }
     
     public short getDoUpdate() {
@@ -63,5 +66,21 @@ public class Program {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public int getTvMazeId() {
+        return tvMazeId;
+    }
+
+    public void setTvMazeId(int tvMazeId) {
+        this.tvMazeId = tvMazeId;
+    }
+
+    public String getNetwork() {
+        return network;
+    }
+
+    public void setNetwork(String network) {
+        this.network = network;
     }
 }

@@ -53,7 +53,7 @@ public class SetUserEpisodesServlet extends GenericServlet {
                     episode.setSeason(tokens[0]);
                     episode.setNumber(Integer.parseInt(tokens[1]));
                     //if (tokens[2].equals("none")) {
-                        Persistor.deleteStatusForEpisode(connection, episode);
+                        Persistor.deleteStatusForEpisode(connection, user, episode);
                     //}
                     if (tokens[2].equals("queued") || tokens[2].equals("viewed"))
                         Persistor.insertStatusForUser(connection, user, 

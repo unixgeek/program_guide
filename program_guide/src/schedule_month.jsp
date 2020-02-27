@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="default.css" type="text/css" />
 <link rel="icon" type="image/png" href="program_guide.png" /> 
 <title>Program Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body class="section-3">
 <%@ include file="header.jsp" %>

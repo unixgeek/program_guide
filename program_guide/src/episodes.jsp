@@ -9,6 +9,7 @@
 <head>
 <link rel="stylesheet" href="default.css" type="text/css" />
 <link rel="icon" type="image/png" href="program_guide.png" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Program Guide</title>
 </head>
 <body class="section-1">
@@ -18,7 +19,8 @@
 <form action="SetUserEpisodes.do" method="post">
 <div><input type="hidden" name="program_id" value="${program.id}" /></div>
 <div><input type="hidden" name="season" value="${currentSeason}" /></div>
-<h2>${program.name}&nbsp;<input type="submit" value="Update" /></h2>
+<h2>${program.name}&nbsp;&nbsp;<input type="submit" value="Update" /></h2>
+<h3>${program.network}</h3>
 <h3>Season 
   <c:forEach var="season" items="${seasons}">
     <c:choose>
@@ -35,18 +37,15 @@
  <tr>
   <th class="rowheader" title="Season">Season</th>
   <th class="rowheader" title="Episode">Episode</th>
-  <th class="rowheader" title="Production Code">Code</th>
   <th class="rowheader" title="Original Air Date">Air Date</th>
   <th class="rowheader" title="Title">Title</th>
   <th class="rowheader" title="Summary">Summary</th>
-  <th class="rowheader" title="Torrent">Torrent</th>
   <th class="rowheader" title="Status">Status</th>
  </tr>
  <c:forEach var="userEpisode" items="${userEpisodesList}">
  <tr>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter"><a id="id${userEpisode.episode.serialNumber}" />${userEpisode.episode.number}</td>
-  <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
   <td class="rowdatacenter">
    <c:if test='${not empty userEpisode.episode.originalAirDate}'>
     <dt:format patternId="dateDisplayFormat">${userEpisode.episode.originalAirDate.time}</dt:format>
@@ -56,14 +55,13 @@
   <td class="rowdatacenter">
    <c:choose>
     <c:when test='${not empty userEpisode.episode.summaryUrl}'>
-   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">summary</a>
+   <a class="rowdata" target="_blank" href="${userEpisode.episode.summaryUrl}">summary</a>
     </c:when>
     <c:otherwise>
     &nbsp;
     </c:otherwise>
    </c:choose>
   </td>
-  <td class="rowdatacenter"><a class="rowdatacenter" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
   <td class="rowdata">
    <c:choose>
     <c:when test='${userEpisode.status == "none"}'>

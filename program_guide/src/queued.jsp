@@ -8,6 +8,7 @@
 <head>
 <link rel="stylesheet" href="default.css" type="text/css" />
 <link rel="icon" type="image/png" href="program_guide.png" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Program Guide</title>
 </head>
 <body class="section-2">
@@ -32,19 +33,16 @@
 <table class="data">
  <tr>
   <th class="rowheader" title="Program">Program</th>
-  <th class="rowheader" title="Season">Season</th>
   <th class="rowheader" title="Episode">Episode</th>
-  <th class="rowheader" title="Production Code">Code</th>
   <th class="rowheader" title="Original Air Date">Air Date</th>
+  <th class="rowheader" title="Network">Network</th>
   <th class="rowheader" title="Title">Title</th>
   <th class="rowheader" title="Summary">Summary</th>
  </tr>
  <c:forEach var="userEpisode" items="${queuedEpisodesList}">
  <tr>
   <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}">${userEpisode.program.name}</a></td>
-  <td class="rowdatacenter">${userEpisode.episode.season}</td>
-  <td class="rowdatacenter">${userEpisode.episode.number}</td>
-  <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
+  <td class="rowdatacenter">${userEpisode.episode.season}-${userEpisode.episode.number}</td>
   <td class="rowdatacenter">
    <c:if test='${not empty userEpisode.episode.originalAirDate}'>
     <dt:format patternId="dateDisplayFormat">
@@ -52,11 +50,12 @@
     </dt:format>
    </c:if>
   </td>
+  <td class="rowdatacenter">${userEpisode.program.network}</td>
   <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}&amp;season=${userEpisode.episode.season}#id${userEpisode.episode.serialNumber}">${userEpisode.episode.title}</a></td>
   <td class="rowdatacenter">
    <c:choose>
     <c:when test='${not empty userEpisode.episode.summaryUrl}'>
-   <a class="rowdata" href="${userEpisode.episode.summaryUrl}">summary</a>
+   <a class="rowdata" target="_blank" href="${userEpisode.episode.summaryUrl}">summary</a>
     </c:when>
     <c:otherwise>
     &nbsp;

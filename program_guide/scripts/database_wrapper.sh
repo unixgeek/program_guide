@@ -21,7 +21,7 @@ SCRIPT=$1
 shift
 ${SCRIPT} "$*" 2>&1 | gzip -c -9 > ${LOG}
 
-COUNT=`gzcat ${LOG} | wc -c | tr -d ' '`
+COUNT=`gunzip -c ${LOG} | wc -c | tr -d ' '`
 if [ "${COUNT}" -eq "0" ]; then
     rm -f ${LOG}
     exit 0
@@ -33,11 +33,7 @@ SQL=\
     null, 
     '`basename ${SCRIPT}`',
     CURRENT_TIMESTAMP(),
-    'PENDING UPDATE');
-
-UPDATE log
-SET content = LOAD_FILE('${LOG}')
-WHERE id = LAST_INSERT_ID();"
+    LOAD_FILE('${LOG}'));"
 
 mysql --max_allowed_packet=16777216 -u ${MYSQLUSER} -p${MYSQLPASSWORD} \
     ${DATABASE} -e "${SQL}"
