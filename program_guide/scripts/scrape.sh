@@ -33,6 +33,8 @@ AFTER=`mktemp /tmp/scrape.after.XXXXXX`
 FIELDS="5 8 13 11 255 1024"
 SERIAL_NUMBER=0
 
+. hacks
+
 echo "${PROGRAM} => ${DUMP}"
 echo "${PROGRAM} => ${RAW}"
 echo "${PROGRAM} => ${DATA}"
@@ -60,7 +62,7 @@ do
     SEASON=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 1 | tr -d '_'`
     EPISODE=`echo "${line}" | cut -d "|" -f 1 | cut -d "-" -f 2 | tr -d '_'`
     PRODUCTION_CODE=`echo "${line}" | cut -d "|" -f 2 | tr -d '_'`
-    DATE=`echo "${line}" | cut -d "|" -f 3 | tr -d '_' | awk '{printf "%07s", $1}'`
+    DATE=`echo "${line}" | cut -d "|" -f 3 | tr -d '_' | awk '{printf "%07s", $1}' | tr -d ' '`
     TITLE=`echo "${line}" | cut -d "|" -f 4 | tr '_' ' ' | sed 's/^[[:space:]]*//' | sed 's/\[.*\]//'`
     LINK_NUMBER=`echo "${line}" | cut -d "|" -f 4 | tr '_' ' ' | sed 's/^[[:space:]]*//' | sed 's/\].*//' | tr -d '['`
     SUMMARY_LINK=`cat ${DUMP} | grep "^[[:space:]]*${LINK_NUMBER}\.[[:space:]]*http" | sed "s/.*${LINK_NUMBER}\. *//"`
@@ -75,7 +77,7 @@ do
         YEAR=20${YEARPART}
     fi
     FULLDATE=`echo ${DATE} | cut -c 1-5`${YEAR}
-    if [ "${DATE}" != "0000000" ]; then
+    if [ -n "${DATE}" ] && [ "${DATE}" != "0000000" ]; then
         ORIGINAL_AIR_DATE=`mysql -u ${MYSQLUSER} -p${MYSQLPASSWORD} -s --skip-column-names -e "SELECT STR_TO_DATE('${FULLDATE}', '%d%b%Y')"`
     else
         ORIGINAL_AIR_DATE=""
