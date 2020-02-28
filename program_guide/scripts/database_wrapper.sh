@@ -33,11 +33,7 @@ SQL=\
     null, 
     '`basename ${SCRIPT}`',
     CURRENT_TIMESTAMP(),
-    'PENDING UPDATE');
-
-UPDATE log
-SET content = LOAD_FILE('${LOG}')
-WHERE id = LAST_INSERT_ID();"
+    LOAD_FILE('${LOG}'));"
 
 mysql --max_allowed_packet=16777216 -u ${MYSQLUSER} -p${MYSQLPASSWORD} \
     ${DATABASE} -e "${SQL}"
