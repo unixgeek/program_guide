@@ -299,19 +299,23 @@ public class Persistor {
             throw new SQLException("Attempted operation with a null user.");
         
         String sql = "SELECT p.*, e.*, "
-            + "IFNULL(t.status, 'none') AS status "
-            + "FROM subscribed s "
-            + "LEFT JOIN program p "
-            + "ON s.program_id = p.id "
-            + "LEFT JOIN episode e "
-            + "ON s.program_id = e.program_id "
-            + "LEFT JOIN status t "
-            + "ON (s.user_id = t.user_id "
-            + "    AND t.program_id = e.program_id "
-            + "    AND t.season = e.season "
-            + "    AND t.episode_number = e.number) "
-            + "WHERE s.user_id = ? "
-            + "AND status = 'queued' "
+            + "IFNULL(st.status, 'none') AS status "    
+            + "    FROM `user` u " 
+            + "    LEFT JOIN subscribed s "  
+            + "        ON u.id = s.user_id "  
+            + "    LEFT JOIN program p " 
+            + "        ON p.id = s.program_id "  
+            + "    LEFT JOIN episode e " 
+            + "        ON e.program_id = s.program_id "  
+            + "    LEFT JOIN status st " 
+            + "        ON st.user_id = u.id " 
+            + "        AND st.program_id = e.program_id "  
+            + "        AND st.season = e.season "  
+            + "        AND st.episode_number = e.`number` " 
+            + "WHERE u.id = ? " 
+            + "AND (((st.status IS NULL OR st.status != 'viewed') " 
+            + "       AND CURDATE() >= e.original_air_date) " 
+            + "     OR st.status = 'queued') " 
             + "ORDER BY e.original_air_date ASC, p.name ASC "
             + "LIMIT ?,? ";
             
@@ -358,17 +362,23 @@ public class Persistor {
         if (user == null)
             throw new SQLException("Attempted operation with a null user.");
         
-        String sql = "SELECT COUNT(*) "
-            + "FROM subscribed s "
-            + "LEFT JOIN episode e " 
-            + "ON s.program_id = e.program_id " 
-            + "LEFT JOIN status t "
-            + "ON (s.user_id = t.user_id " 
-            + "    AND t.program_id = e.program_id " 
-            + "    AND t.season = e.season "
-            + "    AND t.episode_number = e.number) " 
-            + "WHERE s.user_id = ? "
-            + "AND t.status  = 'queued' ";
+        String sql = "SELECT COUNT(*) " 
+                + "    FROM `user` u " 
+                + "    LEFT JOIN subscribed s "  
+                + "        ON u.id = s.user_id "  
+                + "    LEFT JOIN program p " 
+                + "        ON p.id = s.program_id "  
+                + "    LEFT JOIN episode e " 
+                + "        ON e.program_id = s.program_id "  
+                + "    LEFT JOIN status st " 
+                + "        ON st.user_id = u.id " 
+                + "        AND st.program_id = e.program_id "  
+                + "        AND st.season = e.season "  
+                + "        AND st.episode_number = e.`number` " 
+                + "WHERE u.id = ? " 
+                + "AND (((st.status IS NULL OR st.status != 'viewed') " 
+                + "       AND CURDATE() >= e.original_air_date) " 
+                + "     OR st.status = 'queued') " ;
             
         
         PreparedStatement statement = connection.prepareStatement(sql);
