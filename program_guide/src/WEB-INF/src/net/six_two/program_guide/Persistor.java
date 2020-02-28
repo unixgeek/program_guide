@@ -982,17 +982,19 @@ public class Persistor {
     }
     
     public static int deleteStatusForEpisode(Connection connection, 
-            Episode episode) 
+            User user, Episode episode) 
             throws SQLException {
         String sql = "DELETE FROM status "
-            + "WHERE program_id = ? "
+            + "WHERE user_id = ? "
+            + "AND program_id = ? "
             + "AND season = ? "
             + "AND episode_number = ?";
                 
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, episode.getProgramId());
-        statement.setString(2, episode.getSeason());
-        statement.setInt(3, episode.getNumber());
+        statement.setInt(1, user.getId());
+        statement.setInt(2, episode.getProgramId());
+        statement.setString(3, episode.getSeason());
+        statement.setInt(4, episode.getNumber());
         
         statement.execute();
         int count = statement.getUpdateCount();
