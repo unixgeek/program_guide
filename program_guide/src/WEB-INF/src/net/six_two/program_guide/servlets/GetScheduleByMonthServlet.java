@@ -104,8 +104,6 @@ public class GetScheduleByMonthServlet extends GenericServlet {
                     
                     // Add any episodes for this date.
                     for (int i = 0; i != episodes.length; i++) {
-                        Date x1 = schedule[week][day].getDate();
-                        Date x2 = episodes[i].getEpisode().getOriginalAirDate();
                         if (DateTimeUtilities.isEqual(
                                 schedule[week][day].getDate(), 
                                 episodes[i].getEpisode().getOriginalAirDate())) {
