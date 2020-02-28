@@ -9,6 +9,7 @@
 <head>
 <link rel="stylesheet" href="default.css" type="text/css" />
 <link rel="icon" type="image/png" href="program_guide.png" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Program Guide</title>
 </head>
 <body class="section-4">
@@ -38,11 +39,9 @@
   <th class="rowheader" title="Program">Program</th>
   <th class="rowheader" title="Season">Season</th>
   <th class="rowheader" title="Episode">Episode</th>
-  <th class="rowheader" title="Production Code">Code</th>
   <th class="rowheader" title="Original Air Date">Air Date</th>
   <th class="rowheader" title="Title">Title</th>
   <th class="rowheader" title="Summary">Summary</th>
-  <th class="rowheader" title="Torrent">Torrent</th>
   <th class="rowheader" title="Status">Status</th>
  </tr>
  <c:forEach var="userEpisode" items="${userEpisodesList}">
@@ -50,7 +49,6 @@
   <td class="rowdata"><a class="rowdata" href="GetUserEpisodes.do?program_id=${userEpisode.program.id}&amp;season=${userEpisode.episode.season}#id${userEpisode.episode.serialNumber}">${userEpisode.program.name}</a></td>
   <td class="rowdatacenter">${userEpisode.episode.season}</td>
   <td class="rowdatacenter"><a name="${userEpisode.episode.serialNumber}" />${userEpisode.episode.number}</td>
-  <td class="rowdatacenter">${userEpisode.episode.productionCode}</td>
   <td class="rowdatacenter">
    <c:if test='${not empty userEpisode.episode.originalAirDate}'>
     <dt:format patternId="dateDisplayFormat">${userEpisode.episode.originalAirDate.time}</dt:format>
@@ -67,7 +65,6 @@
     </c:otherwise>
    </c:choose>
   </td>
-  <td class="rowdatacenter"><a class="rowdatacenter" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
   <td class="rowdatacenter">${userEpisode.status}</td>
  </tr>
  </c:forEach>

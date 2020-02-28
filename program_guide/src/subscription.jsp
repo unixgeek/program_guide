@@ -8,6 +8,7 @@
 <head>
 <link rel="stylesheet" href="default.css" type="text/css" />
 <link rel="icon" type="image/png" href="program_guide.png" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <script type="text/javascript">
     function toggle(checked) {
         form = document.getElementById("subscription");

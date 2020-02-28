@@ -6,7 +6,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <link rel="stylesheet" href="default.css" type="text/css" />
-<link rel="icon" type="image/png" href="program_guide.png" /> 
+<link rel="icon" type="image/png" href="program_guide.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
 <title>Program Guide</title>
 </head>
 <body class="section-5">

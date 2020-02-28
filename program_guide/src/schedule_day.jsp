@@ -8,7 +8,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <link rel="stylesheet" href="default.css" type="text/css" />
-<link rel="icon" type="image/png" href="program_guide.png" /> 
+<link rel="icon" type="image/png" href="program_guide.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
 <title>Program Guide</title>
 </head>
 <body class="section-3">
@@ -21,7 +22,7 @@
   <td class="calendarlinkleft">
     <a class="rowdata" href="GetScheduleByDay.do?date=${previousDate}">&lt;&lt;Previous</a>
   </td>
-  <td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td>
+  <td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td><td class="rowdata">&nbsp;</td>
   <td class="calendarlinkright">
     <a class="rowdata" href="GetScheduleByDay.do?date=${nextDate}">Next&gt;&gt;</a>
   </td>
@@ -32,7 +33,6 @@
   <th class="rowheader" title="Episode">Episode</th>
   <th class="rowheader" title="Title">Title</th>
   <th class="rowheader" title="Summary">Summary</th>
-  <th class="rowheader" title="Torrent">Torrent</th>
   <th class="rowheader" title="Status">Status</th>
  </tr>
  <c:forEach var="userEpisode" items="${schedule.userObject.userEpisodes}">
@@ -51,7 +51,6 @@
     </c:otherwise>
    </c:choose>
   </td>
-  <td class="rowdatacenter"><a class="rowdatacenter" href="${site.searchString}<str:encodeUrl>${userEpisode.program.name} ${userEpisode.episode.number}</str:encodeUrl>">${site.name}</a></td>
   <td class="rowdatacenter">${userEpisode.status}</td>
  </tr>
  </c:forEach>
