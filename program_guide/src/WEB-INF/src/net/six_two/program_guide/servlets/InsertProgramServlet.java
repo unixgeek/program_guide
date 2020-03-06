@@ -69,7 +69,7 @@ public class InsertProgramServlet extends GenericServlet {
         
         Program program = new Program();
         program.setName(request.getParameter("name"));
-        program.setUrl(request.getParameter("url"));
+        program.setTvMazeId(Integer.parseInt(request.getParameter("tvmaze_id")));
         
         String doUpdate = request.getParameter("do_update");
         if (doUpdate == null)

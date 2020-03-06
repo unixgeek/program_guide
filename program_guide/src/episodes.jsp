@@ -19,7 +19,8 @@
 <form action="SetUserEpisodes.do" method="post">
 <div><input type="hidden" name="program_id" value="${program.id}" /></div>
 <div><input type="hidden" name="season" value="${currentSeason}" /></div>
-<h2>${program.name}&nbsp;<input type="submit" value="Update" /></h2>
+<h2>${program.name}&nbsp;&nbsp;<input type="submit" value="Update" /></h2>
+<h3>${program.network}</h3>
 <h3>Season 
   <c:forEach var="season" items="${seasons}">
     <c:choose>

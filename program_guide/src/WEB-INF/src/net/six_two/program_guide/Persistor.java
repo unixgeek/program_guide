@@ -173,7 +173,9 @@ public class Persistor {
                     result.getString("p.name"),
                     result.getString("p.url"),
                     result.getTimestamp("p.last_update"),
-                    result.getShort("p.do_update"));
+                    result.getShort("p.do_update"),
+                    result.getInt("p.tvmaze_id"),
+                    result.getString("p.network"));
             Episode episode = new Episode(result.getInt("e.program_id"),
                     result.getString("e.season"),
                     result.getInt("e.number"),
@@ -232,7 +234,9 @@ public class Persistor {
                     result.getString("p.name"),
                     result.getString("p.url"),
                     result.getTimestamp("p.last_update"),
-                    result.getShort("p.do_update"));
+                    result.getShort("p.do_update"),
+                    result.getInt("p.tvmaze_id"),
+                    result.getString("p.network"));
             Episode episode = new Episode(result.getInt("e.program_id"),
                     result.getString("e.season"),
                     result.getInt("e.number"),
@@ -333,7 +337,9 @@ public class Persistor {
                     result.getString("p.name"),
                     result.getString("p.url"),
                     result.getTimestamp("p.last_update"),
-                    result.getShort("p.do_update"));
+                    result.getShort("p.do_update"),
+                    result.getInt("p.tvmaze_id"),
+                    result.getString("p.network"));
             Episode episode = new Episode(result.getInt("e.program_id"),
                     result.getString("e.season"),
                     result.getInt("e.number"),
@@ -454,7 +460,9 @@ public class Persistor {
                     result.getString("p.name"),
                     result.getString("p.url"),
                     result.getTimestamp("p.last_update"),
-                    result.getShort("p.do_update"));
+                    result.getShort("p.do_update"),
+                    result.getInt("p.tvmaze_id"),
+                    result.getString("p.network"));
             Episode episode = new Episode(result.getInt("e.program_id"),
                     result.getString("e.season"),
                     result.getInt("e.number"),
@@ -544,6 +552,8 @@ public class Persistor {
             program.setUrl(result.getString("url"));
             program.setLastUpdate(result.getTimestamp("last_update"));
             program.setDoUpdate(result.getShort("do_update"));
+            program.setTvMazeId(result.getInt("tvmaze_id"));
+            program.setNetwork(result.getString("network"));
         }
         result.close();
         statement.close();
@@ -826,14 +836,14 @@ public class Persistor {
     
     public static int insertProgram(Connection connection, Program program)
             throws SQLException {
-        String sql = "INSERT INTO program VALUES (null, ?, ?, null, ?)";
+        String sql = "INSERT INTO program (name, tvmaze_id, do_update, url)  VALUES (?, ?, ?, 'TBD')";
         
         if (program == null)
             throw new SQLException("Attempted operation with a null program.");
         
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, program.getName());
-        statement.setString(2, program.getUrl());
+        statement.setInt(2, program.getTvMazeId());
         statement.setShort(3, program.getDoUpdate());
         
         statement.execute();

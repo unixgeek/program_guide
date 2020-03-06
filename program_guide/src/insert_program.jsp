@@ -19,13 +19,13 @@
 <table class="data">
  <tr>
   <th class="rowheader">Name</th>
-  <th class="rowheader">Update URL</th>
+  <th class="rowheader">TVMaze ID</th>
   <th class="rowheader">Update</th>
  </tr>
  <tr>
   <td class="rowdata"><input type="text" name="name" /></td>
-  <td class="rowdata"><input type="text" name="url" /></td>
-  <td class="rowdatacenter"><input type="checkbox" name="do_update" value="1" /></td>
+  <td class="rowdata"><input type="text" name="tvmaze_id" /></td>
+  <td class="rowdatacenter"><input type="checkbox" name="do_update" value="1" checked/></td>
  </tr>
  <tr>
   <td class="rowdata" align="right" colspan="4">
