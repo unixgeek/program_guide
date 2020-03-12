@@ -22,12 +22,6 @@
 <table class="data" width="0%">
  <tr>
   <td class="rowdatacenter"><input type="text" name="query" value="${query}" /></td>
-  <td class="rowdatacenter">
-   <select name="type">
-    <option value="natural" <c:if test='${type == "natural"}'>selected="selected"</c:if>>Natural-Language</option>
-    <option value="boolean" <c:if test='${type == "boolean"}'>selected="selected"</c:if>>Boolean</option>
-    <option value="expansion" <c:if test='${type == "expansion"}'>selected="selected"</c:if>>Query Expansion</option>
-   </select>
   <td class="rowdatacenter"><input type="submit" value="Search" /></td>
  </tr>
 </table>

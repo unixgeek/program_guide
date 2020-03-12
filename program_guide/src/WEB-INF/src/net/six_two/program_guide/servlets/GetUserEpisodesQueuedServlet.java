@@ -48,8 +48,8 @@ public class GetUserEpisodesQueuedServlet extends GenericServlet {
         try {
             int count = Persistor.selectQueuedEpisodeCountForUser(connection,
                     user);
-            int pages = count / 10;
-            if ((count % 10) > 0)
+            int pages = count / 20;
+            if ((count % 20) > 0)
                 pages++;
             
             String[] pageTitles = new String[pages];
@@ -63,7 +63,7 @@ public class GetUserEpisodesQueuedServlet extends GenericServlet {
             UserEpisode[] queuedEpisodes = null;
             if (currentPage != 0)
                 queuedEpisodes = Persistor.selectAllQueuedEpisodesForUser(
-                        connection, user, (currentPage - 1) * 10, 10); 
+                        connection, user, (currentPage - 1) * 20, 20); 
             
             connection.close();
 

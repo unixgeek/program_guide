@@ -640,6 +640,7 @@ public class Persistor {
             program.setUrl(result.getString("url"));
             program.setLastUpdate(result.getTimestamp("last_update"));
             program.setDoUpdate(result.getShort("do_update"));
+            program.setTvMazeId(result.getInt("tvmaze_id"));
             programs.add(program);
         }
         result.close();

@@ -30,8 +30,8 @@
  <tr>
   <th class="rowheader">Subscribed</th>
   <th class="rowheader">Name</th>
+  <th class="rowheader">Show URL</th>
   <th class="rowheader">Last Update</th>
-  <th class="rowheader">Update URL</th>
  </tr>
  <c:forEach var="program" items="${programsList}">
  <tr>
@@ -44,12 +44,12 @@
    </c:otherwise>
   </c:choose>
   <td class="rowdata">${program.program.name}</td>
+  <td class="rowdata"><a class="rowdata" href="${program.program.url}">${program.program.url}</a></td>
   <td class="rowdatacenter">
    <c:if test='${not empty program.program.lastUpdate}'>
     <dt:format patternId="timestampDisplayFormat">${program.program.lastUpdate.time}</dt:format>
    </c:if>
   </td>
-  <td class="rowdata"><a class="rowdata" href="${program.program.url}">${program.program.url}</a></td>
  </tr>
  </c:forEach>
 </table>

@@ -44,21 +44,6 @@ public class SearchEpisodesServlet extends GenericServlet {
             return;
         }
         
-        String type = (String) request.getParameter("type");
-        type = (type != null) ? type : "";
-        if (type.equals("")) {
-            error(request, response, "Invalid type.");
-            return;
-        }
-        
-        int searchType = Persistor.NATURAL_LANGUAGE_SEARCH;
-        if (type.equals("natural"))
-            searchType = Persistor.NATURAL_LANGUAGE_SEARCH;
-        else if (type.equals("boolean"))
-            searchType = Persistor.BOOLEAN_SEARCH;
-        else if (type.equals("expansion"))
-            searchType = Persistor.QUERY_EXPANSION_SEARCH;
-        
         Timer timer = new Timer();
         timer.start();
         
@@ -73,12 +58,12 @@ public class SearchEpisodesServlet extends GenericServlet {
             TorrentSite site = Persistor.selectTorrentSite(connection);
             
             UserEpisode[] userEpisodesList = 
-                Persistor.searchEpisodes(connection, query, searchType, user);
+                Persistor.searchEpisodes(connection, query, Persistor.NATURAL_LANGUAGE_SEARCH, user);
             connection.close();
             timer.stop();
             
             request.setAttribute("query", query);
-            request.setAttribute("type", type);
+            request.setAttribute("type", Persistor.NATURAL_LANGUAGE_SEARCH);
             request.setAttribute("elapsedTime", timer.getElapsedTime());
             request.setAttribute("site", site);
             request.setAttribute("userEpisodesList", userEpisodesList);

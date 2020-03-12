@@ -18,12 +18,10 @@
 <form action="InsertProgram.do" method="post">
 <table class="data">
  <tr>
-  <th class="rowheader">Name</th>
   <th class="rowheader">TVMaze ID</th>
   <th class="rowheader">Update</th>
  </tr>
  <tr>
-  <td class="rowdata"><input type="text" name="name" /></td>
   <td class="rowdata"><input type="text" name="tvmaze_id" /></td>
   <td class="rowdatacenter"><input type="checkbox" name="do_update" value="1" checked/></td>
  </tr>

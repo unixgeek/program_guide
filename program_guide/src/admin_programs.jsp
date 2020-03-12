@@ -31,7 +31,7 @@
 <table class="data">
  <tr>
   <th class="rowheader">Name</th>
-  <th class="rowheader">Update URL</th>
+  <th class="rowheader">Show URL</th>
   <th class="rowheader">Last Update</th>
   <th class="rowheader">Update</th>
   <c:if test='${canEdit == "true"}'>
@@ -63,7 +63,7 @@
   <c:if test='${canDelete == "true"}'>
   <td class="rowdatacenter"><a class="rowdata" href="DeleteProgram.do?program_id=${program.id}">Delete</a></td>
   </c:if>
-  <td class="rowdatacenter"><a class="rowdata" href="FetchEpisodes.do?program_id=${program.id}">Fetch Episodes</a></td>
+  <td class="rowdatacenter"><a class="rowdata" href="FetchEpisodes.do?program_id=${program.tvMazeId}">Fetch Episodes</a></td>
  </tr>
  </c:forEach>
  <c:if test='${canAdd == "true"}'>

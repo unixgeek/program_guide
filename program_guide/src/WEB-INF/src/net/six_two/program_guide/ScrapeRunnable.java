@@ -28,7 +28,7 @@ public class ScrapeRunnable implements Runnable {
         String[] update = new String[4];
         update[0] = "/bin/sh";
         update[1] = workingDirectory.getAbsolutePath() + "/database_wrapper.sh";
-        update[2] = workingDirectory.getAbsolutePath() + "/scrape.sh";
+        update[2] = workingDirectory.getAbsolutePath() + "/program_guide_tvmaze_api";
         update[3] = Integer.toString(programId);
         
         ExternalProcess process = new ExternalProcess(update, workingDirectory);
